@@ -1,6 +1,4 @@
 # CSC 450 - Team Project
-<<<<<<< HEAD
-=======
 ## Team Members
 # Nick Morris
 
@@ -12,4 +10,3 @@
 
 # Ixchel Peralta
 
->>>>>>> a6cba90e34bd390cd43b76e824c8a7597e896707
