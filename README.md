@@ -1,12 +1,15 @@
 # CSC 450 - Team Project
 ## Team Members
-# Nick Morris
+Nick Morris
 
-# Temo Meza
+Temo Meza
 
-# Llacki Bautista-Perez
+Llacki Bautista-Perez
 
-# Skylar Stockton
+Skylar Stockton
 
-# Ixchel Peralta
+Ixchel Peralta
 
+## User Roles
+
+We anticipate our app will function the same for each user with all features being available. This user can range from anyone who is interested in security to a cybersecurity analyst.
