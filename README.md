@@ -11,5 +11,5 @@ Skylar Stockton
 Ixchel Peralta
 
 ## User Roles
-
+# User
 We anticipate our app will function the same for each user with all features being available. This user can range from anyone who is interested in security to a cybersecurity analyst.
