@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SecurityApp">
         <activity
+            android:name=".IPHashInfo"
+            android:exported="false" />
+        <activity
             android:name=".TrendingThreats"
             android:exported="false" />
         <activity
