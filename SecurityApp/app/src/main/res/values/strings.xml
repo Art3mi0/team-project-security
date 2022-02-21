@@ -2,4 +2,5 @@
     <string name="app_name">Welcome to I.P and Hash</string>
     <string name="created_by">Created by Ixchel Peralta, Nicholas Morris, Temo Meza, Llacki B.P., and Skylar Stockton</string>
     <string name="TrendingThreatHello">Hello from component Trending Threats</string>
+    <string name="EmailCheck">Hello from Email Check</string>
 </resources>
