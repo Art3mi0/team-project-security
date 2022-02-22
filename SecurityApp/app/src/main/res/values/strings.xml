@@ -4,4 +4,11 @@
     <string name="TrendingThreatHello">Hello from component Trending Threats</string>
     <string name="EmailCheck">Hello from Email Check</string>
     <string name="iphashdemo">INFO FOR 192.696.696</string>
+    <string name="login_email">Email:</string>
+    <string name="login_password">Password:</string>
+    <string name="confirm_password">Confirm Password:</string>
+    <string name="login_button">Login</string>
+    <string name="login_create">Create Account</string>
+    <string name="signup_button">Signup!</string>
+    <string name="login_return_button">Return to Login</string>
 </resources>

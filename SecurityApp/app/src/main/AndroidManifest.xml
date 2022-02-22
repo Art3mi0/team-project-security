@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SecurityApp">
         <activity
+            android:name=".Signup"
+            android:exported="false" />
+        <activity
+            android:name=".Login"
+            android:exported="false" />
+        <activity
             android:name=".IPHashInfo"
             android:exported="false" />
         <activity
