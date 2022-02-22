@@ -11,4 +11,9 @@
     <string name="login_create">Create Account</string>
     <string name="signup_button">Signup!</string>
     <string name="login_return_button">Return to Login</string>
+    <string name="compromisedButtonText">Compromised?</string>
+    <string name="emailTextTitle">Enter Email</string>
+    <string name="generatePasswordTitleText">Generate Password</string>
+    <string name="generatePasswordButtonText">Generate</string>
+
 </resources>
