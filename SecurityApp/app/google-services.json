@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "647508636446",
+    "project_id": "security-app-42ff0",
+    "storage_bucket": "security-app-42ff0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647508636446:android:cc59c120379568cfddcf0f",
+        "android_client_info": {
+          "package_name": "com.EZALLC.securityapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "647508636446-j7nj54lp628sg820tnd2lhheef7bruan.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfOh_t4zq2_P7kR4SpbWza5EfEkDgpeFU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "647508636446-j7nj54lp628sg820tnd2lhheef7bruan.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
