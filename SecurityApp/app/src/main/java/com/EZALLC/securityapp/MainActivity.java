@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
+import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -64,5 +65,25 @@ public class MainActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    /**
+     * this function randomly generates passwords for the user to use
+     * @param view = button click
+     * Output = an error or a new password
+     */
+    public void onGeneratePassword(View view) {
+        return;
+
+    }
+
+    /**
+     * this function uses an API to check if an email has been compromised or not
+     * @param view = user input and button click
+     * Output = a pop up that says error or email compromised or not
+     */
+    public void onCheckEmail(View view) {
+        return;
+
     }
 }
