@@ -15,5 +15,6 @@
     <string name="emailTextTitle">Enter Email</string>
     <string name="generatePasswordTitleText">Generate Password</string>
     <string name="generatePasswordButtonText">Generate</string>
-
+    <string name="SearchHello">Hello from search component</string>
+    <string name="InformationHello">Hello from Information component</string>
 </resources>
