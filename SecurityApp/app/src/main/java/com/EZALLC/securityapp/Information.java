@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.firestore.core.View;
+
 public class Information extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) { //done immediately
@@ -18,6 +20,15 @@ public class Information extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+    }
+    /**
+     * This onSelectionSelected method retrieves the information from the database based on selection
+     * and displays on page
+     * @param view listener for selection
+     * @return Nothing.
+     */
+    public void onSectionSelected(View view){
 
     }
 
