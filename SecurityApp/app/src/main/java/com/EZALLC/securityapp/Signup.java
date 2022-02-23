@@ -37,7 +37,7 @@ public class Signup extends AppCompatActivity {
         confirmPasswordEditText = findViewById(R.id.confirm_password_edit);
     }
 
-    private boolean validateForm() {
+    private boolean checkEmptyFields() {
         // Method for validating edit text fields on signin/up page
         boolean valid = true;
 
@@ -64,6 +64,15 @@ public class Signup extends AppCompatActivity {
         } else {
             confirmPasswordEditText.setError(null);
         }
+
+        return valid;
+    }
+
+    private boolean checkMatchingPasswords() {
+        boolean valid = true;
+        String password = passwordEditText.getText().toString();
+        String confirmPassword = confirmPasswordEditText.getText().toString();
+
         if (!confirmPassword.equals(password)) {
             confirmPasswordEditText.setError("Passwords did not match.");
             passwordEditText.setError("Passwords did not match.");
@@ -78,12 +87,15 @@ public class Signup extends AppCompatActivity {
 
     public void onSignup(View view) {
         // Method for creating user account and updating ui to homebase when successful
-        if (!validateForm()) {
+        if (!checkEmptyFields()) {
+            return;
+        }
+        if (!checkMatchingPasswords()) {
             return;
         }
 
         String email = emailEditText.getText().toString();
-        String password = passwordEditText.getText().toString();
+        String password = confirmPasswordEditText.getText().toString();
 
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
