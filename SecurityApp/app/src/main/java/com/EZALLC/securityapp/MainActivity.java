@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Homebase");
+        getSupportActionBar().setTitle(null);
     }
 
     @Override
@@ -57,6 +58,33 @@ public class MainActivity extends AppCompatActivity {
                 // as a favorite...
                 Intent myIntent2 = new Intent(this, TrendingThreats.class);
                 startActivity(myIntent2);
+                return true;
+
+            case R.id.Search:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                Intent myIntent4 = new Intent(this, Search.class);
+                startActivity(myIntent4);
+                return true;
+
+            case R.id.Info:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                Intent myIntent5 = new Intent(this, Information.class);
+                startActivity(myIntent5);
+                return true;
+
+
+            case R.id.sign_out:
+                mAuth.signOut();
+                FirebaseUser user = mAuth.getCurrentUser();
+
+                Toast.makeText(MainActivity.this, "Log Out Successful!",
+                        Toast.LENGTH_SHORT).show();
+
+                Intent myIntent3 = new Intent(this,Login.class );
+                startActivity(myIntent3);
+
                 return true;
 
             default:
@@ -86,4 +114,15 @@ public class MainActivity extends AppCompatActivity {
         return;
 
     }
+    /**
+     * this method will set a specially marked IP and its info to the Homepage
+     * @param view = Get favorited IP from Watchlist
+     * Output = Get relevant information from the IP to be then displayed
+     */
+    public void onGetFavoriteIP(View view) {
+        return;
+
+    }
+
+
 }

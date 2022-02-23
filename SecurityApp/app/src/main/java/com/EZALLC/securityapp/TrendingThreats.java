@@ -3,7 +3,9 @@ package com.EZALLC.securityapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import java.util.ArrayList;
 
@@ -16,6 +18,10 @@ public class TrendingThreats extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         getSupportActionBar().setTitle("Trending Threats");
 
     }
@@ -40,4 +46,16 @@ public class TrendingThreats extends AppCompatActivity {
          * @param threat Some string representing either a file hash or IP address.
          */
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
