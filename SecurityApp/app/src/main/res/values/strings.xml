@@ -4,4 +4,6 @@
     <string name="TrendingThreatHello">Hello from component Trending Threats</string>
     <string name="EmailCheck">Hello from Email Check</string>
     <string name="iphashdemo">INFO FOR 192.696.696</string>
+    <string name="SearchHello">Hello from Search component </string>
+    <string name="InformationHello">Hello from Information component </string>
 </resources>
