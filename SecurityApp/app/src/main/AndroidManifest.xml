@@ -15,6 +15,15 @@
             android:name=".Signup"
             android:exported="false" />
         <activity
+            android:name=".Information"
+            android:exported="false" />
+        <activity
+            android:name=".IPHashInfo"
+            android:exported="false" />
+        <activity
+            android:name=".Search"
+            android:exported="false" />
+        <activity
             android:name=".Login"
             android:exported="false" />
         <activity
