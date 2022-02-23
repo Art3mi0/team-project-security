@@ -17,4 +17,8 @@
     <string name="generatePasswordButtonText">Generate</string>
     <string name="SearchHello">Hello from search component</string>
     <string name="InformationHello">Hello from Information component</string>
+    <string name="watchlist_title">Hello from WatchList component</string>
+    <string name="watchlist_instruction">Enter an IP or Hash File:</string>
+    <string name="watchlist_help">Potentially significant text to be entered later</string>
+    <string name="watchlist_add_button_text">Add</string>
 </resources>

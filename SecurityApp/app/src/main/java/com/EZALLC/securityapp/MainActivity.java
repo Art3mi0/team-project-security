@@ -73,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
                 Intent myIntent5 = new Intent(this, Information.class);
                 startActivity(myIntent5);
                 return true;
+            case R.id.WatchList:
+                // User chose the "Watchlist" action, sends to that page
+                Intent myIntent6 = new Intent(this, WatchList.class);
+                startActivity(myIntent6);
+                return true;
 
 
             case R.id.sign_out:

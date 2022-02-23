@@ -26,7 +26,11 @@
         android:orderInCategory="1"
         app:showAsAction="never" />
 
+    <item android:id="@+id/WatchList"
+        android:title="WatchList"
 
+        android:orderInCategory="1"
+        app:showAsAction="never" />
 
     <item android:id="@+id/sign_out"
 
