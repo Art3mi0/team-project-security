@@ -3,6 +3,10 @@ package com.EZALLC.securityapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.firebase.firestore.core.View;
 
 public class Information extends AppCompatActivity {
+    private ListView ListViewinfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) { //done immediately
         super.onCreate(savedInstanceState);
@@ -19,7 +24,24 @@ public class Information extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        ListViewinfo = findViewById(R.id.ListViewInfo);
+        String[] InfoHolder = new String[] {
+                "Test one",
+                "Test two",
+                "Test three",
+        };
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item, InfoHolder);
+        ListViewinfo.setAdapter(adapter);
+        ListViewinfo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, android.view.View view, int i, long l) {
+                switch (i){
+                    case 0: Intent PageOne = new Intent(Information.this,Information_1.class);
+                       Information.this.startActivity(PageOne);
+                        break;
+                }
+            }
+        });
 
     }
     /**
@@ -28,11 +50,9 @@ public class Information extends AppCompatActivity {
      * @param view listener for selection
      * @return Nothing.
      */
-    public void onSectionSelected(View view){
-
+    public void onSelectionSelected(View view){
 
     }
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
