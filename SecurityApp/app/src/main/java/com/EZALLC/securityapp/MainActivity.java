@@ -14,6 +14,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Random;
+
+
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -105,10 +108,28 @@ public class MainActivity extends AppCompatActivity {
      * @param view = button click
      * Output = an error or a new password
      */
-    public void onGeneratePassword(View view) {
-        return;
+    public String GetPassword(int length) {
+        char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
+        StringBuilder stringBuilder = new StringBuilder();
 
+        Random rand = new Random();
+
+        for(int i = 0; i < length; i++){
+            char c = chars[rand.nextInt(chars.length)];
+            stringBuilder.append(c);
+        }
+
+        return stringBuilder.toString();
     }
+
+
+
+    public void onGeneratePassword(View view) {
+        GetPassword(10);
+    }
+
+
+
 
     /**
      * this function uses an API to check if an email has been compromised or not
@@ -116,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
      * Output = a pop up that says error or email compromised or not
      */
     public void onCheckEmail(View view) {
+
         return;
 
     }
@@ -124,7 +146,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view = Get favorited IP from Watchlist
      * Output = Get relevant information from the IP to be then displayed
      */
+
     public void onGetFavoriteIP(View view) {
+
+
         return;
 
     }
