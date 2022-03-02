@@ -1,49 +1,7 @@
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.appcompat.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="DIS DA APP"
     android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:weightSum="5"
-android:orientation="vertical">
-
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/purple_200"
-        android:title="DIS DA APP"
-        app:subtitle="Information"
-        app:subtitleTextColor="#009688"
-        />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#FFFFFF"
-        android:text="Button 1"
-        app:backgroundTint="#009688" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#FFFFFF"
-        android:text="Button 2"
-        app:backgroundTint="#009688" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#FFFFFF"
-        android:text="Button 3"
-        app:backgroundTint="#009688" />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#FFFFFF"
-        android:text="Button 4"
-        app:backgroundTint="#009688" />
-    </LinearLayout>
+    android:layout_height="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    />
