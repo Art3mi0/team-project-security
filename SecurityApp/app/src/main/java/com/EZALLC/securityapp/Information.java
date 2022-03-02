@@ -22,8 +22,8 @@ public class Information extends AppCompatActivity {
         setContentView(R.layout.activity_information);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Information");
         ListViewinfo = findViewById(R.id.ListViewInfo);
         String[] InfoHolder = new String[] {
                 "Test one",
