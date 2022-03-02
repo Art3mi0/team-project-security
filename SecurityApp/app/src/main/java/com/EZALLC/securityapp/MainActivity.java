@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,11 +22,16 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
+    private EditText passwordView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
+        passwordView = findViewById(R.id.passwordDisplay);
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
@@ -125,7 +131,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onGeneratePassword(View view) {
-        GetPassword(10);
+        String password;
+        password = GetPassword(10);
+        passwordView.setText(password);
+
     }
 
 
