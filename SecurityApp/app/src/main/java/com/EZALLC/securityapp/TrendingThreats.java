@@ -9,6 +9,9 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.EditText;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -47,23 +50,46 @@ public class TrendingThreats extends AppCompatActivity {
          * Takes no input and retrieves threat level from IBM X-Force API
          * @return A string of the threat level
          */
-        String content = null;
-        URLConnection connection = null;
-        String threatString = "";
-        try {
-            connection =  new URL("http://www.miltonstart.com/ThreatExplanation.aspx").openConnection();
-            Scanner scanner = new Scanner(connection.getInputStream());
-            scanner.useDelimiter("\\Z");
-            content = scanner.next();
-            scanner.close();
-        }catch ( Exception ex ) {
-            threatString +="Could not retrieve threat level.";
-        }
 
+//        String content = null;
+//        URLConnection connection = null;
+//        try {
+//            connection =  new URL("http://www.miltonstart.com/ThreatExplanation.aspx").openConnection();
+//            Scanner scanner = new Scanner(connection.getInputStream());
+//            scanner.useDelimiter("\\Z");
+//            content = scanner.next();
+//            scanner.close();
+//        }catch ( Exception ex ) {
+//            ex.printStackTrace();
+//        }
+        String content = "";
+        try {
+            URL url = new URL("http://www.miltonstart.com/ThreatExplanation.aspx");
+
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            try {
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                Scanner s = new Scanner(in).useDelimiter("\\A");
+                content = s.hasNext() ? s.next() : "";
+            } finally {
+                urlConnection.disconnect();
+            }
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+       }
+
+
+
+//    	System.out.println(content);
+//    	System.out.println(getThreatLevel(content));
+        String threatString = "";
         String str = "Temp</font></td><td width=\"30\"><font color=\"Black\">";
         String htmlPage = content;
         int index1 = htmlPage.indexOf(str)+51;
         threatString += htmlPage.charAt(index1);
+
         return threatString;
     }
     public ArrayList<String> getTopThreats() {
