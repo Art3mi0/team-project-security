@@ -8,21 +8,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Random;
+
+
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+
+    private EditText passwordView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
+        passwordView = findViewById(R.id.passwordDisplay);
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
@@ -105,10 +114,31 @@ public class MainActivity extends AppCompatActivity {
      * @param view = button click
      * Output = an error or a new password
      */
+    public String GetPassword(int length) {
+        char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
+        StringBuilder stringBuilder = new StringBuilder();
+
+        Random rand = new Random();
+
+        for(int i = 0; i < length; i++){
+            char c = chars[rand.nextInt(chars.length)];
+            stringBuilder.append(c);
+        }
+
+        return stringBuilder.toString();
+    }
+
+
+
     public void onGeneratePassword(View view) {
-        return;
+        String password;
+        password = GetPassword(10);
+        passwordView.setText(password);
 
     }
+
+
+
 
     /**
      * this function uses an API to check if an email has been compromised or not
@@ -116,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
      * Output = a pop up that says error or email compromised or not
      */
     public void onCheckEmail(View view) {
+
         return;
 
     }
@@ -124,7 +155,10 @@ public class MainActivity extends AppCompatActivity {
      * @param view = Get favorited IP from Watchlist
      * Output = Get relevant information from the IP to be then displayed
      */
+
     public void onGetFavoriteIP(View view) {
+
+
         return;
 
     }

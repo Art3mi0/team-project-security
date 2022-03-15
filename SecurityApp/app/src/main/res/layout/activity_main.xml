@@ -81,6 +81,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/enterEmail"/>
 
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/passwordDisplay"
+        android:focusableInTouchMode="false"
+        android:textIsSelectable="true"
+        app:layout_constraintStart_toEndOf="@id/generatePasswordTitleText"
+        app:layout_constraintEnd_toStartOf="@id/generatePasswordButtonText"
+        app:layout_constraintBottom_toBottomOf="@id/generatePasswordTitleText"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
