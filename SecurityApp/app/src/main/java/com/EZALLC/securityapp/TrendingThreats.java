@@ -6,10 +6,19 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.EditText;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class TrendingThreats extends AppCompatActivity {
+    private EditText threatLevel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +31,18 @@ public class TrendingThreats extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        setContentView(R.layout.activity_trending_threats);
+
+        threatLevel = findViewById(R.id.threatLevel);
+//        String stringThreatLevel = getThreatLevel();
+        threatLevel.setText("Threat Level: ");
         getSupportActionBar().setTitle("Trending Threats");
+//        setContentView(R.layout.activity_trending_threats);
+//        TextView threatLevel = findViewById(R.id.textView4);
+//        TextView threatLevel = (TextView) findViewById(R.id.textView4);
+//        threatLevel.setText("Test");
+//
+//        threatLevel.setText(getThreatLevel());
 
     }
     public String getThreatLevel() {
@@ -30,7 +50,47 @@ public class TrendingThreats extends AppCompatActivity {
          * Takes no input and retrieves threat level from IBM X-Force API
          * @return A string of the threat level
          */
-        return "No threat... for now";
+
+//        String content = null;
+//        URLConnection connection = null;
+//        try {
+//            connection =  new URL("http://www.miltonstart.com/ThreatExplanation.aspx").openConnection();
+//            Scanner scanner = new Scanner(connection.getInputStream());
+//            scanner.useDelimiter("\\Z");
+//            content = scanner.next();
+//            scanner.close();
+//        }catch ( Exception ex ) {
+//            ex.printStackTrace();
+//        }
+        String content = "";
+        try {
+            URL url = new URL("http://www.miltonstart.com/ThreatExplanation.aspx");
+
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+            try {
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                Scanner s = new Scanner(in).useDelimiter("\\A");
+                content = s.hasNext() ? s.next() : "";
+            } finally {
+                urlConnection.disconnect();
+            }
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+       }
+
+
+
+//    	System.out.println(content);
+//    	System.out.println(getThreatLevel(content));
+        String threatString = "";
+        String str = "Temp</font></td><td width=\"30\"><font color=\"Black\">";
+        String htmlPage = content;
+        int index1 = htmlPage.indexOf(str)+51;
+        threatString += htmlPage.charAt(index1);
+
+        return threatString;
     }
     public ArrayList<String> getTopThreats() {
         /**

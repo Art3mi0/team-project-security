@@ -16,14 +16,42 @@
         />
 
     <TextView
+        android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/TrendingThreatHello"
         android:layout_marginTop="16dp"
-        android:textSize="24sp"
+        android:text="@string/TrendingThreatHello"
         android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <EditText
+        android:id="@+id/threatLevel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="93dp"
+        android:layout_marginEnd="314dp"
+        android:layout_marginBottom="487dp"
+        android:text="Threat Level:"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.57"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:layout_constraintVertical_bias="0.68" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="367dp"
+        android:layout_height="150dp"
+        android:text="AlertCon 1: Regular vigilance. Ordinary activity compromises an unprotected network minutes to hours after first being connected to the Internet.  AlertCon 2: Elevated vigilance. Discovered significant new threats and are actively tracking them.  AlertCon 3: High vigilance. Major, widespread attacks are occurring and noticeable portions of the Internet.  AlertCon 4: Extreme vigilance. Wide-scale disruptions in service and Internet availability and rapidly expanding attacks"
+        android:textSize="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/threatLevel"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="260dp"
+        tools:ignore="MissingConstraints" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
