@@ -31,8 +31,6 @@ public class TrendingThreats extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        setContentView(R.layout.activity_trending_threats);
-
         threatLevel = findViewById(R.id.threatLevel);
 //        String stringThreatLevel = getThreatLevel();
         threatLevel.setText("Threat Level: ");
