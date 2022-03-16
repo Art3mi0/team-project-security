@@ -9,7 +9,7 @@
         app:showAsAction="never" />
 
     <item android:id="@+id/trendingthreats"
-        android:title="ThrendingThreats"
+        android:title="TrendingThreats"
 
         android:orderInCategory="1"
         app:showAsAction="never" />
