@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
      * Output = an error or a new password
      */
     public String GetPassword(int length) {
-        char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
+        char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&".toCharArray();
         StringBuilder stringBuilder = new StringBuilder();
 
         Random rand = new Random();
