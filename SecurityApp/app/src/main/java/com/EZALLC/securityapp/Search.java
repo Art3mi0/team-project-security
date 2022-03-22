@@ -5,7 +5,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.firestore.core.View;
@@ -16,6 +19,10 @@ public class Search extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) { //done immediately
+
+        Button searchButton;
+        EditText searchUserInput;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -24,6 +31,17 @@ public class Search extends AppCompatActivity {
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        searchButton = (Button)findViewById(R.id.search_button);
+        searchUserInput  = (EditText) findViewById(R.id.searchInput);
+
+        searchButton.setOnClickListener(
+                new android.view.View.OnClickListener(){
+                    public void onClick(android.view.View v){
+                        //Log.v("EditText", mEdit.getText().toString());
+                    }
+                });
+
 
     }
     /**
@@ -34,6 +52,7 @@ public class Search extends AppCompatActivity {
      * @return arraylist with String IP or FileHash and initial input
      */
     public ArrayList<String> onSearch(View view, String IpOrFile){
+
         ArrayList<String> IpOrFileHash= new ArrayList<String>();
         return IpOrFileHash;
     }
