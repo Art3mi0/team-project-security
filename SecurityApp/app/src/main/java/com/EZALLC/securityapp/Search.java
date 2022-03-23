@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -20,8 +21,6 @@ import java.util.ArrayList;
 public class Search extends AppCompatActivity {
     private Button searchButton;
     private EditText searchUserInput;
-    private String ipORFile;
-    private ScrollView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) { //done immediately
 
@@ -30,21 +29,26 @@ public class Search extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Search");
-        searchView = findViewById(R.id.searchScrollView);
         searchUserInput= findViewById(R.id.searchInput);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Button searchButton = (Button) findViewById(R.id.search_button);
+        searchButton.setOnClickListener(new android.view.View.OnClickListener(){
+            public void onClick(android.view.View v){
+                onSearch(searchUserInput.getText().toString());
+            }
 
+        });
     }
+
     /**
      * This onSearch method receives users file hash or IP address
      * and displays on page
-     * @param view listener for selection and string with IP or File hash
+     * for selection and string with IP or File hash
      * @return arraylist with String IP or FileHash and initial input
      */
-    public void onSearch(View view, String IpOrFile){
-        ipORFile = searchUserInput.getText().toString();
-        if(ipORFile.isEmpty()){
+    public void onSearch(String IpOrFile){
+        if(IpOrFile.isEmpty()){
             Toast.makeText(Search.this, "Enter a IP address or file Hash", Toast.LENGTH_SHORT).show();
         }
 
@@ -61,7 +65,7 @@ public class Search extends AppCompatActivity {
     /**
      * This SendIpOrFileHash  method Send type Ip or File Hash and the IP address or File Hash
      * to IpAndHash information Lookup
-     * @param ArrayList with type and Ip or File Hash
+     * type and Ip or File Hash
      */
     public void SendIpOrFileHash(ArrayList IpOrFileHash){
 
