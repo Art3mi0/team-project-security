@@ -24,9 +24,12 @@
         android:layout_marginEnd="304dp"
         android:text="Search"
         android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/searchInput"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/searchInput"
@@ -34,30 +37,28 @@
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="60dp"
         android:text=""
-        app:layout_constraintBottom_toTopOf="@+id/add_to_watch"
+        app:layout_constraintBottom_toTopOf="@+id/searchScrollView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.142"
+        app:layout_constraintHorizontal_bias="0.714"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
         android:layout_marginEnd="28dp"
         android:text="Search"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toTopOf="@+id/searchInput" />
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/searchScrollView"
         android:layout_width="369dp"
         android:layout_height="637dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -74,11 +75,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="280dp"
         android:layout_marginEnd="36dp"
-        android:layout_marginBottom="7dp"
         android:text="Add to watchlist"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintBottom_toTopOf="@+id/searchScrollView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.827"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
