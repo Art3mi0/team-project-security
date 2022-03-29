@@ -1,9 +1,11 @@
 package com.EZALLC.securityapp;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -11,6 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,10 +25,16 @@ public class IPHashInfo extends AppCompatActivity {
 
     TextView fTextView;
 
-    PulsediveAPIInterface pulsediveAPIInterface;
+    VirusTotalAPI virusTotalAPI;
 
-    Integer the_qid;
+    TextView url_info_box;
 
+    /*Will get the ip from an intent sent by Search activity.
+    * Then the code will run to display info about it
+    * Should be smooth and seamless.*/
+    //Integer the_qid;
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,35 +47,24 @@ public class IPHashInfo extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(null);
 
-        pulsediveAPIInterface = PulsediveClient.getClient().create(PulsediveAPIInterface.class);
+        virusTotalAPI = VirusTotalClient.getClient().create(VirusTotalAPI.class);
+
         fTextView = findViewById(R.id.IP_info_box);
 
         TextView title = (TextView) findViewById(R.id.demo_title);
         title.setText(R.string.iphashdemo);
 
-        getTodoUsingRouteParameter();
-        (new Handler()).postDelayed(this::getUser, 15000);
+//        String encodedURL = Base64.getUrlEncoder().encodeToString("https://tinder.com/".getBytes(StandardCharsets.UTF_8));
+//        encodedURL = encodedURL.replace("==","");
+        url_info_box = (TextView) findViewById(R.id.hash_box);
+//        hash.setText(encodedURL);
 
-    }
-    /**
-     * this method will call the call the API PulseDive for information on the IP recieved from Search Activity
-     * @param view = OnCreate will call this methods with an IP
-     * Output = Generate relevant information on the IP to be then displayed in OnCreate
-     */
-    public void onCallPulseDive(View view) {
-        return;
-
+        getUser();
+        getURLHash();
     }
 
-    /**
-     * this method will call the call the API VirusTotal for information on the Hash recieved from Search Activity
-     * @param view = OnCreate will call this methods with a Hash
-     * Output = Generate relevant information on the Hash to be then displayed in OnCreate
-     */
-    public void onCallVirusTotal(View view) {
-        return;
 
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -77,32 +77,14 @@ public class IPHashInfo extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-    public void getTodoUsingRouteParameter() {
-        Call<Todo> todoCall = pulsediveAPIInterface.getTodo("2600:1004:b032:ae2d:482e:bdc2:65b9:76","1");
-        todoCall.enqueue(new Callback<Todo>() {
-            @Override
-            public void onResponse(Call<Todo> call, Response<Todo> response) {
-                //Log.e(TAG, "onResponse: " + response.body() );
-                the_qid = response.body().getQid();
-                Toast.makeText(IPHashInfo.this,
-                        "IP was Put Into Queue, info will display shortly. Please be patient.", Toast.LENGTH_LONG).show();
-            }
-            @Override
-            public void onFailure(Call<Todo> call, Throwable t) {
-                //Log.e(TAG, "onFailure: " + t.getLocalizedMessage() );
-            }
-        });
-    }
-
     public void getUser(){
         //Execute the Network request
-        String da_qid = String.valueOf(the_qid);
-        Call<Post> call = pulsediveAPIInterface.getPost(da_qid,"1");
+        String da_qid = "174.216.16.12";
+        Call<IpInfo> call = virusTotalAPI.getIPInfo(da_qid);
         //Execute the request in a background thread
-        call.enqueue(new Callback<Post>() {
+        call.enqueue(new Callback<IpInfo>() {
             @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
+            public void onResponse(Call<IpInfo> call, Response<IpInfo> response) {
                 if (!response.isSuccessful()){
                     fTextView.setText("It gets this far that's it.");
                     return;
@@ -110,33 +92,61 @@ public class IPHashInfo extends AppCompatActivity {
 
 //                if (response.body() != null){
 //                    //Get the values
+                //String res = response.body().string();
                 String userContent = "";
-                userContent += "Success: " + response.body().getSuccess() + "\n";
-                userContent += "Q ID: " + response.body().getQid() + "\n";
-                userContent += "Status: " + response.body().getStatus() + "\n";
-                userContent += "Risk: " + response.body().getData().getRisk() + "\n";
-                userContent += "Longitude: " + response.body().getData().getProperties().getGeo().getLong() + "\n";
-                userContent += "Latitude: " + response.body().getData().getProperties().getGeo().getLat() + "\n";
-                userContent += "Region: " + response.body().getData().getProperties().getGeo().getRegion() + "\n";
-                userContent += "Address: " + response.body().getData().getProperties().getGeo().getAddress() + "\n";
-                userContent += "ISP: " + response.body().getData().getProperties().getGeo().getIsp() + "\n";
-                userContent += "City: " + response.body().getData().getProperties().getGeo().getCity() + "\n";
-                userContent += "ASN: " + response.body().getData().getProperties().getGeo().getAsn() + "\n";
-                userContent += "Country: " + response.body().getData().getProperties().getGeo().getCountry() + "\n";
-                userContent += "CountyCode: " + response.body().getData().getProperties().getGeo().getCountrycode() + "\n";
-                //userContent += "Organization: " + response.body().getData().getProperties().getGeo().getOrg() + "\n";
-                //userContent += "Organization: " + response.body().getData().getProperties().getWhois() + "\n";
+                //userContent += "Success: " + response.body().toString() + "\n";
+                userContent += "Success: " + response.body().getData().getAttributes().getAsn()+ "\n";
+//                userContent += "Harmless: " + response.body().getData().getAttributes().getLastAnalysisStats().getHarmless()+ "\n";
+//                userContent += "Malicious: " + response.body().getData().getAttributes().getLastAnalysisStats().getMalicious()+ "\n";
+//                userContent += "Suspicious: " + response.body().getData().getAttributes().getLastAnalysisStats().getSuspicious()+ "\n";
+//                userContent += "Undetected: " + response.body().getData().getAttributes().getLastAnalysisStats().getUndetected()+ "\n";
+//                userContent += "Timeout: " + response.body().getData().getAttributes().getLastAnalysisStats().getTimeout()+ "\n";
 
                 fTextView.setText(userContent);
 //                }
                 //Log.e(TAG, "onResponse: " + response.body() );
             }
             @Override
-            public void onFailure(Call<Post> call, Throwable t) {
+            public void onFailure(Call<IpInfo> call, Throwable t) {
                 fTextView.setText("Failure: " + t);
             }
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void getURLHash(){
+
+        String encodedURL = Base64.getUrlEncoder().encodeToString("https://tinder.com/".getBytes(StandardCharsets.UTF_8));
+        encodedURL = encodedURL.replace("==","");
+
+        Call<HashInfo> call = virusTotalAPI.getHashInfo(encodedURL);
+        //Execute the request in a background thread
+        call.enqueue(new Callback<HashInfo>() {
+            @Override
+            public void onResponse(Call<HashInfo> call, Response<HashInfo> response) {
+                if (!response.isSuccessful()){
+                    fTextView.setText("It gets this far that's it.");
+                    return;
+                }
+
+//                if (response.body() != null){
+//                    //Get the values
+                //String res = response.body().string();
+                String userContent = "";
+                //userContent += "Success: " + response.body().toString() + "\n";
+                userContent += "Success: " + response.body().getData().getAttributes().getTitle()+ "\n";
+
+
+                url_info_box.setText(userContent);
+//                }
+                //Log.e(TAG, "onResponse: " + response.body() );
+            }
+            @Override
+            public void onFailure(Call<HashInfo> call, Throwable t) {
+                fTextView.setText("Failure: " + t);
+            }
+        });
+
+    }
 
 }
