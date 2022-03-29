@@ -5,21 +5,22 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.AsyncTask;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.EditText;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class TrendingThreats extends AppCompatActivity {
     private EditText threatLevel;
-
+    // Can't run network code on main thread :(
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,63 +33,90 @@ public class TrendingThreats extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         threatLevel = findViewById(R.id.threatLevel);
-//        String stringThreatLevel = getThreatLevel();
-        threatLevel.setText("Threat Level: ");
+        try {
+            getThreatLevel();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         getSupportActionBar().setTitle("Trending Threats");
-//        setContentView(R.layout.activity_trending_threats);
-//        TextView threatLevel = findViewById(R.id.textView4);
-//        TextView threatLevel = (TextView) findViewById(R.id.textView4);
-//        threatLevel.setText("Test");
-//
-//        threatLevel.setText(getThreatLevel());
+
+
 
     }
-    public String getThreatLevel() {
+    public class AsyncHttpTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            InputStream inputStream = null;
+            HttpURLConnection urlConnection = null;
+            Integer result = 0;
+            String response="";
+            int statusCode = 10;
+            try {
+                /* forming th java.net.URL object */
+                URL url = new URL("http://www.miltonstart.com/ThreatExplanation.aspx");
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                statusCode = urlConnection.getResponseCode();
+
+                /* 200 represents HTTP OK */
+                if (statusCode ==  200) {
+                    inputStream = new BufferedInputStream(urlConnection.getInputStream());
+                    response = convertInputStreamToString(inputStream);
+                    result = 1; // Successful
+                }else{
+                    result = 0; //"Failed to fetch data!";
+                }
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            return response + statusCode; //"Failed to fetch data!";
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            /* Download complete. Update UI */
+            String threatString = "AlertCon Level: ";
+            String str = "Temp</font></td><td width=\"30\"><font color=\"Black\">";
+            String htmlPage = result;
+            try {
+                int index1 = htmlPage.indexOf(str)+51;
+                threatString += htmlPage.charAt(index1);
+            }
+            catch (Exception ex) {
+                threatString+= "Unable to find threat level";
+            }
+            threatLevel.setText(threatString);
+        }
+    }
+
+
+    private String convertInputStreamToString(InputStream inputStream) throws IOException {
+
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+
+        String line = "";
+        String result = "";
+
+        while((line = bufferedReader.readLine()) != null){
+            result += line;
+        }
+
+        /* Close Stream */
+        if(null!=inputStream){
+            inputStream.close();
+        }
+
+        return result;
+    }
+
+    public void getThreatLevel() throws Exception {
         /**
          * Takes no input and retrieves threat level from IBM X-Force API
          * @return A string of the threat level
          */
 
-//        String content = null;
-//        URLConnection connection = null;
-//        try {
-//            connection =  new URL("http://www.miltonstart.com/ThreatExplanation.aspx").openConnection();
-//            Scanner scanner = new Scanner(connection.getInputStream());
-//            scanner.useDelimiter("\\Z");
-//            content = scanner.next();
-//            scanner.close();
-//        }catch ( Exception ex ) {
-//            ex.printStackTrace();
-//        }
-        String content = "";
-        try {
-            URL url = new URL("http://www.miltonstart.com/ThreatExplanation.aspx");
-
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
-            try {
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                Scanner s = new Scanner(in).useDelimiter("\\A");
-                content = s.hasNext() ? s.next() : "";
-            } finally {
-                urlConnection.disconnect();
-            }
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
-       }
-
-
-
-//    	System.out.println(content);
-//    	System.out.println(getThreatLevel(content));
-        String threatString = "";
-        String str = "Temp</font></td><td width=\"30\"><font color=\"Black\">";
-        String htmlPage = content;
-        int index1 = htmlPage.indexOf(str)+51;
-        threatString += htmlPage.charAt(index1);
-
-        return threatString;
+        new AsyncHttpTask().execute();
     }
     public ArrayList<String> getTopThreats() {
         /**
