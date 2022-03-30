@@ -3,7 +3,8 @@
     <string name="created_by">Created by Ixchel Peralta, Nicholas Morris, Temo Meza, Llacki B.P., and Skylar Stockton</string>
     <string name="TrendingThreatHello">Hello from component Trending Threats</string>
     <string name="EmailCheck">Hello from Email Check</string>
-    <string name="iphashdemo">INFO FOR IPV4 174.216.16.12</string>
+    <string name="iphashdemo">INFO FOR IPV4 174.216.16.12 &amp; Below That Results of Security Check of Tinder.com
+    Info Provided By VIRUS TOTAL</string>
     <string name="login_email">Email:</string>
     <string name="login_password">Password:</string>
     <string name="confirm_password">Confirm Password:</string>
