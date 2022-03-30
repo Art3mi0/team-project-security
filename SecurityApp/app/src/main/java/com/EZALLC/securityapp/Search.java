@@ -1,8 +1,8 @@
 package com.EZALLC.securityapp;
 
+import android.view.View.OnClickListener;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -12,9 +12,7 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.firestore.core.View;
-
 import java.util.ArrayList;
 import java.util.regex.*;
 
@@ -26,18 +24,24 @@ public class Search extends AppCompatActivity {
     private ScrollView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) { //done immediately
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Search");
-        searchView = findViewById(R.id.searchScrollView);
         searchUserInput= findViewById(R.id.searchInput);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        Button searchButton = (Button) findViewById(R.id.search_button);
+        searchButton.setOnClickListener(new android.view.View.OnClickListener(){
+            public void onClick(android.view.View v){
+                onSearch(searchUserInput.getText().toString());
+            }
 
+        });
     }
+
+
     /**
      * This isValidIPAddress method receives users file hash or IP address
      * and check if valid ip address
@@ -93,10 +97,10 @@ public class Search extends AppCompatActivity {
     /**
      * This onSearch method receives users file hash or IP address
      * and displays on page
-     * @param view listener for selection and string with IP or File hash
+     * @param   IpOrFile
      * @return arraylist with String IP or FileHash and initial input
      */
-    public void onSearch(View view, String IpOrFile){
+    public void onSearch(String IpOrFile){
         ipORFile = searchUserInput.getText().toString();
         if(ipORFile.isEmpty()){
             Toast.makeText(Search.this, "Enter a IP address or file Hash", Toast.LENGTH_SHORT).show();
