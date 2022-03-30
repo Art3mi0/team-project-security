@@ -14,6 +14,7 @@ import android.view.View;
 
 import android.os.Bundle;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -67,6 +68,17 @@ public class WatchList extends AppCompatActivity {
         adapter = new ThreatAdapter(this, new ArrayList<Threat>());
         watchList.setAdapter(adapter);
         getThreats();
+
+        AdapterView.OnItemClickListener itemClickListener =
+                new AdapterView.OnItemClickListener() {
+                   // @Override
+                    public void onItemClick(AdapterView<?> listView, View view, int i, long l) {
+                        String item = mThreats.get(i).getThreat();
+                        Log.d(TAG, item);
+                        userInput.setText(item);
+                    }
+                };
+        watchList.setOnItemClickListener(itemClickListener);
     }
 
     /**
