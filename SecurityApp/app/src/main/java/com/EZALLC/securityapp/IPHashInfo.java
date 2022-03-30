@@ -96,10 +96,10 @@ public class IPHashInfo extends AppCompatActivity {
                 String userContent = "";
                 //userContent += "Success: " + response.body().toString() + "\n";
                 userContent += "Success: " + response.body().getData().getAttributes().getAsn()+ "\n";
-//                userContent += "Harmless: " + response.body().getData().getAttributes().getLastAnalysisStats().getHarmless()+ "\n";
-//                userContent += "Malicious: " + response.body().getData().getAttributes().getLastAnalysisStats().getMalicious()+ "\n";
-//                userContent += "Suspicious: " + response.body().getData().getAttributes().getLastAnalysisStats().getSuspicious()+ "\n";
-//                userContent += "Undetected: " + response.body().getData().getAttributes().getLastAnalysisStats().getUndetected()+ "\n";
+                userContent += "Harmless: " + response.body().getData().getAttributes().getLastAnalysisStats().getHarmless()+ "\n";
+                userContent += "Malicious: " + response.body().getData().getAttributes().getLastAnalysisStats().getMalicious()+ "\n";
+                userContent += "Suspicious: " + response.body().getData().getAttributes().getLastAnalysisStats().getSuspicious()+ "\n";
+                userContent += "Undetected: " + response.body().getData().getAttributes().getLastAnalysisStats().getUndetected()+ "\n";
 //                userContent += "Timeout: " + response.body().getData().getAttributes().getLastAnalysisStats().getTimeout()+ "\n";
 
                 fTextView.setText(userContent);
@@ -135,7 +135,8 @@ public class IPHashInfo extends AppCompatActivity {
                 String userContent = "";
                 //userContent += "Success: " + response.body().toString() + "\n";
                 userContent += "Success: " + response.body().getData().getAttributes().getTitle()+ "\n";
-
+                userContent += "Harmless: " + response.body().getData().getAttributes().getTotalVotes().getHarmless()+ "\n";
+                userContent += "Malicious: " + response.body().getData().getAttributes().getTotalVotes().getMalicious()+ "\n";
 
                 url_info_box.setText(userContent);
 //                }

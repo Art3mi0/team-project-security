@@ -45,9 +45,9 @@ class Attributes{
     @SerializedName("times_submitted")
     @Expose
     private Integer timesSubmitted;
-//    @SerializedName("total_votes")
-//    @Expose
-//    private TotalVotes totalVotes;
+    @SerializedName("total_votes")
+    @Expose
+    private TotalVotes totalVotes;
     @SerializedName("title")
     @Expose
     private String title;
@@ -118,13 +118,13 @@ class Attributes{
         this.timesSubmitted = timesSubmitted;
     }
 
-//    public TotalVotes getTotalVotes() {
-//        return totalVotes;
-//    }
-//
-//    public void setTotalVotes(TotalVotes totalVotes) {
-//        this.totalVotes = totalVotes;
-//    }
+    public TotalVotes getTotalVotes() {
+        return totalVotes;
+    }
+
+    public void setTotalVotes(TotalVotes totalVotes) {
+        this.totalVotes = totalVotes;
+    }
 
     public String getTitle() {
         return title;
@@ -245,4 +245,31 @@ class Attributes{
     public void setLastAnalysisStats(LastAnalysisStats lastAnalysisStats) {
         this.lastAnalysisStats = lastAnalysisStats;
     }
+
+}
+
+class TotalVotes{
+    @SerializedName("harmless")
+    @Expose
+    private Integer harmless;
+    @SerializedName("malicious")
+    @Expose
+    private Integer malicious;
+
+    public Integer getHarmless() {
+        return harmless;
+    }
+
+    public void setHarmless(Integer harmless) {
+        this.harmless = harmless;
+    }
+
+    public Integer getMalicious() {
+        return malicious;
+    }
+
+    public void setMalicious(Integer malicious) {
+        this.malicious = malicious;
+    }
+
 }
