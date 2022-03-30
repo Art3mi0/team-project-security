@@ -127,7 +127,7 @@ public class Search extends AppCompatActivity {
     /**
      * This SendIpOrFileHash  method Send type Ip or File Hash and the IP address or File Hash
      * to IpAndHash information Lookup
-     * @param ArrayList with type and Ip or File Hash
+     *  with type and Ip or File Hash
      */
     public void SendIpOrFileHash(ArrayList IpOrFileHash){
 
