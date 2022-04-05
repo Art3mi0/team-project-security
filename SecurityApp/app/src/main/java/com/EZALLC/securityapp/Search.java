@@ -20,7 +20,7 @@ import java.util.regex.*;
 public class Search extends AppCompatActivity {
     private Button searchButton;
     private EditText searchUserInput;
-    private String ipORFile;
+    private String ipOrURL;
     private ScrollView searchView;
     @Override
     protected void onCreate(Bundle savedInstanceState) { //done immediately
@@ -71,23 +71,18 @@ public class Search extends AppCompatActivity {
     /**
      * This validFileHash method receives users file hash or IP address
      * and check if valid file hash in the form SHA256,MD5 and SHA1
-     * @param fileHash
-     * @return true if valid file hash and false if not
+     * @param URL
+     * @return true if valid URL and false if not
      */
-    public static boolean validFileHash(String fileHash)
+    public static boolean validURl(String URL)
     {
-        String fileSHA256
-                = "^[A-Fa-f0-9]{64}$";
-        String fileSHA1
-                ="\\b[0-9a-f]{5,40}\\b";
-        String fileMD5 ="/^([a-f\\d]{32}|[A-F\\d]{32})$/";
-        Pattern SHA256 = Pattern.compile(fileSHA256);
-        Matcher m = SHA256.matcher(fileHash);
-        Pattern SHA1 = Pattern.compile(fileSHA1);
-        Matcher t = SHA1.matcher(fileHash);
-        Pattern MD5= Pattern.compile(fileMD5);
-        Matcher z = SHA256.matcher(fileHash);
-        if(m.matches()||t.matches() ||  z.matches()){
+        String url
+                = "((http|https)://)(www.)?"
+        + "[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]"
+        + "{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
+        Pattern strURL = Pattern.compile(url);
+        Matcher m = strURL.matcher(URL);
+        if(m.matches()){
             return true;
         }
         else{
@@ -97,24 +92,23 @@ public class Search extends AppCompatActivity {
     /**
      * This onSearch method receives users file hash or IP address
      * and displays on page
-     * @param   IpOrFile
+     * @param   ipOrURL
      * @return arraylist with String IP or FileHash and initial input
      */
-    public void onSearch(String IpOrFile){
-        ipORFile = searchUserInput.getText().toString();
-        if(ipORFile.isEmpty()){
-            Toast.makeText(Search.this, "Enter a IP address or file Hash", Toast.LENGTH_SHORT).show();
+    public void onSearch(String ipOrURL){
+        if(ipOrURL.isEmpty()){
+            Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
         }
         else{
-            if(isValidIPAddress(ipORFile)){
-                Toast.makeText(Search.this, "Valid Ip Address "+ipORFile, Toast.LENGTH_SHORT).show();
+            if(isValidIPAddress(ipOrURL)){
+                Toast.makeText(Search.this, "Valid Ip Address "+ipOrURL, Toast.LENGTH_SHORT).show();
 
             }
-            else if(validFileHash(ipORFile)){
-                Toast.makeText(Search.this, "Valid File Hash "+ipORFile, Toast.LENGTH_SHORT).show();
+            else if(validURl(ipOrURL)){
+                Toast.makeText(Search.this, "Valid URL "+ipOrURL, Toast.LENGTH_SHORT).show();
             }
             else{
-                Toast.makeText(Search.this, "Enter a IP address or file Hash", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
             }
         }
 
