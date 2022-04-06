@@ -1,5 +1,10 @@
 package com.EZALLC.securityapp;
 
+import static android.content.ContentValues.TAG;
+
+import android.os.Handler;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.View.OnClickListener;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -18,6 +23,7 @@ import java.util.regex.*;
 
 
 public class Search extends AppCompatActivity {
+    private static long mLastClickTime;
     private Button searchButton;
     private EditText searchUserInput;
     private String ipOrURL;
@@ -31,11 +37,36 @@ public class Search extends AppCompatActivity {
         getSupportActionBar().setTitle("Search");
         searchUserInput= findViewById(R.id.searchInput);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         Button searchButton = (Button) findViewById(R.id.search_button);
         searchButton.setOnClickListener(new android.view.View.OnClickListener(){
             public void onClick(android.view.View v){
-                onSearch(searchUserInput.getText().toString());
+                if (searchUserInput.getText().toString().isEmpty()) {
+                    Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
+                    searchButton.setEnabled(false);
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            searchButton.setEnabled(true);
+                            Log.d(TAG, "resend1");
+
+                        }
+                    }, 3000);
+                }
+                else{
+                    onSearch(searchUserInput.getText().toString());
+                    searchButton.setEnabled(false);
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            searchButton.setEnabled(true);
+                            Log.d(TAG, "resend1");
+
+                        }
+                    }, 7000);
+                    }
+
             }
 
         });
@@ -93,26 +124,22 @@ public class Search extends AppCompatActivity {
      * This onSearch method receives users file hash or IP address
      * and displays on page
      * @param   ipOrURL
-     * @return arraylist with String IP or FileHash and initial input
      */
     public void onSearch(String ipOrURL){
-        if(ipOrURL.isEmpty()){
-            Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
-        }
-        else{
             if(isValidIPAddress(ipOrURL)){
-                Toast.makeText(Search.this, "Valid Ip Address "+ipOrURL, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Search.this, "Valid Ip Address "+ipOrURL+"\nSearching", Toast.LENGTH_SHORT).show();
 
             }
             else if(validURl(ipOrURL)){
-                Toast.makeText(Search.this, "Valid URL "+ipOrURL, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Search.this, "Valid URL "+ipOrURL+"\nSearching", Toast.LENGTH_SHORT).show();
             }
-            else{
+            else {
                 Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
             }
-        }
 
     }
+
+
     /**
      * This onSelectWatchlistIpOrFileHash method retrieves the IP address or File Hash string from the database
      * based on selection of watchlist
