@@ -12,12 +12,13 @@ public class Threat {
     private int malicious;
     private int suspicious;
     private int undetected;
+    private boolean isFavorite;
 
     public Threat() {
     }
 
     public Threat(String type, String id, String regionalInternetRegistry, String asOwner, String continent, String country,
-                  int harmless, int malicious, int suspicious, int undetected) {
+                  int harmless, int malicious, int suspicious, int undetected, boolean isFavorite) {
         this.type = type;
         this.id = id;
         this.regionalInternetRegistry = regionalInternetRegistry;
@@ -28,6 +29,7 @@ public class Threat {
         this.malicious = malicious;
         this.suspicious = suspicious;
         this.undetected = undetected;
+        this.isFavorite = isFavorite;
     }
 
     public String getType() {
@@ -108,5 +110,13 @@ public class Threat {
 
     public void setUndetected(int undetected) {
         this.undetected = undetected;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 }
