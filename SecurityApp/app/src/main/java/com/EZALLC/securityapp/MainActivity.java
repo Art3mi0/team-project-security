@@ -4,25 +4,57 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    private final FirebaseFirestore mDb = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
+    private static final String TAG = "MainActivity";
+    private String email;
+    private String COLLECTION;
+
+    private ArrayList<Threat> mThreats;
+    private ArrayAdapter<Threat> adapter;
+
+    private ListView fav_list_view;
+
 
     private EditText passwordView;
+
+    private String type = "type - ";
+    private String id = "id - ";
+    private String regionalInternetRegistry = "regionalInternetRegistry - ";
+    private String asOwner = "asOwner - ";
+    private String continent = "continent - ";
+    private String country = "country - ";
+    private String harmless = "harmless - ";
+    private String malicious = "malicious - ";
+    private String suspicious ="suspicious - ";
+    private String undetected ="undetected - ";
+
+    private String[] FavoriteData;
+
+
+
 
 
     @Override
@@ -38,6 +70,37 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, Login.class);
             startActivity(intent);
         }
+
+        fav_list_view = (ListView) findViewById(R.id.da_list_view);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        email = user.getEmail();
+        COLLECTION = email + "'s Threats";
+
+        getThreats();
+        if(mThreats != null){
+            for(int i = 0; i < mThreats.size();i++ ){
+                if(mThreats.get(i).getIsFavorite()){
+
+                    type+=mThreats.get(i).getType();
+                    id+=mThreats.get(i).getId();
+                    regionalInternetRegistry += mThreats.get(i).getId();
+                    asOwner += mThreats.get(i).getAsOwner();
+                    continent += mThreats.get(i).getContinent();
+                    country += mThreats.get(i).getCountry();
+                    harmless += Integer.toString(mThreats.get(i).getHarmless());
+                    malicious +=  Integer.toString(mThreats.get(i).getMalicious());
+                    suspicious += Integer.toString(mThreats.get(i).getSuspicious());
+                    undetected += Integer.toString(mThreats.get(i).getUndetected());
+                    break;
+                }
+            }
+        }
+        FavoriteData = new String[]{type,id,regionalInternetRegistry,asOwner,continent,country,harmless,malicious,suspicious,undetected};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,FavoriteData);
+        fav_list_view.setAdapter(adapter);
+
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -111,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * this function randomly generates passwords for the user to use
-     * @param view = button click
+     * param view = button click
      * Output = an error or a new password
      */
     public String GetPassword(int length) {
@@ -161,6 +224,28 @@ public class MainActivity extends AppCompatActivity {
 
         return;
 
+    }
+
+    public void getThreats() {
+        mDb.collection(COLLECTION)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        mThreats = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Threat t = document.toObject(Threat.class);
+                            mThreats.add(t);
+                            Log.d(TAG, t.getId());
+                            Log.d(TAG, Boolean.toString(t.getIsFavorite()));
+                        }
+//                        adapter.clear();
+                        if (mThreats != null) {
+                            Log.d(TAG, "threats not null");
+//                            adapter.addAll(mThreats);
+                        }
+                    }
+                });
     }
 
 
