@@ -1,5 +1,6 @@
 package com.EZALLC.securityapp;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,6 +15,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
@@ -22,6 +30,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class IPHashInfo extends AppCompatActivity {
+    private final FirebaseFirestore mDb = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth;
+    private static final String TAG = "IPHASH INFO";
+
 
     TextView fTextView;
 
@@ -29,10 +41,28 @@ public class IPHashInfo extends AppCompatActivity {
 
     TextView url_info_box;
 
+    private String email;
+    private String COLLECTION;
+
+    private int Harmless;
+    private int Success;
+    private int Malicious;
+    private int Suspicious;
+    private int Undetected;
+    private String Country;
+    private String ASNOwner;
+    private String Continent;
+    private String Id;
+    private String Type;
+    private String RegionalInternetRegistry;
+    private Boolean IsFavorite;
+
+
+
+
     /*Will get the ip from an intent sent by Search activity.
-    * Then the code will run to display info about it
-    * Should be smooth and seamless.*/
-    //Integer the_qid;
+     * Then the code will run to display info about it
+     * Should be smooth and seamless.*/
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -42,28 +72,57 @@ public class IPHashInfo extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(null);
 
-        virusTotalAPI = VirusTotalClient.getClient().create(VirusTotalAPI.class);
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        email = user.getEmail();
+        COLLECTION = email + "'s Threats";
 
+        virusTotalAPI = VirusTotalClient.getClient().create(VirusTotalAPI.class);
         fTextView = findViewById(R.id.IP_info_box);
+        url_info_box = (TextView) findViewById(R.id.hash_box);
 
         TextView title = (TextView) findViewById(R.id.demo_title);
         title.setText(R.string.iphashdemo);
 
-//        String encodedURL = Base64.getUrlEncoder().encodeToString("https://tinder.com/".getBytes(StandardCharsets.UTF_8));
-//        encodedURL = encodedURL.replace("==","");
-        url_info_box = (TextView) findViewById(R.id.hash_box);
-//        hash.setText(encodedURL);
-
         getUser();
         getURLHash();
+
     }
 
 
+    public void Add_To_Firebase(View view){
+
+        String test;
+        //Toast.makeText(IPHashInfo.this, test = Integer.toString(Harmless),Toast.LENGTH_LONG).show();
+
+        Threat newThreat = new Threat(Type,Id,RegionalInternetRegistry,ASNOwner,Continent,Country,Harmless,Malicious,Suspicious,Undetected, false);
+
+        mDb.collection(COLLECTION)
+                .add(newThreat)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "Threat added successfully.");
+                        Toast.makeText(IPHashInfo.this,
+                                "Threat added!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Could not add threat!");
+                        Toast.makeText(IPHashInfo.this,
+                                "Failed to add threat!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
 
 
     @Override
@@ -91,16 +150,42 @@ public class IPHashInfo extends AppCompatActivity {
                 }
 
 //                if (response.body() != null){
-//                    //Get the values
-                //String res = response.body().string();
+//                    //Handle error here?
+
                 String userContent = "";
-                //userContent += "Success: " + response.body().toString() + "\n";
-                userContent += "Success: " + response.body().getData().getAttributes().getAsn()+ "\n";
+                //userContent += "Success: " + response.body().getData().getAttributes().getAsn()+ "\n";
+
                 userContent += "Harmless: " + response.body().getData().getAttributes().getLastAnalysisStats().getHarmless()+ "\n";
+                Harmless = response.body().getData().getAttributes().getLastAnalysisStats().getHarmless();
+
                 userContent += "Malicious: " + response.body().getData().getAttributes().getLastAnalysisStats().getMalicious()+ "\n";
+                Malicious = response.body().getData().getAttributes().getLastAnalysisStats().getMalicious();
+
                 userContent += "Suspicious: " + response.body().getData().getAttributes().getLastAnalysisStats().getSuspicious()+ "\n";
+                Suspicious = response.body().getData().getAttributes().getLastAnalysisStats().getSuspicious();
+
                 userContent += "Undetected: " + response.body().getData().getAttributes().getLastAnalysisStats().getUndetected()+ "\n";
-//                userContent += "Timeout: " + response.body().getData().getAttributes().getLastAnalysisStats().getTimeout()+ "\n";
+                Undetected = response.body().getData().getAttributes().getLastAnalysisStats().getUndetected();
+
+                userContent += "Country: " + response.body().getData().getAttributes().getCountry()+ "\n";
+                Country = response.body().getData().getAttributes().getCountry();
+
+                userContent += "ASOwner: " + response.body().getData().getAttributes().getAsOwner()+ "\n";
+                ASNOwner = response.body().getData().getAttributes().getAsOwner();
+
+                //userContent += "Undetected: " + response.body().getData().getAttributes().getLastAnalysisStats().getUndetected()+ "\n";
+
+                userContent += "Regional Internet Registry: " + response.body().getData().getAttributes().getRegionalInternetRegistry()+ "\n";
+                RegionalInternetRegistry = response.body().getData().getAttributes().getRegionalInternetRegistry();
+
+                userContent += "Continent: " + response.body().getData().getAttributes().getContinent()+ "\n";
+                Continent = response.body().getData().getAttributes().getContinent();
+
+                userContent += "Id: " + response.body().getData().getId()+ "\n";
+                Id = response.body().getData().getId();
+
+                userContent += "Type: " + response.body().getData().getType()+ "\n";
+                Type = response.body().getData().getType();
 
                 fTextView.setText(userContent);
 //                }
@@ -115,7 +200,6 @@ public class IPHashInfo extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void getURLHash(){
-
         String encodedURL = Base64.getUrlEncoder().encodeToString("https://tinder.com/".getBytes(StandardCharsets.UTF_8));
         encodedURL = encodedURL.replace("==","");
 
@@ -130,24 +214,20 @@ public class IPHashInfo extends AppCompatActivity {
                 }
 
 //                if (response.body() != null){
-//                    //Get the values
-                //String res = response.body().string();
+//                    //Handle API errors here?
+
                 String userContent = "";
-                //userContent += "Success: " + response.body().toString() + "\n";
                 userContent += "Success: " + response.body().getData().getAttributes().getTitle()+ "\n";
-                userContent += "Harmless: " + response.body().getData().getAttributes().getTotalVotes().getHarmless()+ "\n";
-                userContent += "Malicious: " + response.body().getData().getAttributes().getTotalVotes().getMalicious()+ "\n";
+                //userContent += "Harmless: " + response.body().getData().getAttributes().getTotalVotes().getHarmless()+ "\n";
+                //userContent += "Malicious: " + response.body().getData().getAttributes().getTotalVotes().getMalicious()+ "\n";
 
                 url_info_box.setText(userContent);
-//                }
-                //Log.e(TAG, "onResponse: " + response.body() );
+
             }
             @Override
             public void onFailure(Call<HashInfo> call, Throwable t) {
                 fTextView.setText("Failure: " + t);
             }
         });
-
     }
-
 }

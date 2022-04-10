@@ -21,6 +21,16 @@ class data1 {
     @Expose
     private attributes1 attributes;
 
+    public String id;
+    public String type;
+
+    public String getId() {
+        return id;
+    }
+    public String getType() {
+        return type;
+    }
+
     public attributes1 getAttributes() {
         return attributes;
     }
@@ -31,21 +41,26 @@ class data1 {
 }
 
 class attributes1 {
-    //    @SerializedName("regional_internet_registry")
-//    @Expose
-//    private String regionalInternetRegistry;
-//    @SerializedName("network")
+    @SerializedName("regional_internet_registry")
+    @Expose
+    private String regionalInternetRegistry;
+    //    @SerializedName("network")
 //    @Expose
 //    private String network;
 //    @SerializedName("tags")
 //    @Expose
 //    private List<Object> tags = null;
-//    @SerializedName("country")
-//    @Expose
-//    private String country;
-//    @SerializedName("as_owner")
-//    @Expose
-//    private String asOwner;
+    public String continent;
+
+
+
+
+    @SerializedName("country")
+    @Expose
+    private String country;
+    @SerializedName("as_owner")
+    @Expose
+    private String asOwner;
     @SerializedName("last_analysis_stats")
     @Expose
     private LastAnalysisStats lastAnalysisStats;
@@ -59,13 +74,13 @@ class attributes1 {
 //    @Expose
 //    private LastAnalysisResults lastAnalysisResults;
 
-    //    public String getRegionalInternetRegistry() {
-//        return regionalInternetRegistry;
-//    }
-//
-//    public void setRegionalInternetRegistry(String regionalInternetRegistry) {
-//        this.regionalInternetRegistry = regionalInternetRegistry;
-//    }
+    public String getRegionalInternetRegistry() {
+        return regionalInternetRegistry;
+    }
+
+    public void setRegionalInternetRegistry(String regionalInternetRegistry) {
+        this.regionalInternetRegistry = regionalInternetRegistry;
+    }
 //
 //    public String getNetwork() {
 //        return network;
@@ -75,7 +90,8 @@ class attributes1 {
 //        this.network = network;
 //    }
 //
-//    public List<Object> getTags() {
+
+    //    public List<Object> getTags() {
 //        return tags;
 //    }
 //
@@ -83,22 +99,21 @@ class attributes1 {
 //        this.tags = tags;
 //    }
 //
-//    public String getCountry() {
-//        return country;
-//    }
-//
-//    public void setCountry(String country) {
-//        this.country = country;
-//    }
-//
-//    public String getAsOwner() {
-//        return asOwner;
-//    }
-//
-//    public void setAsOwner(String asOwner) {
-//        this.asOwner = asOwner;
-//    }
-//
+    public String getCountry() {
+        return country;
+    }
+    public void setCountry(String country) {
+        this.country = country;
+    }
+    //
+    public String getAsOwner() {
+        return asOwner;
+    }
+
+    public void setAsOwner(String asOwner) {
+        this.asOwner = asOwner;
+    }
+    //
     public LastAnalysisStats getLastAnalysisStats() {
         return lastAnalysisStats;
     }
@@ -114,6 +129,11 @@ class attributes1 {
     public void setAsn(Integer asn) {
         this.asn = asn;
     }
+
+    public String getContinent() {
+        return continent;
+    }
+
 
 //    public Integer getWhoisDate() {
 //        return whoisDate;
