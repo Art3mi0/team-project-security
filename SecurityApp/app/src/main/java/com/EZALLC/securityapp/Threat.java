@@ -112,11 +112,11 @@ public class Threat {
         this.undetected = undetected;
     }
 
-    public boolean isFavorite() {
+    public boolean getIsFavorite() {
         return isFavorite;
     }
 
-    public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
+    public void setFavorite(boolean isFavorite) {
+        this.isFavorite = isFavorite;
     }
 }

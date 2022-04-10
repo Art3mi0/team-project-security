@@ -21,6 +21,6 @@
     <string name="watchlist_title">Hello from WatchList component</string>
     <string name="watchlist_instruction">Enter an IP or Hash File:</string>
     <string name="watchlist_help">Potentially significant text to be entered later</string>
-    <string name="watchlist_add_button_text">Add</string>
+    <string name="watchlist_favorite_button_text">Favorite</string>
     <string name="watchlist_remove_button_text">Remove</string>
 </resources>
