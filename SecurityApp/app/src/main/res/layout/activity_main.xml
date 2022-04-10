@@ -100,14 +100,13 @@
         app:layout_constraintBottom_toTopOf="@id/compromisedButton"
         app:layout_constraintEnd_toEndOf="@id/compromisedButton"/>
 
-    <TextView
-        android:id="@+id/textView3"
+    <ListView
+        android:id="@+id/da_list_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="address 22001 Loudoun County Pkwy asn	AS6167 \n city	Fayetteville Ashburn \n	United States of America \n countrycode	US \n isp	CELLCO-PART \n lat	35.1243 \n long	-78.8979"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="@+id/passwordDisplay" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

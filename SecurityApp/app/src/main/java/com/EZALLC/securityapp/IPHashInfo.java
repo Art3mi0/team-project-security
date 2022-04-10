@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,8 @@ public class IPHashInfo extends AppCompatActivity {
     VirusTotalAPI virusTotalAPI;
 
     TextView url_info_box;
+
+    private Button da_button;
 
     private String email;
     private String COLLECTION;
@@ -88,8 +91,11 @@ public class IPHashInfo extends AppCompatActivity {
         TextView title = (TextView) findViewById(R.id.demo_title);
         title.setText(R.string.iphashdemo);
 
+        da_button = (Button)findViewById(R.id.button);
+        da_button.setEnabled(false);
+
         getUser();
-        getURLHash();
+        //getURLHash();
 
     }
 
@@ -153,7 +159,6 @@ public class IPHashInfo extends AppCompatActivity {
 //                    //Handle error here?
 
                 String userContent = "";
-                //userContent += "Success: " + response.body().getData().getAttributes().getAsn()+ "\n";
 
                 userContent += "Harmless: " + response.body().getData().getAttributes().getLastAnalysisStats().getHarmless()+ "\n";
                 Harmless = response.body().getData().getAttributes().getLastAnalysisStats().getHarmless();
@@ -173,8 +178,6 @@ public class IPHashInfo extends AppCompatActivity {
                 userContent += "ASOwner: " + response.body().getData().getAttributes().getAsOwner()+ "\n";
                 ASNOwner = response.body().getData().getAttributes().getAsOwner();
 
-                //userContent += "Undetected: " + response.body().getData().getAttributes().getLastAnalysisStats().getUndetected()+ "\n";
-
                 userContent += "Regional Internet Registry: " + response.body().getData().getAttributes().getRegionalInternetRegistry()+ "\n";
                 RegionalInternetRegistry = response.body().getData().getAttributes().getRegionalInternetRegistry();
 
@@ -188,6 +191,10 @@ public class IPHashInfo extends AppCompatActivity {
                 Type = response.body().getData().getType();
 
                 fTextView.setText(userContent);
+
+                da_button.setEnabled(true);
+
+
 //                }
                 //Log.e(TAG, "onResponse: " + response.body() );
             }
