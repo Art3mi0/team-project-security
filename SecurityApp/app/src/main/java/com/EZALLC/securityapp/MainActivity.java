@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,7 +23,12 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private String email;
     private String COLLECTION;
+    haveibeenpwndinterface Haveibeenpwndinterface;
 
     private ArrayList<Threat> mThreats;
     private ArrayAdapter<Threat> adapter;
@@ -39,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private EditText passwordView;
+    EditText enterEmail;
 
     private String type = "type - ";
     private String id = "id - ";
@@ -70,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, Login.class);
             startActivity(intent);
         }
+        Haveibeenpwndinterface = PulsediveClient.getClient().create(haveibeenpwndinterface.class);
 
         fav_list_view = (ListView) findViewById(R.id.da_list_view);
         mAuth = FirebaseAuth.getInstance();
@@ -209,8 +218,30 @@ public class MainActivity extends AppCompatActivity {
      * Output = a pop up that says error or email compromised or not
      */
     public void onCheckEmail(View view) {
+        //Execute the Network request
+        enterEmail = findViewById(R.id.enterEmail);
+        String value = enterEmail.getText().toString();
+        String da_qid = "skystock19%40gmail.com";
+        Call<List<Pwned>> call = Haveibeenpwndinterface.getPwned(value);
 
-        return;
+        //Execute the request in a background thread
+        call.enqueue(new Callback<List<Pwned>>() {
+            @Override
+            public void onResponse(Call<List<Pwned>> call, Response<List<Pwned>> response) {
+
+                String userContent = "";
+                userContent += "Title " + response.body().get(0).getName()+ "\n";
+                Toast.makeText(MainActivity.this,
+                        userContent,
+                        Toast.LENGTH_LONG).show();
+
+                Log.e(TAG, "onResponse: " + response.body() );
+            }
+            @Override
+            public void onFailure(Call<List<Pwned>> call, Throwable t) {
+                Log.e(TAG, "onResponse: " + "It just gets here." );
+            }
+        });
 
     }
     /**

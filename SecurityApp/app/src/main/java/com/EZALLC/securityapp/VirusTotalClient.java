@@ -18,3 +18,4 @@ public class VirusTotalClient {
         return retrofit;
     }
 }
+
