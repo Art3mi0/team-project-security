@@ -17,3 +17,4 @@ public interface VirusTotalAPI {
     @GET("urls/{url}")
     Call<HashInfo> getHashInfo(@Path(value = "url", encoded = true)String url);
 }
+
