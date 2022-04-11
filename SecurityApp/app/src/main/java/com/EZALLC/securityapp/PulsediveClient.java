@@ -4,7 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class PulsediveClient {
-    private static final String BASE_URL = "https://pulsedive.com/api/";
+    private static final String BASE_URL = "https://haveibeenpwned.com/api/v3/breachedaccount/";
 
     private static Retrofit retrofit = null;
 
