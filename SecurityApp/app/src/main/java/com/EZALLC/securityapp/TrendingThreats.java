@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.AsyncTask;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 
 public class TrendingThreats extends AppCompatActivity {
     private EditText threatLevel;
+//    private ListView threatList;
     // Can't run network code on main thread :(
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +38,20 @@ public class TrendingThreats extends AppCompatActivity {
         setContentView(R.layout.activity_trending_threats);
 
         threatLevel = findViewById(R.id.threatLevel);
+//        threatList = findViewById(R.id.threatList);
         try {
             getThreatLevel();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+//        try {
+//            getTopThreats();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
         getSupportActionBar().setTitle("Trending Threats");
 
 
@@ -111,7 +123,95 @@ public class TrendingThreats extends AppCompatActivity {
 
         return result;
     }
+    public class AsyncThreatTask extends AsyncTask<String, Void, String> {
+        private ArrayAdapter arrayAdapter;
+        private ArrayList<String> ips;
+        @Override
+        protected String doInBackground(String... params) {
+            InputStream inputStream = null;
+            HttpURLConnection urlConnection = null;
+            Integer result = 0;
+            String response="";
+            int statusCode = 10;
+            try {
+                /* forming th java.net.URL object */
+                URL url = new URL("https://www.blocklist.de/en/statistics.html");
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                statusCode = urlConnection.getResponseCode();
 
+                /* 200 represents HTTP OK */
+                if (statusCode ==  200) {
+                    inputStream = new BufferedInputStream(urlConnection.getInputStream());
+                    response = convertInputStream(inputStream);
+                    result = 1; // Successful
+                }else{
+                    result = 0; //"Failed to fetch data!";
+                }
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            return response + statusCode; //"Failed to fetch data!";
+        }
+        @Override
+        protected void onPostExecute(String result) {
+            /* Download complete. Update UI */
+            String threatString = "AlertCon Level: ";
+            String str = "Temp</font></td><td width=\"30\"><font color=\"Black\">";
+            String htmlPage = result;
+            ArrayList<String> ips = new ArrayList<String>();
+            int start = 0;
+            int end = 0;
+            for (int i = 0; i< htmlPage.length()-26; i++) {
+                if (htmlPage.substring(i,i+26).contains("<a href=\"/en/view.html?ip=")) {
+                    start = i+26;
+                    int index = htmlPage.substring(start, start+100).indexOf('"');
+                    end = index + start;
+                    System.out.println(htmlPage.substring(start,end));
+    			ips.add(htmlPage.substring(start,end));
+                }
+            }
+//    	System.out.println(content);
+//    	System.out.println(getThreatLevel(content));
+            String threatLevel = "";
+//    	String str = "Temp</font></td><td width=\"30\"><font color=\"Black\">";
+//    	String htmlPage = content;
+//    	int index1 = htmlPage.indexOf(str)+51;
+//    	threatLevel += htmlPage.charAt(index1);
+//        System.out.println(threatLevel);
+            System.out.println(ips);
+            try {
+                int index1 = htmlPage.indexOf(str)+51;
+                threatString += htmlPage.charAt(index1);
+            }
+            catch (Exception ex) {
+                threatString+= "Unable to find threat level";
+            }
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(TrendingThreats.this, android.R.layout.simple_list_item_1,ips);
+//            threatList.setAdapter(arrayAdapter);
+        }
+    }
+
+
+    private String convertInputStream(InputStream inputStream) throws IOException {
+
+        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+
+        String line = "";
+        String result = "";
+
+        while((line = bufferedReader.readLine()) != null){
+            result += line;
+        }
+
+        /* Close Stream */
+        if(null!=inputStream){
+            inputStream.close();
+        }
+
+        return result;
+    }
     public void getThreatLevel() throws Exception {
         /**
          * Takes no input and retrieves threat level from IBM X-Force API
@@ -120,13 +220,14 @@ public class TrendingThreats extends AppCompatActivity {
 
         new AsyncHttpTask().execute();
     }
-    public ArrayList<String> getTopThreats() {
+    public void getTopThreats() {
         /**
          * Takes no input and retrieves top threats from IBM X-Force API
          * @return A arraylist of strings that represent each threat
          */
-        ArrayList<String> noError = new ArrayList<String>();
-        return noError;
+        new AsyncThreatTask().execute();
+//        ArrayList<String> noError = new ArrayList<String>();
+//        return noError;
     }
     public void addToList(String threat) {
         /**
