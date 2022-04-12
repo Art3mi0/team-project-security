@@ -46,7 +46,7 @@ public class Search extends AppCompatActivity {
         /***
          *
          */
-        ListViewSearch = findViewById(R.id.SearchList);
+        ListViewSearch = findViewById(R.id.SearchListView);
         SearchArray = new ArrayList<>();
         SearchAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item, SearchArray);
         searchUserInput.addTextChangedListener(new TextWatcher() {

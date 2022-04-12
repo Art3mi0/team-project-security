@@ -68,7 +68,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ListView
-        android:id="@+id/SearchList"
+        android:id="@+id/SearchListView"
         android:layout_width="265dp"
         android:layout_height="382dp"
         app:layout_constraintEnd_toEndOf="@+id/searchInput"
