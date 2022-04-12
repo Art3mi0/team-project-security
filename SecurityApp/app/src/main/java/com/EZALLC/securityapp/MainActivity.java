@@ -1,18 +1,24 @@
 package com.EZALLC.securityapp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import androidx.appcompat.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,28 +46,10 @@ public class MainActivity extends AppCompatActivity {
     haveibeenpwndinterface Haveibeenpwndinterface;
 
     private ArrayList<Threat> mThreats;
-    private ArrayAdapter<Threat> adapter;
-
-    private ListView fav_list_view;
-
 
     private EditText passwordView;
+    private TextView favoritesText;
     EditText enterEmail;
-
-    private String type = "type - ";
-    private String id = "id - ";
-    private String regionalInternetRegistry = "regionalInternetRegistry - ";
-    private String asOwner = "asOwner - ";
-    private String continent = "continent - ";
-    private String country = "country - ";
-    private String harmless = "harmless - ";
-    private String malicious = "malicious - ";
-    private String suspicious ="suspicious - ";
-    private String undetected ="undetected - ";
-
-    private String[] FavoriteData;
-
-
 
 
 
@@ -71,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         passwordView = findViewById(R.id.passwordDisplay);
+        favoritesText = findViewById(R.id.favorites);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -80,34 +69,13 @@ public class MainActivity extends AppCompatActivity {
         }
         Haveibeenpwndinterface = PulsediveClient.getClient().create(haveibeenpwndinterface.class);
 
-        fav_list_view = (ListView) findViewById(R.id.da_list_view);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         email = user.getEmail();
         COLLECTION = email + "'s Threats";
-
         getThreats();
-        if(mThreats != null){
-            for(int i = 0; i < mThreats.size();i++ ){
-                if(mThreats.get(i).getIsFavorite()){
 
-                    type+=mThreats.get(i).getType();
-                    id+=mThreats.get(i).getId();
-                    regionalInternetRegistry += mThreats.get(i).getId();
-                    asOwner += mThreats.get(i).getAsOwner();
-                    continent += mThreats.get(i).getContinent();
-                    country += mThreats.get(i).getCountry();
-                    harmless += Integer.toString(mThreats.get(i).getHarmless());
-                    malicious +=  Integer.toString(mThreats.get(i).getMalicious());
-                    suspicious += Integer.toString(mThreats.get(i).getSuspicious());
-                    undetected += Integer.toString(mThreats.get(i).getUndetected());
-                    break;
-                }
-            }
-        }
-        FavoriteData = new String[]{type,id,regionalInternetRegistry,asOwner,continent,country,harmless,malicious,suspicious,undetected};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,FavoriteData);
-        fav_list_view.setAdapter(adapter);
+
 
 
 
@@ -244,19 +212,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     /**
-     * this method will set a specially marked IP and its info to the Homepage
-     * @param view = Get favorited IP from Watchlist
-     * Output = Get relevant information from the IP to be then displayed
+     * This method creates an array list of the threat class from the users database, and uses the setFavorites
+     * method to set the correct text.
      */
-
-    public void onGetFavoriteIP(View view) {
-
-
-        return;
-
-    }
-
     public void getThreats() {
         mDb.collection(COLLECTION)
                 .get()
@@ -270,13 +230,35 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, t.getId());
                             Log.d(TAG, Boolean.toString(t.getIsFavorite()));
                         }
-//                        adapter.clear();
                         if (mThreats != null) {
                             Log.d(TAG, "threats not null");
-//                            adapter.addAll(mThreats);
+                            setFavorites(favoritesText);
                         }
                     }
                 });
+    }
+
+    /**
+     * This method pulls the data from the favorited threat and displays it. If a threat is not favorited,
+     * a different message will appear.
+     * @param textView - The favorites textview already initialized should be inputed
+     */
+    public void setFavorites(TextView textView) {
+        for (int i = 0; i < mThreats.size(); i++) {
+            if (mThreats.get(i).getIsFavorite()) {
+                textView.setText(mThreats.get(i).getType() + "- " + mThreats.get(i).getId()+ "\n" +
+                        "Regional Internet Registry: " + mThreats.get(i).getRegionalInternetRegistry() + "\n" +
+                        "A.S Owner: " + mThreats.get(i).getAsOwner() + "\n" +
+                        "Continent: " + mThreats.get(i).getContinent() + "\n" +
+                        "Country: " + mThreats.get(i).getCountry() + "\n" +
+                        "Total Harmless Results: " + Integer.toString(mThreats.get(i).getHarmless()) + "\n" +
+                        "Total Malicious Results: " + Integer.toString(mThreats.get(i).getMalicious()) + "\n" +
+                        "Total Suspicious Results: " + Integer.toString(mThreats.get(i).getSuspicious()) + "\n" +
+                        "Total Undetected Results: " + Integer.toString(mThreats.get(i).getUndetected()));
+                return;
+            }
+        }
+        textView.setText("You have not yet set a favorite from your watchlist.");
     }
 
 
