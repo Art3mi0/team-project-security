@@ -1,16 +1,23 @@
 package com.EZALLC.securityapp;
 
-import android.view.View.OnClickListener;
+import static android.content.ContentValues.TAG;
+
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.TypedValue;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 import com.google.firebase.firestore.core.View;
 import java.util.ArrayList;
@@ -18,10 +25,14 @@ import java.util.regex.*;
 
 
 public class Search extends AppCompatActivity {
+    private static long mLastClickTime;
     private Button searchButton;
     private EditText searchUserInput;
-    private String ipORFile;
+    private String SearchText;
     private ScrollView searchView;
+    private ListView ListViewSearch;
+    public ArrayAdapter<String> SearchAdapter;
+    ArrayList<String> SearchArray;
     @Override
     protected void onCreate(Bundle savedInstanceState) { //done immediately
         super.onCreate(savedInstanceState);
@@ -32,12 +43,98 @@ public class Search extends AppCompatActivity {
         searchUserInput= findViewById(R.id.searchInput);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        /***
+         *
+         */
+        ListViewSearch = findViewById(R.id.SearchList);
+        SearchArray = new ArrayList<>();
+        SearchAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item, SearchArray);
+        searchUserInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                ListViewSearch.setVisibility(android.view.View.VISIBLE);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        /***
+         *
+         */
         Button searchButton = (Button) findViewById(R.id.search_button);
         searchButton.setOnClickListener(new android.view.View.OnClickListener(){
             public void onClick(android.view.View v){
-                onSearch(searchUserInput.getText().toString());
+                ListViewSearch.setVisibility(android.view.View.INVISIBLE);
+                if (searchUserInput.getText().toString().isEmpty()) {
+                    Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
+                    searchButton.setEnabled(false);
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            searchButton.setEnabled(true);
+                            Log.d(TAG, "resend1");
+
+                        }
+                    }, 2000);
+                }
+                else if (isValidIPAddress(searchUserInput.getText().toString())==false && validURl(searchUserInput.getText().toString())==false) {
+                    Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
+                    searchButton.setEnabled(false);
+                    new Handler().postDelayed(new Runnable() {
+
+                        @Override
+                        public void run() {
+                            searchButton.setEnabled(true);
+                            Log.d(TAG, "resend1");
+
+                        }
+                    }, 2000);
+                }
+                else{
+                    onSearch(searchUserInput.getText().toString());
+                    searchButton.setEnabled(false);
+                    searchUserInput.setEnabled(false);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            searchUserInput.setEnabled(true);
+                            searchButton.setEnabled(true);
+                            Log.d(TAG, "resend1");
+
+                        }
+                    }, 6000);
+                    }
+
             }
 
+        });
+        ListViewSearch.setAdapter(SearchAdapter);
+        ListViewSearch.setVisibility(android.view.View.VISIBLE);
+        ListViewSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> adapterView, android.view.View view, int i, long l) {
+                ListViewSearch.setVisibility(android.view.View.INVISIBLE);
+                onSearch(SearchArray.get(i));
+                searchButton.setEnabled(false);
+                searchUserInput.setEnabled(false);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        searchUserInput.setEnabled(true);
+                        searchButton.setEnabled(true);
+                        Log.d(TAG, "resend1");
+
+                    }
+                }, 6000);
+
+            }
         });
     }
 
@@ -71,23 +168,18 @@ public class Search extends AppCompatActivity {
     /**
      * This validFileHash method receives users file hash or IP address
      * and check if valid file hash in the form SHA256,MD5 and SHA1
-     * @param fileHash
-     * @return true if valid file hash and false if not
+     * @param URL
+     * @return true if valid URL and false if not
      */
-    public static boolean validFileHash(String fileHash)
+    public static boolean validURl(String URL)
     {
-        String fileSHA256
-                = "^[A-Fa-f0-9]{64}$";
-        String fileSHA1
-                ="\\b[0-9a-f]{5,40}\\b";
-        String fileMD5 ="/^([a-f\\d]{32}|[A-F\\d]{32})$/";
-        Pattern SHA256 = Pattern.compile(fileSHA256);
-        Matcher m = SHA256.matcher(fileHash);
-        Pattern SHA1 = Pattern.compile(fileSHA1);
-        Matcher t = SHA1.matcher(fileHash);
-        Pattern MD5= Pattern.compile(fileMD5);
-        Matcher z = SHA256.matcher(fileHash);
-        if(m.matches()||t.matches() ||  z.matches()){
+        String url
+                = "((http|https)://)(www.)?"
+        + "[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]"
+        + "{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
+        Pattern strURL = Pattern.compile(url);
+        Matcher m = strURL.matcher(URL);
+        if(m.matches()){
             return true;
         }
         else{
@@ -95,30 +187,41 @@ public class Search extends AppCompatActivity {
         }
     }
     /**
-     * This onSearch method receives users file hash or IP address
-     * and displays on page
-     * @param   IpOrFile
-     * @return arraylist with String IP or FileHash and initial input
+     * Add to vaild ip and urls to front of Search history
+     * removes all searches after ten searches
      */
-    public void onSearch(String IpOrFile){
-        ipORFile = searchUserInput.getText().toString();
-        if(ipORFile.isEmpty()){
-            Toast.makeText(Search.this, "Enter a IP address or file Hash", Toast.LENGTH_SHORT).show();
+    public void add_clear_list(String ipOrUrlAdd){
+        if(SearchArray.size()<10){
+            SearchArray.add(0,ipOrUrlAdd);
         }
         else{
-            if(isValidIPAddress(ipORFile)){
-                Toast.makeText(Search.this, "Valid Ip Address "+ipORFile, Toast.LENGTH_SHORT).show();
+            SearchArray.clear();
+            SearchArray.add(ipOrUrlAdd);
+        }
+        ListViewSearch.setAdapter(SearchAdapter);
+    }
+    /**
+     * This onSearch method receives users file hash or IP address
+     * and displays on page
+     * @param   ipOrURL
+     */
+    public void onSearch(String ipOrURL){
+            if(isValidIPAddress(ipOrURL)){
+                add_clear_list(ipOrURL);
+                Toast.makeText(Search.this, "Valid Ip Address "+ipOrURL+"\nSearching", Toast.LENGTH_SHORT).show();
 
             }
-            else if(validFileHash(ipORFile)){
-                Toast.makeText(Search.this, "Valid File Hash "+ipORFile, Toast.LENGTH_SHORT).show();
+            else if(validURl(ipOrURL)){
+                add_clear_list(ipOrURL);
+                Toast.makeText(Search.this, "Valid URL "+ipOrURL+"\nSearching", Toast.LENGTH_SHORT).show();
             }
-            else{
-                Toast.makeText(Search.this, "Enter a IP address or file Hash", Toast.LENGTH_SHORT).show();
+            else {
+                Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
             }
-        }
 
     }
+
+
     /**
      * This onSelectWatchlistIpOrFileHash method retrieves the IP address or File Hash string from the database
      * based on selection of watchlist
