@@ -46,7 +46,7 @@ public class Search extends AppCompatActivity {
         /***
          *
          */
-        ListViewSearch = findViewById(R.id.SearchList);
+        ListViewSearch = findViewById(R.id.SearchListView);
         SearchArray = new ArrayList<>();
         SearchAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item, SearchArray);
         searchUserInput.addTextChangedListener(new TextWatcher() {
@@ -171,20 +171,17 @@ public class Search extends AppCompatActivity {
      * @param URL
      * @return true if valid URL and false if not
      */
-    public static boolean validURl(String URL)
-    {
+    public static boolean validURl(String URL) {
         String url
                 = "((http|https)://)(www.)?"
-        + "[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]"
-        + "{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
+                + "[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.(com|net|gov)/{0,1}"
+                + "\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
         Pattern strURL = Pattern.compile(url);
         Matcher m = strURL.matcher(URL);
-        if(m.matches()){
+        if (m.matches()) {
             return true;
         }
-        else{
-            return false;
-        }
+        return false;
     }
     /**
      * Add to vaild ip and urls to front of Search history
