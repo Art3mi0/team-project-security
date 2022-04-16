@@ -31,11 +31,8 @@ public class TrendingThreats extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        setContentView(R.layout.activity_trending_threats);
+        getSupportActionBar().setTitle("Trending Threats");
 
         threatLevel = findViewById(R.id.threatLevel);
 //        threatList = findViewById(R.id.threatList);
@@ -51,8 +48,6 @@ public class TrendingThreats extends AppCompatActivity {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-
-        getSupportActionBar().setTitle("Trending Threats");
 
 
 

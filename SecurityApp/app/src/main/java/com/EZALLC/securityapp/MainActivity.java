@@ -71,7 +71,14 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
-        email = user.getEmail();
+        try {
+            email = user.getEmail();
+        }
+        catch (Exception ex) {
+            Log.e(TAG, String.valueOf(ex));
+            Intent intent = new Intent(MainActivity.this, Login.class);
+            startActivity(intent);
+        }
         COLLECTION = email + "'s Threats";
         getThreats();
 
