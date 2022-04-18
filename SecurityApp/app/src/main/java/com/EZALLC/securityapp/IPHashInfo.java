@@ -129,8 +129,6 @@ public class IPHashInfo extends AppCompatActivity {
                 });
 
     }
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -144,19 +142,33 @@ public class IPHashInfo extends AppCompatActivity {
 
     public void getUser(){
         //Execute the Network request
-        String da_qid = "174.216.16.12";
+        String da_qid = "696.696.69.69";
         Call<IpInfo> call = virusTotalAPI.getIPInfo(da_qid);
         //Execute the request in a background thread
         call.enqueue(new Callback<IpInfo>() {
             @Override
             public void onResponse(Call<IpInfo> call, Response<IpInfo> response) {
-                if (!response.isSuccessful()){
-                    fTextView.setText("It gets this far that's it.");
-                    return;
-                }
+//                if (!response.isSuccessful()){
+//                    fTextView.setText("It gets this far that's it.");
+//                    return;
+//                }
 
 //                if (response.body() != null){
 //                    //Handle error here?
+
+
+                if(response.code() ==400){
+                    Toast.makeText(IPHashInfo.this,
+                            "Bad request. IP not valid. Pls double check.",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(response.code() >= 500){
+                    Toast.makeText(IPHashInfo.this,
+                            "Server side issue pls try again.",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 String userContent = "";
 
@@ -200,7 +212,10 @@ public class IPHashInfo extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<IpInfo> call, Throwable t) {
-                fTextView.setText("Failure: " + t);
+                //fTextView.setText("Failure: " + t);
+                Toast.makeText(IPHashInfo.this,
+                        "Check internet connection.",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -215,8 +230,21 @@ public class IPHashInfo extends AppCompatActivity {
         call.enqueue(new Callback<HashInfo>() {
             @Override
             public void onResponse(Call<HashInfo> call, Response<HashInfo> response) {
-                if (!response.isSuccessful()){
-                    fTextView.setText("It gets this far that's it.");
+//                if (!response.isSuccessful()){
+//                    fTextView.setText("It gets this far that's it.");
+//                    return;
+//                }
+
+                if(response.code() ==400){
+                    Toast.makeText(IPHashInfo.this,
+                            "Bad request. URL not valid. Pls double check.",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(response.code() >= 500){
+                    Toast.makeText(IPHashInfo.this,
+                            "Server side issue pls try again.",
+                            Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -233,7 +261,10 @@ public class IPHashInfo extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<HashInfo> call, Throwable t) {
-                fTextView.setText("Failure: " + t);
+                //fTextView.setText("Failure: " + t);
+                Toast.makeText(IPHashInfo.this,
+                        "Check internet connection.",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }
