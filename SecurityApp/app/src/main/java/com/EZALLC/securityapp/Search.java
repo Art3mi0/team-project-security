@@ -42,41 +42,17 @@ public class Search extends AppCompatActivity {
         getSupportActionBar().setTitle("Search");
         searchUserInput= findViewById(R.id.searchInput);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        /***
-         *
-         */
         ListViewSearch = findViewById(R.id.SearchListView);
         SearchArray = new ArrayList<>();
         SearchAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item, SearchArray);
-        searchUserInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                ListViewSearch.setVisibility(android.view.View.VISIBLE);
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-        /***
-         *
-         */
+        Intent PageIPHashing = new Intent(Search.this,IPHashInfo.class);
         Button searchButton = (Button) findViewById(R.id.search_button);
         searchButton.setOnClickListener(new android.view.View.OnClickListener(){
             public void onClick(android.view.View v){
-                ListViewSearch.setVisibility(android.view.View.INVISIBLE);
                 if (searchUserInput.getText().toString().isEmpty()) {
                     Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
                     searchButton.setEnabled(false);
                     new Handler().postDelayed(new Runnable() {
-
                         @Override
                         public void run() {
                             searchButton.setEnabled(true);
@@ -89,7 +65,6 @@ public class Search extends AppCompatActivity {
                     Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
                     searchButton.setEnabled(false);
                     new Handler().postDelayed(new Runnable() {
-
                         @Override
                         public void run() {
                             searchButton.setEnabled(true);
@@ -102,12 +77,26 @@ public class Search extends AppCompatActivity {
                     onSearch(searchUserInput.getText().toString());
                     searchButton.setEnabled(false);
                     searchUserInput.setEnabled(false);
+                    ListViewSearch.setVisibility(android.view.View.INVISIBLE);
+                    Intent intent = new Intent(Search.this,IPHashInfo.class);
+                    if(isValidIPAddress(searchUserInput.getText().toString())==true){
+                        String[] vaildIP = {searchUserInput.getText().toString(), "IP"};
+                        intent.putExtra("SendIP",vaildIP);
+                    }
+                    else if(validURl(searchUserInput.getText().toString())==true){
+                        String[] URL = {searchUserInput.getText().toString(), "URL"};
+                        intent.putExtra("SendURL",URL);
+                    }
+                    Search.this.startActivity(PageIPHashing);
+
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            ListViewSearch.setVisibility(android.view.View.VISIBLE);
                             searchUserInput.setEnabled(true);
                             searchButton.setEnabled(true);
                             Log.d(TAG, "resend1");
+
 
                         }
                     }, 6000);
@@ -120,28 +109,41 @@ public class Search extends AppCompatActivity {
         ListViewSearch.setVisibility(android.view.View.VISIBLE);
         ListViewSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> adapterView, android.view.View view, int i, long l) {
-                ListViewSearch.setVisibility(android.view.View.INVISIBLE);
                 onSearch(SearchArray.get(i));
                 searchButton.setEnabled(false);
-                searchUserInput.setEnabled(false);
+                ListViewSearch.setVisibility(android.view.View.INVISIBLE);
+                Intent intent = new Intent(Search.this,IPHashInfo.class);
+                if(isValidIPAddress(searchUserInput.getText().toString())==true){
+                    String[] vaildIP = {searchUserInput.getText().toString(), "IP"};
+                    intent.putExtra("SendIP",vaildIP);
+                }
+                else if(validURl(searchUserInput.getText().toString())==true){
+                    String[] URL = {searchUserInput.getText().toString(), "URL"};
+                    intent.putExtra("SendURL",URL);
+                }
+                Search.this.startActivity(PageIPHashing);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        searchUserInput.setEnabled(true);
+                        ListViewSearch.setVisibility(android.view.View.VISIBLE);
                         searchButton.setEnabled(true);
                         Log.d(TAG, "resend1");
 
                     }
-                }, 6000);
-
-            }
+                }, 6000); }
         });
+
     }
-
-
     /**
      * This isValidIPAddress method receives users file hash or IP address
      * and check if valid ip address
+     * @param
+     * @return true if ip address and false if not
+     */
+
+    /**
+     * This isValidIPAddress method receives users file hash or IP address
+     * and check if valid ip address in form IPv4
      * @param  ip
      * @return true if ip address and false if not
      */
@@ -166,8 +168,8 @@ public class Search extends AppCompatActivity {
         }
     }
     /**
-     * This validFileHash method receives users file hash or IP address
-     * and check if valid file hash in the form SHA256,MD5 and SHA1
+     * This validURl method receives users URL or IP address
+     * and check if valid URL in for .com,.net,.gov
      * @param URL
      * @return true if valid URL and false if not
      */
@@ -175,8 +177,8 @@ public class Search extends AppCompatActivity {
     {
         String url
                 = "((http|https)://)(www.)?"
-        + "[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]"
-        + "{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
+                + "[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.(com|net|gov)/{0,1}"
+                + "\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
         Pattern strURL = Pattern.compile(url);
         Matcher m = strURL.matcher(URL);
         if(m.matches()){
@@ -221,24 +223,6 @@ public class Search extends AppCompatActivity {
 
     }
 
-
-    /**
-     * This onSelectWatchlistIpOrFileHash method retrieves the IP address or File Hash string from the database
-     * based on selection of watchlist
-     * @param view listener for selection
-     * @return Ip or File Hash String.
-     */
-    public String onSelectWatchlistIpOrFileHash(View view){
-        return "";
-    }
-    /**
-     * This SendIpOrFileHash  method Send type Ip or File Hash and the IP address or File Hash
-     * to IpAndHash information Lookup
-     *  with type and Ip or File Hash
-     */
-    public void SendIpOrFileHash(ArrayList IpOrFileHash){
-
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
