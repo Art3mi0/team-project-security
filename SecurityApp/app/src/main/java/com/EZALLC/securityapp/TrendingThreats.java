@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -23,7 +24,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class TrendingThreats extends AppCompatActivity {
-    private EditText threatLevel;
+    private TextView threatLevel;
     private ListView threatList;
     // Can't run network code on main thread :(
     @Override
