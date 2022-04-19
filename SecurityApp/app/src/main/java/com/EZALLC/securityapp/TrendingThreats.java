@@ -6,7 +6,9 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 
 public class TrendingThreats extends AppCompatActivity {
     private EditText threatLevel;
-//    private ListView threatList;
+    private ListView threatList;
     // Can't run network code on main thread :(
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +37,19 @@ public class TrendingThreats extends AppCompatActivity {
         getSupportActionBar().setTitle("Trending Threats");
 
         threatLevel = findViewById(R.id.threatLevel);
-//        threatList = findViewById(R.id.threatList);
+        threatList = findViewById(R.id.threatList);
         try {
             getThreatLevel();
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        try {
-//            getTopThreats();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            getTopThreats();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
 
@@ -152,8 +154,6 @@ public class TrendingThreats extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             /* Download complete. Update UI */
-            String threatString = "AlertCon Level: ";
-            String str = "Temp</font></td><td width=\"30\"><font color=\"Black\">";
             String htmlPage = result;
             ArrayList<String> ips = new ArrayList<String>();
             int start = 0;
@@ -169,22 +169,18 @@ public class TrendingThreats extends AppCompatActivity {
             }
 //    	System.out.println(content);
 //    	System.out.println(getThreatLevel(content));
-            String threatLevel = "";
+//            String threatLevel = "";
 //    	String str = "Temp</font></td><td width=\"30\"><font color=\"Black\">";
 //    	String htmlPage = content;
 //    	int index1 = htmlPage.indexOf(str)+51;
 //    	threatLevel += htmlPage.charAt(index1);
 //        System.out.println(threatLevel);
-            System.out.println(ips);
-            try {
-                int index1 = htmlPage.indexOf(str)+51;
-                threatString += htmlPage.charAt(index1);
-            }
-            catch (Exception ex) {
-                threatString+= "Unable to find threat level";
+            for (int i = 0; i< ips.size(); i++) {
+                Log.i("IP list entry", ips.get(i));
+
             }
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(TrendingThreats.this, android.R.layout.simple_list_item_1,ips);
-//            threatList.setAdapter(arrayAdapter);
+            threatList.setAdapter(arrayAdapter);
         }
     }
 
