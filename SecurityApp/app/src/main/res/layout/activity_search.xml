@@ -43,8 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <Button
         android:id="@+id/search_button"
@@ -56,23 +55,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
-    <ScrollView
-        android:id="@+id/searchScrollView"
-        android:layout_width="366dp"
-        android:layout_height="650dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginBottom="38dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <ListView
         android:id="@+id/SearchListView"
-        android:layout_width="265dp"
-        android:layout_height="382dp"
-        app:layout_constraintEnd_toEndOf="@+id/searchInput"
-        app:layout_constraintStart_toStartOf="@+id/searchInput"
+        android:layout_width="276dp"
+        android:layout_height="115dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="123dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchInput" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="332dp"
+        android:layout_height="287dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="22dp"
+        android:autoLink="web"
+        android:text="@string/findMyIp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SearchListView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
