@@ -43,7 +43,7 @@ public class Search extends AppCompatActivity {
         getSupportActionBar().setTitle("Search");
         searchUserInput= findViewById(R.id.searchInput);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ListViewSearch = findViewById(R.id.SearchListView);
+        ListViewSearch = findViewById(R.id.SearchList);
         SearchArray = new ArrayList<>();
         SearchAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item, SearchArray);
         Intent PageIPHashing = new Intent(Search.this,IPHashInfo.class);
