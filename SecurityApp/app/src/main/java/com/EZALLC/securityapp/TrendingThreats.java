@@ -9,10 +9,12 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -182,6 +184,18 @@ public class TrendingThreats extends AppCompatActivity {
             }
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(TrendingThreats.this, android.R.layout.simple_list_item_1,ips);
             threatList.setAdapter(arrayAdapter);
+            AdapterView.OnItemClickListener itemClickListener =
+                    new AdapterView.OnItemClickListener() {
+                        // @Override
+                        public void onItemClick(AdapterView<?> listView, View view, int i, long l) {
+                            String item = ips.get(i);
+                            Intent intent = new Intent(TrendingThreats.this,IPHashInfo.class);
+                            intent.putExtra("trend",item);
+                            startActivity(intent);
+//                            Toast.makeText(TrendingThreats.this,item, Toast.LENGTH_SHORT).show();
+                        }
+                    };
+            threatList.setOnItemClickListener(itemClickListener);
         }
     }
 
