@@ -33,6 +33,7 @@ public class Search extends AppCompatActivity {
     private ListView ListViewSearch;
     public ArrayAdapter<String> SearchAdapter;
     ArrayList<String> SearchArray;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) { //done immediately
         super.onCreate(savedInstanceState);
@@ -112,14 +113,14 @@ public class Search extends AppCompatActivity {
                 onSearch(SearchArray.get(i));
                 searchButton.setEnabled(false);
                 ListViewSearch.setVisibility(android.view.View.INVISIBLE);
-                Intent intent = new Intent(Search.this,IPHashInfo.class);
+                Intent intent1 = new Intent(Search.this,IPHashInfo.class);
                 if(isValidIPAddress(searchUserInput.getText().toString())==true){
                     String[] vaildIP = {searchUserInput.getText().toString(), "IP"};
-                    intent.putExtra("SendIP",vaildIP);
+                    intent1.putExtra("SendIP",vaildIP);
                 }
                 else if(validURl(searchUserInput.getText().toString())==true){
                     String[] URL = {searchUserInput.getText().toString(), "URL"};
-                    intent.putExtra("SendURL",URL);
+                    intent1.putExtra("SendURL",URL);
                 }
                 Search.this.startActivity(PageIPHashing);
                 new Handler().postDelayed(new Runnable() {
