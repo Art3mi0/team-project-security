@@ -30,6 +30,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/description"
+        android:text="@string/findMyIp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchInput"
+        />
 
     <EditText
         android:id="@+id/searchInput"
@@ -60,7 +69,7 @@
         android:layout_margin="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchInput"
+        app:layout_constraintTop_toBottomOf="@+id/description"
         app:layout_constraintBottom_toBottomOf="parent"  />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
