@@ -34,6 +34,10 @@ public class Search extends AppCompatActivity {
     public ArrayAdapter<String> SearchAdapter;
     ArrayList<String> SearchArray;
 
+    ArrayList<String> bundle= new ArrayList<>();
+    //String[] bundle = new String[]{};
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) { //done immediately
         super.onCreate(savedInstanceState);
@@ -81,14 +85,24 @@ public class Search extends AppCompatActivity {
                     ListViewSearch.setVisibility(android.view.View.INVISIBLE);
                     Intent intent = new Intent(Search.this,IPHashInfo.class);
                     if(isValidIPAddress(searchUserInput.getText().toString())==true){
-                        String[] vaildIP = {searchUserInput.getText().toString(), "IP"};
-                        intent.putExtra("SendIP",vaildIP);
+                        bundle.clear();
+                        //String[] vaildIP = {searchUserInput.getText().toString(), "IP"};
+                        bundle.add(searchUserInput.getText().toString());
+                        bundle.add("IP");
+                        //intent.putExtra("EXTRA_BUNDLE",vaildIP);
+                        intent.putExtra("key",bundle);
+                        startActivity(intent);
                     }
                     else if(validURl(searchUserInput.getText().toString())==true){
-                        String[] URL = {searchUserInput.getText().toString(), "URL"};
-                        intent.putExtra("SendURL",URL);
+                        bundle.clear();
+                        //String[] URL = {searchUserInput.getText().toString(), "URL"};
+                        bundle.add(searchUserInput.getText().toString());
+                        bundle.add("URL");
+                        //intent.putExtra("EXTRA_BUNDLE",URL);
+                        intent.putExtra("key",bundle);
+                        startActivity(intent);
                     }
-                    Search.this.startActivity(PageIPHashing);
+                    //Search.this.startActivity(PageIPHashing);
 
                     new Handler().postDelayed(new Runnable() {
                         @Override

@@ -24,6 +24,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Base64;
 
 import retrofit2.Call;
@@ -60,6 +61,12 @@ public class IPHashInfo extends AppCompatActivity {
     private String RegionalInternetRegistry;
     private Boolean IsFavorite;
 
+    String url;
+    String ip;
+
+    String[] myStrings;
+
+
 
 
 
@@ -79,6 +86,19 @@ public class IPHashInfo extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(null);
 
+        //Intent intent = getIntent();
+        //myStrings = intent.getStringArrayExtra("EXTRA_BUNDLE");
+        //intent.getExtras();
+
+//        ArrayList<String> list = (ArrayList<String>) getIntent().getSerializableExtra("key");
+//        if(list.get(1).equals("IP")) {
+//            getUser(list.get(0));
+//        }else{
+//            getURLHash(list.get(0));
+//        }
+
+
+
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         email = user.getEmail();
@@ -94,7 +114,15 @@ public class IPHashInfo extends AppCompatActivity {
         da_button = (Button)findViewById(R.id.button);
         da_button.setEnabled(false);
 
-        getUser();
+        ArrayList<String> list = (ArrayList<String>) getIntent().getSerializableExtra("key");
+        Log.w(TAG, list.toString());
+        Log.w(TAG, "Should be above this!!!");
+        if(list.get(1).equals("IP")) {
+            getUser(list.get(0));
+        }else{
+            getURLHash(list.get(0));
+        }
+        //getUser();
         //getURLHash();
 
     }
@@ -140,10 +168,11 @@ public class IPHashInfo extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void getUser(){
+    public void getUser(String ip){
         //Execute the Network request
         String da_qid = "696.696.69.69";
-        Call<IpInfo> call = virusTotalAPI.getIPInfo(da_qid);
+
+        Call<IpInfo> call = virusTotalAPI.getIPInfo(ip);
         //Execute the request in a background thread
         call.enqueue(new Callback<IpInfo>() {
             @Override
@@ -221,8 +250,9 @@ public class IPHashInfo extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void getURLHash(){
-        String encodedURL = Base64.getUrlEncoder().encodeToString("https://tinder.com/".getBytes(StandardCharsets.UTF_8));
+    public void getURLHash(String url){
+        //String encodedURL = Base64.getUrlEncoder().encodeToString("https://tinder.com/".getBytes(StandardCharsets.UTF_8));
+        String encodedURL = Base64.getUrlEncoder().encodeToString(url.getBytes(StandardCharsets.UTF_8));
         encodedURL = encodedURL.replace("==","");
 
         Call<HashInfo> call = virusTotalAPI.getHashInfo(encodedURL);
