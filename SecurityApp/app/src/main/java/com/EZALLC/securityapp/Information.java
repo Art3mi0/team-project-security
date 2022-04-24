@@ -45,18 +45,7 @@ public class Information extends AppCompatActivity {
         });
 
     }
-    public void onButtonInc(){
 
-    }
-    /**
-     * This onSelectionSelected method retrieves the information from the database based on selection
-     * and displays on page
-     * @param view listener for selection
-     * @return Nothing.
-     */
-    public void onSelectionSelected(View view){
-
-    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

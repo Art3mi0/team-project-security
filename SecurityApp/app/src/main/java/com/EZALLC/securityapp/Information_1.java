@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,9 @@ public class Information_1 extends AppCompatActivity {
     Button IncButton;
     Button DecButton;
     private float TextSize = 14f;
+    private float maxTextSize = 30f;
+    private float minTextSize = 10f;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,15 +34,25 @@ public class Information_1 extends AppCompatActivity {
         DecButton = (Button) findViewById(R.id.buttonDec);
         IncButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                TextSize += 4f;
-                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize);
+                if (TextSize<=maxTextSize){
+                    TextSize += 4f;
+                    tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize);
+                }
+                else{
+                    Toast.makeText(Information_1.this, "Maximum Text size reached", Toast.LENGTH_SHORT).show();
+                }
             }
 
         });
         DecButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                TextSize -= 4f;
-                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize);
+                if (minTextSize<=TextSize){
+                    TextSize -= 4f;
+                    tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize);
+                }
+                else{
+                    Toast.makeText(Information_1.this, "Minimum text size reached", Toast.LENGTH_SHORT).show();
+                }
             }
 
         });
