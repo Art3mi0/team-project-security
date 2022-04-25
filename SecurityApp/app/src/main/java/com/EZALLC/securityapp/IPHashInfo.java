@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -60,6 +61,7 @@ public class IPHashInfo extends AppCompatActivity {
     private String Type;
     private String RegionalInternetRegistry;
     private Boolean IsFavorite;
+    private ProgressBar spinner;
 
     String url;
     String ip;
@@ -86,18 +88,8 @@ public class IPHashInfo extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(null);
 
-        //Intent intent = getIntent();
-        //myStrings = intent.getStringArrayExtra("EXTRA_BUNDLE");
-        //intent.getExtras();
-
-//        ArrayList<String> list = (ArrayList<String>) getIntent().getSerializableExtra("key");
-//        if(list.get(1).equals("IP")) {
-//            getUser(list.get(0));
-//        }else{
-//            getURLHash(list.get(0));
-//        }
-
-
+        spinner=(ProgressBar)findViewById(R.id.pBar);
+        spinner.setVisibility(View.VISIBLE);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -109,22 +101,21 @@ public class IPHashInfo extends AppCompatActivity {
         url_info_box = (TextView) findViewById(R.id.hash_box);
 
         TextView title = (TextView) findViewById(R.id.demo_title);
-        title.setText(R.string.iphashdemo);
 
         da_button = (Button)findViewById(R.id.button);
         da_button.setEnabled(false);
 
         ArrayList<String> list = (ArrayList<String>) getIntent().getSerializableExtra("key");
+
+        title.setText("INFO FOR \n"+ list.get(0));
         Log.w(TAG, list.toString());
         Log.w(TAG, "Should be above this!!!");
+
         if(list.get(1).equals("IP")) {
             getUser(list.get(0));
         }else{
             getURLHash(list.get(0));
         }
-        //getUser();
-        //getURLHash();
-
     }
 
 
@@ -170,21 +161,12 @@ public class IPHashInfo extends AppCompatActivity {
 
     public void getUser(String ip){
         //Execute the Network request
-        String da_qid = "696.696.69.69";
-
         Call<IpInfo> call = virusTotalAPI.getIPInfo(ip);
         //Execute the request in a background thread
         call.enqueue(new Callback<IpInfo>() {
             @Override
             public void onResponse(Call<IpInfo> call, Response<IpInfo> response) {
-//                if (!response.isSuccessful()){
-//                    fTextView.setText("It gets this far that's it.");
-//                    return;
-//                }
-
-//                if (response.body() != null){
-//                    //Handle error here?
-
+                spinner.setVisibility(View.GONE);
 
                 if(response.code() ==400){
                     Toast.makeText(IPHashInfo.this,
@@ -235,12 +217,10 @@ public class IPHashInfo extends AppCompatActivity {
 
                 da_button.setEnabled(true);
 
-
-//                }
-                //Log.e(TAG, "onResponse: " + response.body() );
             }
             @Override
             public void onFailure(Call<IpInfo> call, Throwable t) {
+                spinner.setVisibility(View.GONE);
                 //fTextView.setText("Failure: " + t);
                 Toast.makeText(IPHashInfo.this,
                         "Check internet connection.",
@@ -260,10 +240,7 @@ public class IPHashInfo extends AppCompatActivity {
         call.enqueue(new Callback<HashInfo>() {
             @Override
             public void onResponse(Call<HashInfo> call, Response<HashInfo> response) {
-//                if (!response.isSuccessful()){
-//                    fTextView.setText("It gets this far that's it.");
-//                    return;
-//                }
+                spinner.setVisibility(View.GONE);
 
                 if(response.code() ==400){
                     Toast.makeText(IPHashInfo.this,
@@ -278,9 +255,6 @@ public class IPHashInfo extends AppCompatActivity {
                     return;
                 }
 
-//                if (response.body() != null){
-//                    //Handle API errors here?
-
                 String userContent = "";
                 userContent += "Success: " + response.body().getData().getAttributes().getTitle()+ "\n";
                 //userContent += "Harmless: " + response.body().getData().getAttributes().getTotalVotes().getHarmless()+ "\n";
@@ -291,7 +265,7 @@ public class IPHashInfo extends AppCompatActivity {
             }
             @Override
             public void onFailure(Call<HashInfo> call, Throwable t) {
-                //fTextView.setText("Failure: " + t);
+                spinner.setVisibility(View.GONE);
                 Toast.makeText(IPHashInfo.this,
                         "Check internet connection.",
                         Toast.LENGTH_LONG).show();
