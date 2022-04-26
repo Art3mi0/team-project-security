@@ -9,9 +9,38 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
+class ValidIPURL{
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    public void iPIsValid() {
+        assertTrue(Search.isValidIPAddress("1.1.1.1"));
+    }
+    public void invalidIpNumber() {
+        assertFalse(Search.isValidIPAddress("260.1.1.1"));
+    }
+
+    public void invalidIpManyNumbers() {
+        assertFalse(Search.isValidIPAddress("1.1.1.1.1"));
+    }
+    public void invalidIpNotNumber() {
+        assertFalse(Search.isValidIPAddress("1.1.1.A"));
+    }
+    public void invalidIpRand() {
+        assertFalse(Search.isValidIPAddress("-1.#####.@.9="));
+    }
+    public void urlIsValid() {
+        assertTrue(Search.validURl("https://www.google.com"));
+    }
+    public void invalidURLNoProtocol() {
+        assertFalse(Search.validURl("www.google.com"));
+    }
+
+    public void invalidURLNoComGovNet() {
+        assertFalse(Search.validURl(""));
+    }
+    public void invalidURLBADDomainName() {
+        assertFalse(Search.validURl(""));
+    }
+    public void invalidURLRand() {
+        assertFalse(Search.validURl(""));
     }
 }

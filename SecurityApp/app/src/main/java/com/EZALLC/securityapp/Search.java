@@ -135,16 +135,10 @@ public class Search extends AppCompatActivity {
         });
 
     }
-    /**
-     * This isValidIPAddress method receives users file hash or IP address
-     * and check if valid ip address
-     * @param
-     * @return true if ip address and false if not
-     */
 
     /**
-     * This isValidIPAddress method receives users file hash or IP address
-     * and check if valid ip address in form IPv4
+     * This isValidIPAddress method receives users URL or IP address
+     * and checks if valid ip address in form IPv4
      * @param  ip
      * @return true if ip address and false if not
      */
@@ -170,7 +164,7 @@ public class Search extends AppCompatActivity {
     }
     /**
      * This validURl method receives users URL or IP address
-     * and check if valid URL in for .com,.net,.gov
+     * and check if valid URL with domain name including .com,.net,.gov
      * @param URL
      * @return true if valid URL and false if not
      */
@@ -205,7 +199,7 @@ public class Search extends AppCompatActivity {
     }
     /**
      * This onSearch method receives users file hash or IP address
-     * and displays on page
+     * and displays on page if its valid ip address or url
      * @param   ipOrURL
      */
     public void onSearch(String ipOrURL){
