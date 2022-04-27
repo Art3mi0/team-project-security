@@ -23,4 +23,6 @@
     <string name="watchlist_help">Potentially significant text to be entered later</string>
     <string name="watchlist_favorite_button_text">Favorite</string>
     <string name="watchlist_remove_button_text">Remove</string>
+    <string name="findMyIp">Enter your IP address in the format xxx.xxx.xxx.xxx numbers can range between 0 and 255\nEnter your URL address with  protocol  http or https and a domain name including .com .net .gov like https://www.google.com\nFind your Ip address <a href="https://whatismyipaddress.com/">Here</a></string>
+    <string name="add">Add to Watchlist</string>
 </resources>
