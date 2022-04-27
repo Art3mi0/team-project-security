@@ -104,12 +104,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.iphash:
-                // User chose the "Settings" item, show the app settings UI...
-                Intent myIntent = new Intent(this, IPHashInfo.class);
-                startActivity(myIntent);
-                return true;
-
             case R.id.trendingthreats:
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...
