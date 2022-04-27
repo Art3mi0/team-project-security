@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Welcome to I.P and Hash</string>
     <string name="created_by">Created by Ixchel Peralta, Nicholas Morris, Temo Meza, Llacki B.P., and Skylar Stockton</string>
-    <string name="TrendingThreatHello">Hello from component Trending Threats</string>
+    <string name="TrendingThreatHello">Threat Level</string>
     <string name="EmailCheck">Hello from Email Check</string>
     <string name="iphashdemo">INFO FOR IPV4 174.216.16.12 &amp; Below That Results of Security Check of Tinder.com
     Info Provided By VIRUS TOTAL</string>
