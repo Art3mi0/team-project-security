@@ -41,6 +41,7 @@ public class TrendingThreats extends AppCompatActivity {
 
         threatLevel = findViewById(R.id.threatLevel);
         threatList = findViewById(R.id.threatList);
+
         try {
             getThreatLevel();
 
@@ -190,7 +191,7 @@ public class TrendingThreats extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> listView, View view, int i, long l) {
                             String item = ips.get(i);
                             Intent intent = new Intent(TrendingThreats.this,IPHashInfo.class);
-                            intent.putExtra("trend",item);
+                            intent.putExtra("key",item);
                             startActivity(intent);
 //                            Toast.makeText(TrendingThreats.this,item, Toast.LENGTH_SHORT).show();
                         }
