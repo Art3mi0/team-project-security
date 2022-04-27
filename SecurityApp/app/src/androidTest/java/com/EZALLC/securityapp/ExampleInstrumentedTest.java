@@ -6,6 +6,7 @@ import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.intent.matcher.IntentMatchers.toPackage;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -79,9 +80,16 @@ class InformationTest {
     }
     public void onInformationListClick() {
         Espresso.onData(allOf(is(instanceOf(Information.class)), is("Test one"))).perform(click());
-
+        intended(hasComponent(Information_1.class.getName()));
+        Espresso.onView(withId(R.id.textView6))
+                .check(matches(withText(containsString("https://www.google.com/"))));
+        Espresso.onView(withContentDescription("Navigate up")).perform(click());
+        intended(hasComponent(Information.class.getName()));
+    }
+    public void fontSizeTest{
 
     }
+
         intended(hasComponent(IPHashInfo.class.getName()));
         SystemClock.sleep(15000);
         Espresso.onView(withId(R.id.button)).perform(click());
@@ -101,7 +109,6 @@ class InformationTest {
 
         // Espresso.onView(ViewMatchers.withId(R.id.ip_info_page)).perform(ViewActions.click());
 
-    }
     @After
     public void tearDown() throws Exception{
         Intents.release();
