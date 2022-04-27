@@ -35,12 +35,17 @@ class ValidIPURL{
     }
 
     public void invalidURLNoComGovNet() {
-        assertFalse(Search.validURl(""));
+        assertFalse(Search.validURl("https://uncw.edu"));
     }
     public void invalidURLBADDomainName() {
-        assertFalse(Search.validURl(""));
+        assertFalse(Search.validURl("https://www.google.com.com"));
     }
     public void invalidURLRand() {
-        assertFalse(Search.validURl(""));
+        assertFalse(Search.validURl("https:/www.google.com"));
+        assertFalse(Search.validURl("https://www.google.........com"));
+        assertFalse(Search.validURl("https//www.google.com"));
+        assertFalse(Search.validURl("https://www.google"));
+        assertFalse(Search.validURl("https:/www.google.co"));
+        assertFalse(Search.validURl("https:/www.googlecom"));
     }
 }
