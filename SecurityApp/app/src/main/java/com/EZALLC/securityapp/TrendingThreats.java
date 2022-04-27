@@ -28,6 +28,7 @@ import java.util.ArrayList;
 public class TrendingThreats extends AppCompatActivity {
     private TextView threatLevel;
     private ListView threatList;
+    ArrayList<String> bundle= new ArrayList<>();
     // Can't run network code on main thread :(
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,7 +192,9 @@ public class TrendingThreats extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> listView, View view, int i, long l) {
                             String item = ips.get(i);
                             Intent intent = new Intent(TrendingThreats.this,IPHashInfo.class);
-                            intent.putExtra("key",item);
+                            bundle.add(item);
+                            bundle.add("IP");
+                            intent.putExtra("key",bundle);
                             startActivity(intent);
 //                            Toast.makeText(TrendingThreats.this,item, Toast.LENGTH_SHORT).show();
                         }
