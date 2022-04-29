@@ -27,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,7 +38,7 @@ public class IPHashInfo extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final String TAG = "IPHASH INFO";
 
-
+    haveibeenpwndinterface Haveibeenpwndinterface;
     TextView fTextView;
 
     VirusTotalAPI virusTotalAPI;
@@ -106,15 +107,17 @@ public class IPHashInfo extends AppCompatActivity {
         da_button.setEnabled(false);
 
         ArrayList<String> list = (ArrayList<String>) getIntent().getSerializableExtra("key");
-
+        Haveibeenpwndinterface = PulsediveClient.getClient().create(haveibeenpwndinterface.class);
         title.setText("INFO FOR \n"+ list.get(0));
         Log.w(TAG, list.toString());
         Log.w(TAG, "Should be above this!!!");
 
         if(list.get(1).equals("IP")) {
             getUser(list.get(0));
-        }else{
-            getURLHash(list.get(0));
+        }else if(list.get(1).equals("EMAIL")){
+            onCheckEmail(list.get(0));
+        }else if(list.get(1).equals("URL")){
+            getURLHash(list.get(1));
         }
     }
 
@@ -269,6 +272,63 @@ public class IPHashInfo extends AppCompatActivity {
                 Toast.makeText(IPHashInfo.this,
                         "Check internet connection.",
                         Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    /**
+     * this function uses an API to check if an email has been compromised or not
+     * @param  = user input and button click
+     * Output = a pop up that says error or email compromised or not
+     */
+    public void onCheckEmail(String email) {
+        //Execute the Network request
+
+
+        Call<List<Pwned>> call = Haveibeenpwndinterface.getPwned(email, false);
+        // if value is empty, return a comment
+        // if value is not valid email, return a comment (toast)
+        //Execute the request in a background thread
+        call.enqueue(new Callback<List<Pwned>>() {
+            @Override
+            public void onResponse(Call<List<Pwned>> call, Response<List<Pwned>> response) {
+                String userContent = "";
+                if (response.code() == 404) {
+                    userContent += "This account probably don't exist.";
+                }
+                if (response.body() == null) {
+//                    Toast.makeText(IPHashInfo.this,
+//                            "No Breaches",
+//                            Toast.LENGTH_LONG).show();
+
+                    Log.e(TAG, "onResponse: " + response.body());
+                    return;
+                }
+                //loop incremented value
+                if (response.code() == 404) {
+                    userContent += "This account probably don't exist.";
+                }
+                for (int i = 0; i < response.body().size(); i++) {
+                    userContent += "Name: " + response.body().get(i).getName() + "\n";
+                    userContent += "Domain: " + response.body().get(i).getDomain() + "\n";
+                    userContent += "Title: " + response.body().get(i).getTitle() + "\n";
+                    userContent += "Breach Date: " + response.body().get(i).getBreachDate() + "\n";
+                    userContent += "Description: " + response.body().get(i).getDescription() + "\n";
+
+
+                }
+//                Toast.makeText(IPHashInfo.this,
+//                        userContent,
+//                        Toast.LENGTH_LONG).show();
+
+                fTextView.setText(userContent);
+
+                Log.e(TAG, "onResponse: " + response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Pwned>> call, Throwable t) {
+                Log.e(TAG, "onResponse: " + "It just gets here.");
             }
         });
     }
