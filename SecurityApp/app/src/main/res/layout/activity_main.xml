@@ -48,57 +48,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/emailTextTitle"
-        android:text="@string/emailTextTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/created_by" />
-
     <EditText
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/enterEmail"
-        app:layout_constraintStart_toEndOf="@id/emailTextTitle"
-        app:layout_constraintBottom_toTopOf="@id/created_by"
-        app:layout_constraintEnd_toStartOf="@id/compromisedButton"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/compromisedButton"
-        android:onClick="onCheckEmail"
-        android:text="@string/compromisedButtonText"
-        app:layout_constraintBottom_toTopOf="@id/created_by"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/generatePasswordTitleText"
-        android:text="@string/generatePasswordTitleText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/enterEmail"/>
-
-    <EditText
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
         android:id="@+id/passwordDisplay"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:width="180dp"
         android:focusableInTouchMode="false"
         android:textIsSelectable="true"
-        app:layout_constraintStart_toEndOf="@id/generatePasswordTitleText"
-        app:layout_constraintEnd_toStartOf="@id/generatePasswordButtonText"
-        app:layout_constraintBottom_toBottomOf="@id/generatePasswordTitleText"/>
+        app:layout_constraintBottom_toTopOf="@id/created_by"
+        app:layout_constraintStart_toEndOf="@id/generatePasswordButtonText"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="10dp"/>
 
     <Button
+        android:id="@+id/generatePasswordButtonText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/generatePasswordButtonText"
+        android:layout_marginEnd="268dp"
+        android:layout_marginBottom="80dp"
         android:onClick="onGeneratePassword"
         android:text="@string/generatePasswordButtonText"
-        app:layout_constraintBottom_toTopOf="@id/compromisedButton"
-        app:layout_constraintEnd_toEndOf="@id/compromisedButton"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/favorites"

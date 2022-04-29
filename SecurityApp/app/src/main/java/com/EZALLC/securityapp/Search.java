@@ -66,7 +66,7 @@ public class Search extends AppCompatActivity {
                         }
                     }, 2000);
                 }
-                else if (isValidIPAddress(searchUserInput.getText().toString())==false && validURl(searchUserInput.getText().toString())==false) {
+                else if (isValidIPAddress(searchUserInput.getText().toString())==false && validURl(searchUserInput.getText().toString())==false && !isValid(searchUserInput.getText().toString())) {
                     Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
                     searchButton.setEnabled(false);
                     new Handler().postDelayed(new Runnable() {
@@ -101,6 +101,15 @@ public class Search extends AppCompatActivity {
                         //intent.putExtra("EXTRA_BUNDLE",URL);
                         intent.putExtra("key",bundle);
                         startActivity(intent);
+                    }else if(isValid(searchUserInput.getText().toString())){
+                        bundle.clear();
+                        //String[] URL = {searchUserInput.getText().toString(), "URL"};
+                        bundle.add(searchUserInput.getText().toString());
+                        bundle.add("EMAIL");
+                        //intent.putExtra("EXTRA_BUNDLE",URL);
+                        intent.putExtra("key",bundle);
+                        startActivity(intent);
+
                     }
                     //Search.this.startActivity(PageIPHashing);
 
@@ -248,6 +257,19 @@ public class Search extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public static boolean isValid(String email)
+    {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
     }
 
 }
