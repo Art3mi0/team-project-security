@@ -55,7 +55,7 @@ public class Search extends AppCompatActivity {
         searchButton.setOnClickListener(new android.view.View.OnClickListener(){
             public void onClick(android.view.View v){
                 if (searchUserInput.getText().toString().isEmpty()) {
-                    Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Search.this, "Enter a valid email address, IP address, or URL", Toast.LENGTH_SHORT).show();
                     searchButton.setEnabled(false);
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -67,7 +67,7 @@ public class Search extends AppCompatActivity {
                     }, 2000);
                 }
                 else if (isValidIPAddress(searchUserInput.getText().toString().trim())==false && validURl(searchUserInput.getText().toString().trim())==false && !isValid(searchUserInput.getText().toString().trim())) {
-                    Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Search.this, "Enter a valid email address, IP address, or URL", Toast.LENGTH_SHORT).show();
                     searchButton.setEnabled(false);
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -227,23 +227,26 @@ public class Search extends AppCompatActivity {
         ListViewSearch.setAdapter(SearchAdapter);
     }
     /**
-     * This onSearch method receives users file hash or IP address
+     * This onSearch method receives users email address,URL or IP address
      * and displays on page
-     * @param   ipOrURL
+     * @param   ipOrURLOrEmail
      */
-    public void onSearch(String ipOrURL){
-            if(isValidIPAddress(ipOrURL)){
-                add_clear_list(ipOrURL);
-                Toast.makeText(Search.this, "Valid Ip Address "+ipOrURL+"\nSearching", Toast.LENGTH_SHORT).show();
+    public void onSearch(String ipOrURLOrEmail){
+            if(isValidIPAddress(ipOrURLOrEmail)){
+                add_clear_list(ipOrURLOrEmail);
+                Toast.makeText(Search.this, "Valid Ip Address "+ipOrURLOrEmail+"\nSearching", Toast.LENGTH_SHORT).show();
 
             }
-            else if(validURl(ipOrURL)){
-                add_clear_list(ipOrURL);
-                Toast.makeText(Search.this, "Valid URL "+ipOrURL+"\nSearching", Toast.LENGTH_SHORT).show();
+            else if(validURl(ipOrURLOrEmail)){
+                add_clear_list(ipOrURLOrEmail);
+                Toast.makeText(Search.this, "Valid URL "+ipOrURLOrEmail+"\nSearching", Toast.LENGTH_SHORT).show();
+            }else if(isValid(ipOrURLOrEmail)==true){
+                add_clear_list(ipOrURLOrEmail);
+                Toast.makeText(Search.this, "Valid Email Address "+ipOrURLOrEmail+"\nSearching", Toast.LENGTH_SHORT).show();
             }
 
             else {
-                Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Search.this, "Enter a valid email address, IP address, or URL", Toast.LENGTH_SHORT).show();
             }
 
     }
