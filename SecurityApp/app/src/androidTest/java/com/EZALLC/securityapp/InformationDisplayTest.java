@@ -68,9 +68,7 @@ import java.util.Map;
  */
 @RunWith(AndroidJUnit4.class)
 
-public class SearchInformationTest {
-    @Rule
-    public ActivityScenarioRule<Information> activityActivityTestRule = new ActivityScenarioRule<>(Information.class);
+public class InformationDisplayTest {
     @Rule
     public ActivityScenarioRule<Information_1> InfoActivityTestRule = new ActivityScenarioRule<>(Information_1.class);
     @Rule
@@ -81,6 +79,7 @@ public class SearchInformationTest {
     @Before
     public void setUp() throws Exception{
         Intents.init();
+
     }
 
    @Test
@@ -91,20 +90,6 @@ public class SearchInformationTest {
         Espresso.onData(allOf(is(instanceOf(Information.class)), is("Test three")));
     }
 
-    @Test
-    public void onInformationListClick() {
-        Espresso.onData(allOf(is(instanceOf(Information.class)), is("Test one")));
-        Espresso.onData(anything())
-                .inAdapterView(withId(R.id.ListViewInfo))
-                .atPosition(0)
-                .perform(click());
-        intended(hasComponent(Information_1.class.getName()));
-        Espresso.onView(withId(R.id.textView6)).check(matches(withText(containsString("https://www.google.com/"))));
-        Espresso.onView(withContentDescription("Navigate up")).perform(click());
-        intended(hasComponent(Information.class.getName()));
-        Espresso.onView(withContentDescription("Navigate up")).perform(click());
-        intended(hasComponent(MainActivity.class.getName()));
-    }
     public class ToastMatcher extends TypeSafeMatcher<Root> {
 
         @Override    public void describeTo(Description description) {
@@ -124,7 +109,7 @@ public class SearchInformationTest {
             return false;
         }
     }
-    @Test
+   @Test
     public void maxMinTextSizeTest(){
         Espresso.onView(withId(R.id.buttonInc)).perform(click());
         Espresso.onView(withId(R.id.buttonInc)).perform(click());
