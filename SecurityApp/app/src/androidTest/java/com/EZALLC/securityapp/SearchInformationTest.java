@@ -64,7 +64,9 @@ import static org.junit.Assert.*;
 public class SearchInformationTest {
     @Rule
     public ActivityScenarioRule<Information> activityActivityTestRule = new ActivityScenarioRule<>(Information.class);
+    @Rule
     public IntentsTestRule<Information> intentsTestRule= new IntentsTestRule<>(Information.class);
+    @Rule
     public ActivityTestRule<Information_1> mActivityRule = new ActivityTestRule(Information_1.class);
 
     @Before
@@ -81,6 +83,7 @@ public class SearchInformationTest {
         Espresso.onView(withId(R.id.ListViewInfo))
                 .check(matches(withText(containsString("Test three"))));
     }
+    @Test
     public void onInformationListClick() {
         Espresso.onData(allOf(is(instanceOf(Information.class)), is("Test one"))).perform(click());
         intended(hasComponent(Information_1.class.getName()));
@@ -108,6 +111,7 @@ public class SearchInformationTest {
             return false;
         }
     }
+    @Test
     public void maxMinTextSizeTest(){
         Espresso.onView(withId(R.id.buttonInc)).perform(click());
         Espresso.onView(withId(R.id.buttonInc)).perform(click());
