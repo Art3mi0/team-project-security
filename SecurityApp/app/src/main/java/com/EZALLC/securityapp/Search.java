@@ -66,7 +66,7 @@ public class Search extends AppCompatActivity {
                         }
                     }, 2000);
                 }
-                else if (isValidIPAddress(searchUserInput.getText().toString())==false && validURl(searchUserInput.getText().toString())==false && !isValid(searchUserInput.getText().toString())) {
+                else if (isValidIPAddress(searchUserInput.getText().toString().trim())==false && validURl(searchUserInput.getText().toString().trim())==false && !isValid(searchUserInput.getText().toString().trim())) {
                     Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
                     searchButton.setEnabled(false);
                     new Handler().postDelayed(new Runnable() {
@@ -84,24 +84,24 @@ public class Search extends AppCompatActivity {
                     searchUserInput.setEnabled(false);
                     ListViewSearch.setVisibility(android.view.View.INVISIBLE);
                     Intent intent = new Intent(Search.this,IPHashInfo.class);
-                    if(isValidIPAddress(searchUserInput.getText().toString())==true){
+                    if(isValidIPAddress(searchUserInput.getText().toString().trim())==true){
                         bundle.clear();
                         //String[] vaildIP = {searchUserInput.getText().toString(), "IP"};
-                        bundle.add(searchUserInput.getText().toString());
+                        bundle.add(searchUserInput.getText().toString().trim());
                         bundle.add("IP");
                         //intent.putExtra("EXTRA_BUNDLE",vaildIP);
                         intent.putExtra("key",bundle);
                         startActivity(intent);
                     }
-                    else if(validURl(searchUserInput.getText().toString())==true){
+                    else if(validURl(searchUserInput.getText().toString().trim())==true){
                         bundle.clear();
                         //String[] URL = {searchUserInput.getText().toString(), "URL"};
-                        bundle.add(searchUserInput.getText().toString());
+                        bundle.add(searchUserInput.getText().toString().trim());
                         bundle.add("URL");
                         //intent.putExtra("EXTRA_BUNDLE",URL);
                         intent.putExtra("key",bundle);
                         startActivity(intent);
-                    }else if(isValid(searchUserInput.getText().toString())){
+                    }else if(isValid(searchUserInput.getText().toString().trim())){
                         bundle.clear();
                         //String[] URL = {searchUserInput.getText().toString(), "URL"};
                         bundle.add(searchUserInput.getText().toString());
@@ -137,12 +137,12 @@ public class Search extends AppCompatActivity {
                 searchButton.setEnabled(false);
                 ListViewSearch.setVisibility(android.view.View.INVISIBLE);
                 Intent intent1 = new Intent(Search.this,IPHashInfo.class);
-                if(isValidIPAddress(searchUserInput.getText().toString())==true){
-                    String[] vaildIP = {searchUserInput.getText().toString(), "IP"};
+                if(isValidIPAddress(searchUserInput.getText().toString().trim())==true){
+                    String[] vaildIP = {searchUserInput.getText().toString().trim(), "IP"};
                     intent1.putExtra("SendIP",vaildIP);
                 }
-                else if(validURl(searchUserInput.getText().toString())==true){
-                    String[] URL = {searchUserInput.getText().toString(), "URL"};
+                else if(validURl(searchUserInput.getText().toString().trim())==true){
+                    String[] URL = {searchUserInput.getText().toString().trim(), "URL"};
                     intent1.putExtra("SendURL",URL);
                 }
                 Search.this.startActivity(PageIPHashing);
@@ -241,6 +241,7 @@ public class Search extends AppCompatActivity {
                 add_clear_list(ipOrURL);
                 Toast.makeText(Search.this, "Valid URL "+ipOrURL+"\nSearching", Toast.LENGTH_SHORT).show();
             }
+
             else {
                 Toast.makeText(Search.this, "Enter a IP address or URL", Toast.LENGTH_SHORT).show();
             }

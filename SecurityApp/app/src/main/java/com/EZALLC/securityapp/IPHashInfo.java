@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.text.HtmlCompat;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -99,7 +101,7 @@ public class IPHashInfo extends AppCompatActivity {
 
         virusTotalAPI = VirusTotalClient.getClient().create(VirusTotalAPI.class);
         fTextView = findViewById(R.id.IP_info_box);
-        url_info_box = (TextView) findViewById(R.id.hash_box);
+
 
         TextView title = (TextView) findViewById(R.id.demo_title);
 
@@ -115,6 +117,7 @@ public class IPHashInfo extends AppCompatActivity {
         if(list.get(1).equals("IP")) {
             getUser(list.get(0));
         }else if(list.get(1).equals("EMAIL")){
+            da_button.setVisibility(View.GONE);
             onCheckEmail(list.get(0));
         }else if(list.get(1).equals("URL")){
             getURLHash(list.get(1));
@@ -263,7 +266,7 @@ public class IPHashInfo extends AppCompatActivity {
                 //userContent += "Harmless: " + response.body().getData().getAttributes().getTotalVotes().getHarmless()+ "\n";
                 //userContent += "Malicious: " + response.body().getData().getAttributes().getTotalVotes().getMalicious()+ "\n";
 
-                url_info_box.setText(userContent);
+                fTextView.setText(userContent);
 
             }
             @Override
@@ -293,10 +296,16 @@ public class IPHashInfo extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Pwned>> call, Response<List<Pwned>> response) {
                 String userContent = "";
-                if (response.code() == 404) {
-                    userContent += "This account probably don't exist.";
-                }
+//                if (response.code() == 404) {
+//                    spinner.setVisibility(View.GONE);
+//                    userContent += "This account probably don't exist.";
+//                    fTextView.setText(userContent);
+//                    return;
+//                }
                 if (response.body() == null) {
+                    spinner.setVisibility(View.GONE);
+
+                    fTextView.setText(R.string.Breaches);
 //                    Toast.makeText(IPHashInfo.this,
 //                            "No Breaches",
 //                            Toast.LENGTH_LONG).show();
@@ -306,14 +315,20 @@ public class IPHashInfo extends AppCompatActivity {
                 }
                 //loop incremented value
                 if (response.code() == 404) {
+                    spinner.setVisibility(View.GONE);
                     userContent += "This account probably don't exist.";
+
                 }
                 for (int i = 0; i < response.body().size(); i++) {
+                    spinner.setVisibility(View.GONE);
                     userContent += "Name: " + response.body().get(i).getName() + "\n";
                     userContent += "Domain: " + response.body().get(i).getDomain() + "\n";
                     userContent += "Title: " + response.body().get(i).getTitle() + "\n";
                     userContent += "Breach Date: " + response.body().get(i).getBreachDate() + "\n";
-                    userContent += "Description: " + response.body().get(i).getDescription() + "\n";
+                    Spanned spanned = HtmlCompat.fromHtml(response.body().get(0).getDescription(), HtmlCompat.FROM_HTML_MODE_COMPACT);
+                    userContent += spanned+"\n";
+                    userContent+=""+"\n";
+                    //userContent += "Description: " + response.body().get(i).getDescription() + "\n";
 
 
                 }

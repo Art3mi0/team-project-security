@@ -44,9 +44,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/EmailCheck"
-        app:layout_constraintTop_toBottomOf="@+id/welcome_text"
+        app:layout_constraintBottom_toTopOf="@id/generatePasswordButtonText"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingHorizontal="24dp"
+        android:layout_marginBottom="10dp"/>
+
 
     <EditText
         android:id="@+id/passwordDisplay"
@@ -81,7 +84,7 @@
         android:maxLines="10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView"
-        app:layout_constraintBottom_toTopOf="@id/generatePasswordButtonText" />
-
+        app:layout_constraintTop_toBottomOf="@id/welcome_text"
+        android:layout_marginTop="40dp"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

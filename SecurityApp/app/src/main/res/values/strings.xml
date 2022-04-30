@@ -2,7 +2,7 @@
     <string name="app_name">Welcome to I.P and Hash</string>
     <string name="created_by">Created by Ixchel Peralta, Nicholas Morris, Temo Meza, Llacki B.P., and Skylar Stockton</string>
     <string name="TrendingThreatHello">Threat Level</string>
-    <string name="EmailCheck">Results from haveibeenpwnd</string>
+    <string name="EmailCheck">Grab a free randomly generated password while your here! You can never be too safe!</string>
     <string name="iphashdemo">INFO FOR IPV4 174.216.16.12 &amp; Below That Results of Security Check of Tinder.com
     Info Provided By VIRUS TOTAL</string>
     <string name="login_email">Email:</string>
@@ -23,7 +23,7 @@
     <string name="watchlist_help">Potentially significant text to be entered later</string>
     <string name="watchlist_favorite_button_text">Favorite</string>
     <string name="watchlist_remove_button_text">Remove</string>
-    <string name="findMyIp">Enter your IP address in the format xxx.xxx.xxx.xxx numbers can range between 0 and 255\nEnter your URL address with  protocol  http or https and a domain name including .com .net .gov like https://www.google.com\nFind your Ip address <a href="https://whatismyipaddress.com/">Here</a></string>
+    <string name="findMyIp">Enter your IP address in the format xxx.xxx.xxx.xxx numbers can range between 0 and 255\nEnter your URL address with  protocol  http or https and a domain name including .com .net .gov like https://www.google.com\nEnter your email to find out if it has been compromised using haveibeenpwnd API\nFind your Ip address <a href="https://whatismyipaddress.com/">Here</a></string>
     <string name="add">Add to Watchlist</string>
     <string name="title_activity_email">Email</string>
     <!-- Strings used for fragments for navigation -->
@@ -34,4 +34,8 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="Breaches">Hooray! No breaches were found!</string>
+    <string name="NoBreaches">Breaches include:</string>
+
 </resources>

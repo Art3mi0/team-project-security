@@ -34,9 +34,9 @@ import static org.hamcrest.CoreMatchers.anything;
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
-public class WatchlistTest {
+public class PasswordGeneratorTest {
     @Rule
-    public ActivityTestRule<Search> activityActivityTestRule = new ActivityTestRule<Search>(Search.class);
+    public ActivityTestRule<MainActivity> activityActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class);
 
     @Before
     public void setUp() throws Exception{
@@ -48,35 +48,38 @@ public class WatchlistTest {
     public void goto_Search(){
         //Kinda works.
         //Espresso.onView(withId(R.menu.menu_main)).perform(click()).check(matches(isDisplayed()));
-        Espresso.onView(withId(R.id.textView7)).check(matches(isDisplayed()));
+        //Espresso.onView(withId(R.id.textView7)).check(matches(isDisplayed()));
 
-        Espresso.onView(withId(R.id.searchInput)).perform(typeText("174.216.16.12"));
-        Espresso.onView(withId(R.id.searchInput)).check(matches(withText("174.216.16.12")));
-        Espresso.onView(withId(R.id.search_button)).perform(click());
+        //Espresso.onView(withId(R.id.searchInput)).perform(typeText("174.216.16.12"));
+        //Espresso.onView(withId(R.id.searchInput)).check(matches(withText("174.216.16.12")));
+
+
+        Espresso.onView(withId(R.id.generatePasswordButtonText)).perform(click());
+        Espresso.onView(withId(R.id.passwordDisplay)).check(matches(isDisplayed()));
 
         //SystemClock.sleep(1500);
 
 //        Espresso.onView(withId(R.id.Search)).perform(click());
 //
 
-        intended(hasComponent(IPHashInfo.class.getName()));
-        SystemClock.sleep(15000);
-        Espresso.onView(withId(R.id.button)).perform(click());
+//        intended(hasComponent(IPHashInfo.class.getName()));
+//        SystemClock.sleep(15000);
+        //Espresso.onView(withId(R.id.button)).perform(click());
 
         //openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
         //Espresso.onView(withId(android.R.id.home)).perform(click());
 
-        Espresso.onView(withContentDescription("Navigate up")).perform(click());
-        intended(hasComponent(MainActivity.class.getName()));
+//        Espresso.onView(withContentDescription("Navigate up")).perform(click());
+//        intended(hasComponent(MainActivity.class.getName()));
 
-        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
-        Espresso.onView(withText("WatchList")).perform(click());
-        intended(hasComponent(WatchList.class.getName()));
+//        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+//        Espresso.onView(withText("WatchList")).perform(click());
+//        intended(hasComponent(WatchList.class.getName()));
 
         //Mess with one below.
         //Espresso.onData(anything()).inAdapterView(withId(R.id.the_watchlist)).atPosition(0).check(matches(isDisplayed()));
 
-       // Espresso.onView(ViewMatchers.withId(R.id.ip_info_page)).perform(ViewActions.click());
+        // Espresso.onView(ViewMatchers.withId(R.id.ip_info_page)).perform(ViewActions.click());
 
     }
     @After
@@ -85,3 +88,5 @@ public class WatchlistTest {
     }
 
 }
+
+
