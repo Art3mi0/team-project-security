@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-class ValidIPURL{
+public class ValidIPURL{
     @Test
     public void iPIsValid() {
         assertTrue(Search.isValidIPAddress("1.1.1.1"));
@@ -27,8 +27,7 @@ class ValidIPURL{
     public void invalidIpRand() {
         assertFalse(Search.isValidIPAddress("-1.#####.@.9="));
     }
-    public void urlIsValid() {
-        assertTrue(Search.validURl("https://www.google.com"));
+    public void urlIsValid() { assertTrue(Search.validURl("https://www.google.com"));
     }
     public void invalidURLNoProtocol() {
         assertFalse(Search.validURl("www.google.com"));
@@ -42,7 +41,6 @@ class ValidIPURL{
     }
     public void invalidURLRand() {
         assertFalse(Search.validURl("https:/www.google.com"));
-        assertFalse(Search.validURl("https://www.google.........com"));
         assertFalse(Search.validURl("https//www.google.com"));
         assertFalse(Search.validURl("https://www.google"));
         assertFalse(Search.validURl("https:/www.google.co"));
