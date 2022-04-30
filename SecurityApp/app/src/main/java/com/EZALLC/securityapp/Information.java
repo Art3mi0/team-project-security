@@ -27,9 +27,9 @@ public class Information extends AppCompatActivity {
         getSupportActionBar().setTitle("Information");
         ListViewinfo = findViewById(R.id.ListViewInfo);
         String[] InfoHolder = new String[] {
-                "IP address",
-                "URL",
-                "Cyber Security threat",
+                "Test one",
+                "Test two",
+                "Test three",
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item, InfoHolder);
         ListViewinfo.setAdapter(adapter);

@@ -12,6 +12,7 @@ import static androidx.test.espresso.assertion.ViewAssertions.matches;
 
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static androidx.test.espresso.matcher.CursorMatchers.withRowString;
 import static androidx.test.espresso.matcher.RootMatchers.withDecorView;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -35,6 +36,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
 import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.After;
 import org.junit.Before;
@@ -45,7 +47,10 @@ import org.junit.runner.RunWith;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.EasyMock2Matchers.equalTo;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anything;
+import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.*;
 
@@ -53,6 +58,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
+
+import java.util.Map;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -65,7 +72,9 @@ public class SearchInformationTest {
     @Rule
     public ActivityScenarioRule<Information> activityActivityTestRule = new ActivityScenarioRule<>(Information.class);
     @Rule
-    public IntentsTestRule<Information> intentsTestRule= new IntentsTestRule<>(Information.class);
+    public ActivityScenarioRule<Information_1> InfoActivityTestRule = new ActivityScenarioRule<>(Information_1.class);
+    @Rule
+    public ActivityTestRule<Information> intentsTestRule= new ActivityTestRule<>(Information.class);
     @Rule
     public ActivityTestRule<Information_1> mActivityRule = new ActivityTestRule(Information_1.class);
 
@@ -74,38 +83,42 @@ public class SearchInformationTest {
         Intents.init();
     }
 
-    @Test
+   @Test
     public void information_Display() {
-        Espresso.onView(withId(R.id.ListViewInfo))
-                .check(matches(withText(containsString("Test one"))));
-        Espresso.onView(withId(R.id.ListViewInfo))
-                .check(matches(withText(containsString("Test two"))));
-        Espresso.onView(withId(R.id.ListViewInfo))
-                .check(matches(withText(containsString("Test three"))));
+
+        Espresso.onData(allOf(is(instanceOf(Information.class)), is("Test one")));
+        Espresso.onData(allOf(is(instanceOf(Information.class)), is("Test two")));
+        Espresso.onData(allOf(is(instanceOf(Information.class)), is("Test three")));
     }
+
     @Test
     public void onInformationListClick() {
-        Espresso.onData(allOf(is(instanceOf(Information.class)), is("Test one"))).perform(click());
+        Espresso.onData(allOf(is(instanceOf(Information.class)), is("Test one")));
+        Espresso.onData(anything())
+                .inAdapterView(withId(R.id.ListViewInfo))
+                .atPosition(0)
+                .perform(click());
         intended(hasComponent(Information_1.class.getName()));
-        Espresso.onView(withId(R.id.textView6))
-                .check(matches(withText(containsString("https://www.google.com/"))));
+        Espresso.onView(withId(R.id.textView6)).check(matches(withText(containsString("https://www.google.com/"))));
         Espresso.onView(withContentDescription("Navigate up")).perform(click());
         intended(hasComponent(Information.class.getName()));
         Espresso.onView(withContentDescription("Navigate up")).perform(click());
         intended(hasComponent(MainActivity.class.getName()));
     }
     public class ToastMatcher extends TypeSafeMatcher<Root> {
-        @Override public void describeTo(Description description) {
+
+        @Override    public void describeTo(Description description) {
             description.appendText("is toast");
         }
 
-        @Override public boolean matchesSafely(Root root) {
+        @Override    public boolean matchesSafely(Root root) {
             int type = root.getWindowLayoutParams().get().type;
             if ((type == WindowManager.LayoutParams.TYPE_TOAST)) {
                 IBinder windowToken = root.getDecorView().getWindowToken();
                 IBinder appToken = root.getDecorView().getApplicationWindowToken();
                 if (windowToken == appToken) {
                     //means this window isn't contained by any other windows.
+                    return true;
                 }
             }
             return false;
@@ -118,12 +131,18 @@ public class SearchInformationTest {
         Espresso.onView(withId(R.id.buttonInc)).perform(click());
         Espresso.onView(withId(R.id.buttonInc)).perform(click());
         Espresso.onView(withId(R.id.buttonInc)).perform(click());
-        Espresso.onView(withText("Maximum text size reached")).inRoot(new ToastMatcher())
-                .check(matches(isDisplayed()));
+        Espresso.onView(withId(R.id.buttonInc)).perform(click());
+        Espresso.onView(withText("Maximum text size reached")).inRoot(new ToastMatcher()).check(matches(isDisplayed()));
+        Espresso.onView(withId(R.id.buttonDec)).perform(click());
+        Espresso.onView(withId(R.id.buttonDec)).perform(click());
+        Espresso.onView(withId(R.id.buttonDec)).perform(click());
+        Espresso.onView(withId(R.id.buttonDec)).perform(click());
+        Espresso.onView(withId(R.id.buttonDec)).perform(click());
+        Espresso.onView(withId(R.id.buttonDec)).perform(click());
         Espresso.onView(withId(R.id.buttonDec)).perform(click());
         Espresso.onView(withId(R.id.buttonDec)).perform(click());
         Espresso.onView(withText("Minimum text size reached")).inRoot(new ToastMatcher())
-                .check(matches(isDisplayed()));
+               .check(matches(isDisplayed()));
     }
 
 

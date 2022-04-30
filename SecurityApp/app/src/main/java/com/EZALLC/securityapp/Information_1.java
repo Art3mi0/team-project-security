@@ -39,7 +39,7 @@ public class Information_1 extends AppCompatActivity {
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize);
                 }
                 else{
-                    Toast.makeText(Information_1.this, "Maximum Text size reached", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Information_1.this, "Maximum text size reached", Toast.LENGTH_SHORT).show();
                 }
             }
 
