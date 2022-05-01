@@ -29,7 +29,7 @@ public class ipAddressInformation extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Information");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        tv =(TextView) findViewById(R.id.textView6);
+        tv =(TextView) findViewById(R.id.ipInfoTextBox);
         IncButton = (Button) findViewById(R.id.buttonInc);
         DecButton = (Button) findViewById(R.id.buttonDec);
         IncButton.setOnClickListener(new View.OnClickListener(){
