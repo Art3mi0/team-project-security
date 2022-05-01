@@ -240,8 +240,8 @@ public class Search extends AppCompatActivity {
             else if(validURl(ipOrURLOrEmail)){
                 add_clear_list(ipOrURLOrEmail);
                 Toast.makeText(Search.this, "Valid URL "+ipOrURLOrEmail+"\nSearching", Toast.LENGTH_SHORT).show();
-            }else if(isValid(ipOrURLOrEmail)==true){
-                add_clear_list(ipOrURLOrEmail);
+            }
+            else if(isValid(ipOrURLOrEmail)==true){
                 Toast.makeText(Search.this, "Valid Email Address "+ipOrURLOrEmail+"\nSearching", Toast.LENGTH_SHORT).show();
             }
 
