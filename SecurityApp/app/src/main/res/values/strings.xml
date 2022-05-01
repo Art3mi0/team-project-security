@@ -37,5 +37,7 @@
 
     <string name="Breaches">Hooray! No breaches were found!</string>
     <string name="NoBreaches">Breaches include:</string>
+    <string name="watchlist_no_items">Items can be added to the watchlist after successful searches in the search page
+     or from clicking items in the trending threats page</string>
 
 </resources>

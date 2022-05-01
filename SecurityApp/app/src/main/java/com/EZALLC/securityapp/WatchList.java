@@ -40,6 +40,7 @@ public class WatchList extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final String TAG = "Watchlist";
 
+    private TextView noItemsText;
     private Threat oldFav;
     private ListView watchList;
     private EditText userInput;
@@ -60,6 +61,7 @@ public class WatchList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("WatchList");
 
+        noItemsText = findViewById(R.id.watchlist_no_items);
         watchList = findViewById(R.id.the_watchlist);
         userInput = findViewById(R.id.watchlist_input);
         mAuth = FirebaseAuth.getInstance();
@@ -227,9 +229,12 @@ public class WatchList extends AppCompatActivity {
                             Log.d(TAG, Boolean.toString(t.getIsFavorite()));
                         }
                         adapter.clear();
-                        if (mThreats != null) {
+                        try {
+                            mThreats.get(0);
                             Log.d(TAG, "threats not null");
                             adapter.addAll(mThreats);
+                        } catch (Exception e) {
+                            noItemsText.setText(getString(R.string.watchlist_no_items));
                         }
                     }
                 });
