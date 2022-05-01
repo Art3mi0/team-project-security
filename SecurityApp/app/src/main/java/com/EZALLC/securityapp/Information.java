@@ -5,15 +5,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import com.google.firebase.firestore.core.View;
 
 public class Information extends AppCompatActivity {
     private ListView ListViewinfo;
@@ -27,9 +23,12 @@ public class Information extends AppCompatActivity {
         getSupportActionBar().setTitle("Information");
         ListViewinfo = findViewById(R.id.ListViewInfo);
         String[] InfoHolder = new String[] {
-                "Test one",
+                "Ip Address",
                 "Test two",
                 "Test three",
+                "  ",
+                "  ",
+                "  "
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item, InfoHolder);
         ListViewinfo.setAdapter(adapter);
@@ -37,7 +36,7 @@ public class Information extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, android.view.View view, int i, long l) {
                 switch (i){
-                    case 0: Intent PageOne = new Intent(Information.this,Information_1.class);
+                    case 0: Intent PageOne = new Intent(Information.this,ipAddressInformation.class);
                        Information.this.startActivity(PageOne);
                         break;
                 }

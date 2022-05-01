@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Welcome to I.P and Hash</string>
     <string name="created_by">Created by Ixchel Peralta, Nicholas Morris, Temo Meza, Llacki B.P., and Skylar Stockton</string>
-    <string name="TrendingThreatHello">Hello from component Trending Threats</string>
-    <string name="EmailCheck">Hello from Email Check</string>
+    <string name="TrendingThreatHello">Threat Level</string>
+    <string name="EmailCheck">Grab a free randomly generated password while your here! You can never be too safe!</string>
     <string name="iphashdemo">INFO FOR IPV4 174.216.16.12 &amp; Below That Results of Security Check of Tinder.com
     Info Provided By VIRUS TOTAL</string>
     <string name="login_email">Email:</string>
@@ -15,7 +15,7 @@
     <string name="compromisedButtonText">Compromised?</string>
     <string name="emailTextTitle">Enter Email</string>
     <string name="generatePasswordTitleText">Generate Password</string>
-    <string name="generatePasswordButtonText">Generate</string>
+    <string name="generatePasswordButtonText">Generate Password</string>
     <string name="SearchHello">Hello from search component</string>
     <string name="InformationHello">Hello from Information component</string>
     <string name="watchlist_title">Hello from WatchList component</string>
@@ -23,5 +23,29 @@
     <string name="watchlist_help">Potentially significant text to be entered later</string>
     <string name="watchlist_favorite_button_text">Favorite</string>
     <string name="watchlist_remove_button_text">Remove</string>
-    <string name="findMyIp">Enter your IP address in the format xxx.xxx.xxx.xxx numbers can range between 0 and 255\nEnter your URL address with  protocol  http or https and a domain name including .com .net .gov like https://www.google.com\nFind your Ip address <a href="https://whatismyipaddress.com/">Here</a></string>
+    <string name="findMyIp">Enter your IP address in the format xxx.xxx.xxx.xxx numbers can range between 0 and 255\nEnter your URL address with  protocol
+        http or https and a domain name including .com .net .gov like https://www.google.com
+        \nEnter your email to find out if it has been compromised using haveibeenpwnd API
+        \nFind your Ip address<a href="https://whatismyipaddress.com/">Here</a></string>
+    <string name="IpAddressTextInfo">An IP address is four numbers separated by periods, and numbers can range from 0 to 255.
+        IP stands for Internet Protocol. There are different types of addresses like consumer, private, public, and many more.
+        An IP address is used to identify a device on the internet to make a connection to send and receive information.
+        IP addresses may be used in a malicious way, like tracing your home address or spying on your private internet traffic.\nLearn more\n
+        https://www.kaspersky.com/resource-center/definitions/what-is-an-ip-address
+        \nhttps://www.avast.com/c-what-is-an-ip-address
+        \nhttps://us.norton.com/internetsecurity-privacy-what-does-an-ip-address-tell-you.html</string>
+    <string name="add">Add to Watchlist</string>
+    <string name="title_activity_email">Email</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="Breaches">Hooray! No breaches were found!</string>
+    <string name="NoBreaches">Breaches include:</string>
+
 </resources>

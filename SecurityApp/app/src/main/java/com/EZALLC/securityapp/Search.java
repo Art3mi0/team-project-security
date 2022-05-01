@@ -172,7 +172,7 @@ public class Search extends AppCompatActivity {
     {
         String url
                 = "((http|https)://)(www.)?"
-                + "[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.(com|net|gov)/{0,1}"
+                + "[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.(com|net|gov)/?"
                 + "\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
         Pattern strURL = Pattern.compile(url);
         Matcher m = strURL.matcher(URL);

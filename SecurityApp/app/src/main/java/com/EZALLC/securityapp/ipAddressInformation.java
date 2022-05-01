@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class Information_1 extends AppCompatActivity {
+public class ipAddressInformation extends AppCompatActivity {
     TextView tv;
     Button IncButton;
     Button DecButton;
@@ -24,7 +24,7 @@ public class Information_1 extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_information_1);
+        setContentView(R.layout.activity_ipaddressinformation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Information");
@@ -39,7 +39,7 @@ public class Information_1 extends AppCompatActivity {
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize);
                 }
                 else{
-                    Toast.makeText(Information_1.this, "Maximum text size reached", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ipAddressInformation.this, "Maximum text size reached", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -51,7 +51,7 @@ public class Information_1 extends AppCompatActivity {
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize);
                 }
                 else{
-                    Toast.makeText(Information_1.this, "Minimum text size reached", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ipAddressInformation.this, "Minimum text size reached", Toast.LENGTH_SHORT).show();
                 }
             }
 
