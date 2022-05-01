@@ -62,8 +62,8 @@ public class InformationDisplayTest {
    @Test
     public void information_Display() {
 
-        Espresso.onData(allOf(is(instanceOf(Information.class)), is("Ip Address")));
-        Espresso.onData(allOf(is(instanceOf(Information.class)), is("Test two")));
+        Espresso.onData(allOf(is(instanceOf(Information.class)), is("IP Address")));
+        Espresso.onData(allOf(is(instanceOf(Information.class)), is("URL")));
         Espresso.onData(allOf(is(instanceOf(Information.class)), is("Test three")));
     }
 

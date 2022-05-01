@@ -36,6 +36,9 @@
             android:name=".IpAddressInfo"
             android:exported="false" />
         <activity
+            android:name=".UrlInfo"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

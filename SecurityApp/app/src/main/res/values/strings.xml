@@ -34,6 +34,15 @@
         https://www.kaspersky.com/resource-center/definitions/what-is-an-ip-address
         \nhttps://www.avast.com/c-what-is-an-ip-address
         \nhttps://us.norton.com/internetsecurity-privacy-what-does-an-ip-address-tell-you.html</string>
+    <string name="URLTextInfo">URL stands for uniform resource locator.
+        A URL is an address for a unique resource on the web.
+        URLs have different parts like the protocol, domain name, path, and webpage.
+        They should be human-readable text and identify the file structure of a website.
+        \nLearn more\n
+        https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL
+        \nhttps://www.businessinsider.com/what-is-a-url
+        \nhttps://moz.com/learn/seo/url
+    </string>
     <string name="add">Add to Watchlist</string>
     <string name="title_activity_email">Email</string>
     <!-- Strings used for fragments for navigation -->

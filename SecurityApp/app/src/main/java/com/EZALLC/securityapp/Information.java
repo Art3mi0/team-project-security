@@ -22,9 +22,11 @@ public class Information extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Information");
         ListViewinfo = findViewById(R.id.ListViewInfo);
+        Intent pageInfoIP = new Intent(Information.this,IpAddressInfo.class);
+        Intent pageUrl = new Intent(Information.this,UrlInfo.class);
         String[] InfoHolder = new String[] {
-                "Ip Address",
-                "Test two",
+                "IP Address",
+                "URL",
                 "Test three",
                 "  ",
                 "  ",
@@ -37,8 +39,10 @@ public class Information extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, android.view.View view, int i, long l) {
                 switch (i){
                     case 0:
-                        Intent pageInfoIP = new Intent(Information.this,IpAddressInfo.class);
-                       Information.this.startActivity(pageInfoIP);
+                      Information.this.startActivity(pageInfoIP);
+                        break;
+                    case 1:
+                        Information.this.startActivity(pageUrl);
                         break;
                 }
             }
