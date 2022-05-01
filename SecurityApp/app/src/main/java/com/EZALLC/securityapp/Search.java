@@ -37,6 +37,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.*;
 
@@ -58,6 +60,9 @@ public class Search extends AppCompatActivity {
     private String COLLECTION;
     private String email;
     private String type;
+    private int number = 0;
+    private int old;
+    private String docId;
 
     ArrayList<String> bundle= new ArrayList<>();
     //String[] bundle = new String[]{};
@@ -233,7 +238,11 @@ public class Search extends AppCompatActivity {
      * removes all searches after ten searches
      */
     public void add_clear_list(String ipOrUrlAdd){
-        Recent newRecent = new Recent(type, ipOrUrlAdd);
+        number++;
+        if(SearchArray.size() == 10) {
+            removeOld();
+        }
+        Recent newRecent = new Recent(type, ipOrUrlAdd, number);
 
         mDb.collection(COLLECTION)
                 .add(newRecent)
@@ -251,6 +260,26 @@ public class Search extends AppCompatActivity {
                     }
                 });
         //ListViewSearch.setAdapter(SearchAdapter);
+    }
+
+    public void removeOld() {
+        old = SearchArray.get(SearchArray.size()-1).getNumber();
+        SearchArray.remove(SearchArray.size()-1);
+        mDb.collection(COLLECTION)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Recent r = document.toObject(Recent.class);
+                            if (r.getNumber() == old) {
+                                docId = document.getId();
+                                break;
+                            }
+                        }
+                        mDb.collection(COLLECTION).document(docId).delete();
+                    }
+                });
     }
     /**
      * This onSearch method receives users email address,URL or IP address
@@ -340,13 +369,20 @@ public class Search extends AppCompatActivity {
                         SearchArray = new ArrayList<>();
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             Recent r = document.toObject(Recent.class);
+                            if (r.getNumber() > number) {
+                                number = r.getNumber();
+                            }
                             SearchArray.add(r);
                             Log.d(TAG, r.getSearch());
                         }
                         adapter.clear();
-                        if (SearchArray != null) {
-                            Log.d(TAG, "Recents not null");
+                        try {
+                            SearchArray.get(0);
+                            Collections.sort(SearchArray, new Sortbynumber());
+                            Log.d(TAG, "The last item is " + SearchArray.get(SearchArray.size()-1).getSearch());
                             adapter.addAll(SearchArray);
+                        } catch(Exception e) {
+                            number = 0;
                         }
                     }
                 });
