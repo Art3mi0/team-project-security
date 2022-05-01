@@ -62,12 +62,13 @@ public class InformationDisplayTest {
    @Test
     public void information_Display() {
 
-        Espresso.onData(allOf(is(instanceOf(Information.class)), is("IP Address")));
+        Espresso.onData(allOf(is(instanceOf(Information.class)), is("IP address")));
         Espresso.onData(allOf(is(instanceOf(Information.class)), is("URL")));
-        Espresso.onData(allOf(is(instanceOf(Information.class)), is("Cyber Security Threats")));
+        Espresso.onData(allOf(is(instanceOf(Information.class)), is("Cyber security threats")));
     }
 
     public class ToastMatcher extends TypeSafeMatcher<Root> {
+
 
         @Override    public void describeTo(Description description) {
             description.appendText("is toast");

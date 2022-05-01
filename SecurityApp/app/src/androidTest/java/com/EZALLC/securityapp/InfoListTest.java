@@ -38,7 +38,7 @@ public class InfoListTest {
     }
     @Test
     public void onInformationListClick() {
-        Espresso.onData(allOf(is(instanceOf(Information.class)), is("IP Address")));
+        Espresso.onData(allOf(is(instanceOf(Information.class)), is("IP address")));
         Espresso.onData(anything())
                 .inAdapterView(withId(R.id.ListViewInfo))
                 .atPosition(0)

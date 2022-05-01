@@ -42,6 +42,9 @@
             android:name=".CyberThreatInfo"
             android:exported="false" />
         <activity
+            android:name=".TypeOfDataInfo"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

@@ -24,13 +24,16 @@ public class Information extends AppCompatActivity {
         ListViewinfo = findViewById(R.id.ListViewInfo);
         Intent pageInfoIP = new Intent(Information.this,IpAddressInfo.class);
         Intent pageUrl = new Intent(Information.this,UrlInfo.class);
+        Intent pageCyber = new Intent(Information.this,CyberThreatInfo.class);
+        Intent pageTypeData = new Intent(Information.this,TypeOfDataInfo.class);
         String[] InfoHolder = new String[] {
-                "IP Address",
+                "IP address",
                 "URL",
-                "Cyber Security Threats",
-                "  ",
-                "  ",
-                "  "
+                "Cyber security threats",
+                "Types of data breaches",
+                "Regional internet registry",
+                "Autonomous system",
+                "More Resources"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item, InfoHolder);
         ListViewinfo.setAdapter(adapter);
@@ -43,6 +46,12 @@ public class Information extends AppCompatActivity {
                         break;
                     case 1:
                         Information.this.startActivity(pageUrl);
+                        break;
+                    case 2:
+                        Information.this.startActivity(pageCyber);
+                        break;
+                    case 3:
+                        Information.this.startActivity(pageTypeData);
                         break;
                 }
             }
