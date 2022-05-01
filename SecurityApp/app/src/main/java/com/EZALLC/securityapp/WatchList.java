@@ -279,7 +279,7 @@ public class WatchList extends AppCompatActivity {
             threatType.setText(t.getType());
             threatId.setText(t.getId());
             if(t.getIsFavorite()) {
-                favoriteIndicator.setText("*Favorite*");
+                favoriteIndicator.setText("ඞ Favorite ඞ");
             } else {
                 favoriteIndicator.setText("");
             }
