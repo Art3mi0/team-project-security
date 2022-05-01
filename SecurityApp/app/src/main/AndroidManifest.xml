@@ -33,7 +33,7 @@
             android:name=".TrendingThreats"
             android:exported="false" />
         <activity
-            android:name=".Information_1"
+            android:name=".IpAddressInfo"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

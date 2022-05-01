@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class ipAddressInformation extends AppCompatActivity {
+public class IpAddressInfo extends AppCompatActivity {
     TextView tv;
     Button IncButton;
     Button DecButton;
@@ -29,7 +29,7 @@ public class ipAddressInformation extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Information");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        tv =(TextView) findViewById(R.id.textView6);
+        tv =(TextView) findViewById(R.id.iPInfoBox);
         IncButton = (Button) findViewById(R.id.buttonInc);
         DecButton = (Button) findViewById(R.id.buttonDec);
         IncButton.setOnClickListener(new View.OnClickListener(){
@@ -39,7 +39,7 @@ public class ipAddressInformation extends AppCompatActivity {
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize);
                 }
                 else{
-                    Toast.makeText(ipAddressInformation.this, "Maximum text size reached", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(IpAddressInfo.this, "Maximum text size reached", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -51,7 +51,7 @@ public class ipAddressInformation extends AppCompatActivity {
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize);
                 }
                 else{
-                    Toast.makeText(ipAddressInformation.this, "Minimum text size reached", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(IpAddressInfo.this, "Minimum text size reached", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -67,5 +67,4 @@ public class ipAddressInformation extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

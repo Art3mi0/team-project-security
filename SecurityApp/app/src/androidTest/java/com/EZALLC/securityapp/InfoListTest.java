@@ -29,7 +29,7 @@ public class InfoListTest {
     @Rule
     public ActivityTestRule<Information> intentsTestRule = new ActivityTestRule<>(Information.class);
     @Rule
-    public ActivityTestRule<ipAddressInformation> mActivityRule = new ActivityTestRule(ipAddressInformation.class);
+    public ActivityTestRule<IpAddressInfo> mActivityRule = new ActivityTestRule(IpAddressInfo.class);
 
     @Before
     public void setUp() throws Exception{
@@ -43,8 +43,8 @@ public class InfoListTest {
                 .inAdapterView(withId(R.id.ListViewInfo))
                 .atPosition(0)
                 .perform(click());
-        intended(hasComponent(ipAddressInformation.class.getName()));
-        Espresso.onView(withId(R.id.textView6)).check(matches(withText(containsString("https://www.google.com/"))));
+        intended(hasComponent(IpAddressInfo.class.getName()));
+        Espresso.onView(withId(R.id.iPInfoBox)).check(matches(withText(containsString("IP address"))));
         Espresso.onView(withContentDescription("Navigate up")).perform(click());
         intended(hasComponent(Information.class.getName()));
         Espresso.onView(withContentDescription("Navigate up")).perform(click());

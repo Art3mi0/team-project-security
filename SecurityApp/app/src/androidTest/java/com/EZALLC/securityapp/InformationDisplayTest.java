@@ -47,11 +47,11 @@ import static org.hamcrest.Matchers.hasSize;
 
 public class InformationDisplayTest {
     @Rule
-    public ActivityScenarioRule<ipAddressInformation> InfoActivityTestRule = new ActivityScenarioRule<>(ipAddressInformation.class);
+    public ActivityScenarioRule<IpAddressInfo> InfoActivityTestRule = new ActivityScenarioRule<>(IpAddressInfo.class);
     @Rule
     public ActivityTestRule<Information> intentsTestRule= new ActivityTestRule<>(Information.class);
     @Rule
-    public ActivityTestRule<ipAddressInformation> mActivityRule = new ActivityTestRule(ipAddressInformation.class);
+    public ActivityTestRule<IpAddressInfo> mActivityRule = new ActivityTestRule(IpAddressInfo.class);
 
     @Before
     public void setUp() throws Exception{

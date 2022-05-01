@@ -37,7 +37,7 @@ public class Information extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, android.view.View view, int i, long l) {
                 switch (i){
                     case 0:
-                        Intent pageInfoIP = new Intent(Information.this,ipAddressInformation.class);
+                        Intent pageInfoIP = new Intent(Information.this,IpAddressInfo.class);
                        Information.this.startActivity(pageInfoIP);
                         break;
                 }
