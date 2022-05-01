@@ -57,6 +57,13 @@
         \nhttps://us.norton.com/internetsecurity-privacy-data-breaches-what-you-need-to-know.html
         \nhttps://www.investopedia.com/terms/d/data-breach.asp
     </string>
+    <string name="MoreTextInfo">
+        Learn the basics and practice the best ways to stay secure:\nhttps://overthewire.org
+        \nhttps://www.hackthissite.org
+        \nhttps://tryhackme.com
+        \nhttps://www.cisa.gov/uscert/ncas/tips
+        \nhttps://www.nist.gov/cybersecurity
+    </string>
     <string name="add">Add to Watchlist</string>
     <string name="title_activity_email">Email</string>
     <!-- Strings used for fragments for navigation -->
