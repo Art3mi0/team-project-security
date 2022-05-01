@@ -163,6 +163,7 @@ public class WatchList extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"Favorited " + threat, Toast.LENGTH_LONG).show();
                     }
                 });
+
         Log.d(TAG, "Adapter should have updated");
         return;
 
@@ -272,10 +273,16 @@ public class WatchList extends AppCompatActivity {
 
             TextView threatType = convertView.findViewById(R.id.threatType);
             TextView threatId = convertView.findViewById(R.id.threatId);
+            TextView favoriteIndicator = convertView.findViewById(R.id.favoriteIndicator);
 
             Threat t = threatsList.get(position);
             threatType.setText(t.getType());
             threatId.setText(t.getId());
+            if(t.getIsFavorite()) {
+                favoriteIndicator.setText("*Favorite*");
+            } else {
+                favoriteIndicator.setText("");
+            }
 
             return convertView;
         }
