@@ -2,37 +2,62 @@ package com.EZALLC.securityapp;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
-import com.google.firebase.firestore.core.View;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.*;
 
 
 public class Search extends AppCompatActivity {
+    private static final String TAG = "search";
+
     private static long mLastClickTime;
     private Button searchButton;
     private EditText searchUserInput;
     private String SearchText;
     private ScrollView searchView;
     private ListView ListViewSearch;
-    public ArrayAdapter<String> SearchAdapter;
-    ArrayList<String> SearchArray;
+    public ArrayAdapter<Recent> adapter;
+    private ArrayList<Recent> SearchArray;
+
+    private final FirebaseFirestore mDb = FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth;
+    private String COLLECTION;
+    private String email;
+    private String type;
 
     ArrayList<String> bundle= new ArrayList<>();
     //String[] bundle = new String[]{};
@@ -48,8 +73,14 @@ public class Search extends AppCompatActivity {
         searchUserInput= findViewById(R.id.searchInput);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ListViewSearch = findViewById(R.id.SearchList);
-        SearchArray = new ArrayList<>();
-        SearchAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item, SearchArray);
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        email = user.getEmail();
+        COLLECTION = email + "'s Recents";
+
+        adapter = new SearchAdapter(this, new ArrayList<Recent>());
+
         Intent PageIPHashing = new Intent(Search.this,IPHashInfo.class);
         Button searchButton = (Button) findViewById(R.id.search_button);
         searchButton.setOnClickListener(new android.view.View.OnClickListener(){
@@ -129,34 +160,19 @@ public class Search extends AppCompatActivity {
             }
 
         });
-        ListViewSearch.setAdapter(SearchAdapter);
+        ListViewSearch.setAdapter(adapter);
+        getRecents();
         ListViewSearch.setVisibility(android.view.View.VISIBLE);
-        ListViewSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> adapterView, android.view.View view, int i, long l) {
-                onSearch(SearchArray.get(i));
-                searchButton.setEnabled(false);
-                ListViewSearch.setVisibility(android.view.View.INVISIBLE);
-                Intent intent1 = new Intent(Search.this,IPHashInfo.class);
-                if(isValidIPAddress(searchUserInput.getText().toString().trim())==true){
-                    String[] vaildIP = {searchUserInput.getText().toString().trim(), "IP"};
-                    intent1.putExtra("SendIP",vaildIP);
-                }
-                else if(validURl(searchUserInput.getText().toString().trim())==true){
-                    String[] URL = {searchUserInput.getText().toString().trim(), "URL"};
-                    intent1.putExtra("SendURL",URL);
-                }
-                Search.this.startActivity(PageIPHashing);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ListViewSearch.setVisibility(android.view.View.VISIBLE);
-                        searchButton.setEnabled(true);
-                        Log.d(TAG, "resend1");
-
+        AdapterView.OnItemClickListener itemClickListener =
+                new AdapterView.OnItemClickListener() {
+                    // @Override
+                    public void onItemClick(AdapterView<?> listView, View view, int i, long l) {
+                        String item = SearchArray.get(i).getSearch();
+                        Log.d(TAG, item);
+                        searchUserInput.setText(item);
                     }
-                }, 6000); }
-        });
-
+                };
+        ListViewSearch.setOnItemClickListener(itemClickListener);
     }
     /**
      * This isValidIPAddress method receives users file hash or IP address
@@ -217,14 +233,24 @@ public class Search extends AppCompatActivity {
      * removes all searches after ten searches
      */
     public void add_clear_list(String ipOrUrlAdd){
-        if(SearchArray.size()<10){
-            SearchArray.add(0,ipOrUrlAdd);
-        }
-        else{
-            SearchArray.clear();
-            SearchArray.add(ipOrUrlAdd);
-        }
-        ListViewSearch.setAdapter(SearchAdapter);
+        Recent newRecent = new Recent(type, ipOrUrlAdd);
+
+        mDb.collection(COLLECTION)
+                .add(newRecent)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "Recent added successfully.");
+                        getRecents();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Could not add recent!");
+                    }
+                });
+        //ListViewSearch.setAdapter(SearchAdapter);
     }
     /**
      * This onSearch method receives users email address,URL or IP address
@@ -233,15 +259,19 @@ public class Search extends AppCompatActivity {
      */
     public void onSearch(String ipOrURLOrEmail){
             if(isValidIPAddress(ipOrURLOrEmail)){
+                type = "IP";
                 add_clear_list(ipOrURLOrEmail);
                 Toast.makeText(Search.this, "Valid Ip Address "+ipOrURLOrEmail+"\nSearching", Toast.LENGTH_SHORT).show();
 
             }
             else if(validURl(ipOrURLOrEmail)){
+                type = "URL";
                 add_clear_list(ipOrURLOrEmail);
                 Toast.makeText(Search.this, "Valid URL "+ipOrURLOrEmail+"\nSearching", Toast.LENGTH_SHORT).show();
             }
             else if(isValid(ipOrURLOrEmail)==true){
+                type = "EMAIL";
+                add_clear_list(ipOrURLOrEmail);
                 Toast.makeText(Search.this, "Valid Email Address "+ipOrURLOrEmail+"\nSearching", Toast.LENGTH_SHORT).show();
             }
 
@@ -274,6 +304,52 @@ public class Search extends AppCompatActivity {
         if (email == null)
             return false;
         return pat.matcher(email).matches();
+    }
+
+    class SearchAdapter extends ArrayAdapter<Recent> {
+        ArrayList<Recent> recentsList;
+        SearchAdapter(Context context, ArrayList<Recent> recentsList) {
+            super(context, 0, recentsList);
+            this.recentsList = recentsList;
+        }
+
+        @NonNull
+        @Override
+        public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.search_list_item, parent, false);
+            }
+
+            TextView searchType = convertView.findViewById(R.id.searchType);
+            TextView searchThing = convertView.findViewById(R.id.searchThing);
+
+            Recent r = recentsList.get(position);
+            searchType.setText(r.getType());
+            searchThing.setText(r.getSearch());
+
+            return convertView;
+        }
+    }
+
+    public void getRecents() {
+        mDb.collection(COLLECTION)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        SearchArray = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Recent r = document.toObject(Recent.class);
+                            SearchArray.add(r);
+                            Log.d(TAG, r.getSearch());
+                        }
+                        adapter.clear();
+                        if (SearchArray != null) {
+                            Log.d(TAG, "Recents not null");
+                            adapter.addAll(SearchArray);
+                        }
+                    }
+                });
     }
 
 }
