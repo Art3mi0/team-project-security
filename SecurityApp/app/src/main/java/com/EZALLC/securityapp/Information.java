@@ -27,7 +27,7 @@ public class Information extends AppCompatActivity {
         String[] InfoHolder = new String[] {
                 "IP Address",
                 "URL",
-                "Test three",
+                "Cyber Security Threats",
                 "  ",
                 "  ",
                 "  "

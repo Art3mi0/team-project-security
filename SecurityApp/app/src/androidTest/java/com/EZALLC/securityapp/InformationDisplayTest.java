@@ -64,7 +64,7 @@ public class InformationDisplayTest {
 
         Espresso.onData(allOf(is(instanceOf(Information.class)), is("IP Address")));
         Espresso.onData(allOf(is(instanceOf(Information.class)), is("URL")));
-        Espresso.onData(allOf(is(instanceOf(Information.class)), is("Test three")));
+        Espresso.onData(allOf(is(instanceOf(Information.class)), is("Cyber Security Threats")));
     }
 
     public class ToastMatcher extends TypeSafeMatcher<Root> {

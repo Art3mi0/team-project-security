@@ -43,6 +43,13 @@
         \nhttps://www.businessinsider.com/what-is-a-url
         \nhttps://moz.com/learn/seo/url
     </string>
+    <string name="CyberTextInfo">A cyber threat is a malicious act or event with the potential to steal or damage data, modify information, denial of service, and disrupt digital life in general.
+        Cyber threats can come from within an organization or remote locations by unknown users.
+        Some common cyber threats include malware, phishing attacks, distributed denial of service(DDoS) attacks, and trojans.\nLearn more\n
+        https://www.europarl.europa.eu/news/en/headlines/society/20220120STO21428/cybersecurity-main-and-emerging-threats-in-2021-infographic#ssh
+        \nhttps://csrc.nist.gov/glossary/term/cyber_threat
+        \nhttps://www.cisa.gov/uscert/ics/content/cyber-threat-source-descriptions
+    </string>
     <string name="add">Add to Watchlist</string>
     <string name="title_activity_email">Email</string>
     <!-- Strings used for fragments for navigation -->

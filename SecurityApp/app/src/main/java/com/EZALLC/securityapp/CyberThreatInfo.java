@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class UrlInfo extends AppCompatActivity {
+public class CyberThreatInfo extends AppCompatActivity {
     TextView tv;
     Button IncButton;
     Button DecButton;
@@ -24,14 +24,14 @@ public class UrlInfo extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_urlinfo);
+        setContentView(R.layout.activity_cyberthreatinfo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Information");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        tv =(TextView) findViewById(R.id.URLInfoBox);
-        IncButton = (Button) findViewById(R.id.buttonInc1);
-        DecButton = (Button) findViewById(R.id.buttonDec1);
+        tv =(TextView) findViewById(R.id.CyberInfoBox);
+        IncButton = (Button) findViewById(R.id.buttonInc2);
+        DecButton = (Button) findViewById(R.id.buttonDec2);
         IncButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 if (TextSize<=maxTextSize){
@@ -39,7 +39,7 @@ public class UrlInfo extends AppCompatActivity {
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize);
                 }
                 else{
-                    Toast.makeText(UrlInfo.this, "Maximum text size reached", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CyberThreatInfo.this, "Maximum text size reached", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -51,7 +51,7 @@ public class UrlInfo extends AppCompatActivity {
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize);
                 }
                 else{
-                    Toast.makeText(UrlInfo.this, "Minimum text size reached", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CyberThreatInfo.this, "Minimum text size reached", Toast.LENGTH_SHORT).show();
                 }
             }
 
