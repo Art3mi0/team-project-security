@@ -120,7 +120,7 @@ public class IPHashInfo extends AppCompatActivity {
             da_button.setVisibility(View.GONE);
             onCheckEmail(list.get(0));
         }else if(list.get(1).equals("URL")){
-            getURLHash(list.get(1));
+            getURLHash(list.get(0));
         }
     }
 
@@ -257,6 +257,12 @@ public class IPHashInfo extends AppCompatActivity {
                 if(response.code() >= 500){
                     Toast.makeText(IPHashInfo.this,
                             "Server side issue pls try again.",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if(response.body() == null){
+                    Toast.makeText(IPHashInfo.this,
+                            "Getting Nothing",
                             Toast.LENGTH_LONG).show();
                     return;
                 }
