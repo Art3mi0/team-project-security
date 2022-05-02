@@ -68,10 +68,19 @@ public class SearchListTest {
         Espresso.onView(withId(R.id.search_button)).perform(click());
         Espresso.onView(withContentDescription("Navigate up")).perform(click());
     }
-    @Test
-    public void onSearchtextBox() {
-        Espresso.onView(withId(R.id.description))
-                .perform(openLinkWithText("Here"));
+
+    public void onRecentSearchListClickURL() {
+        Espresso.onView(withId(R.id.searchInput)).perform(typeText("https://www.google.com/"));
+        Espresso.onView(withId(R.id.search_button)).perform(click());
+        intended(hasComponent(IPHashInfo.class.getName()));
+        Espresso.onView(withContentDescription("Navigate up")).perform(click());
+        closeSoftKeyboard();
+        Espresso.onData(anything())
+                .inAdapterView(withId(R.id.SearchList))
+                .atPosition(0).perform(click());
+        Espresso.onView(withId(R.id.searchInput)).check(matches(not(withText(""))));
+        Espresso.onView(withId(R.id.search_button)).perform(click());
+        Espresso.onView(withContentDescription("Navigate up")).perform(click());
     }
    @After
    public void tearDown() throws Exception{
