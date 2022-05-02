@@ -1,0 +1,22 @@
+
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/school_navy</item>
+        <item name="colorPrimaryDark">@color/school_teal</item>
+        <item name="colorAccent">@color/school_navy</item>
+
+        <item name="android:windowBackground">@color/school_teal</item>
+        <item name="android:textColor">@color/school_yellow</item>
+    </style>
+
+    <style name="buttonAppTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="android:background">@color/school_navy</item>
+        <item name="android:textColor">@color/school_yellow</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:textSize">16sp</item>
+
+    </style>
+
+</resources>

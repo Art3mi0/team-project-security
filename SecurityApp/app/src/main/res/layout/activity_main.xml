@@ -55,36 +55,47 @@
         android:id="@+id/passwordDisplay"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:width="180dp"
         android:focusableInTouchMode="false"
         android:textIsSelectable="true"
-        app:layout_constraintBottom_toTopOf="@id/created_by"
+        app:layout_constraintBottom_toBottomOf="@id/generatePasswordButtonText"
         app:layout_constraintStart_toEndOf="@id/generatePasswordButtonText"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginLeft="10dp"/>
 
     <Button
         android:id="@+id/generatePasswordButtonText"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="268dp"
-        android:layout_marginBottom="80dp"
+        android:background="@color/school_navy"
+        android:padding="4dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="10dp"
         android:onClick="onGeneratePassword"
         android:text="@string/generatePasswordButtonText"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toTopOf="@id/created_by"
+
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/favorite_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Favorite Threat:"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/welcome_text" />
     <TextView
         android:id="@+id/favorites"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="18sp"
         android:maxLines="10"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/welcome_text"
-        android:layout_marginTop="40dp"
+        app:layout_constraintTop_toBottomOf="@id/favorite_heading"
+        android:layout_marginTop="8dp"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

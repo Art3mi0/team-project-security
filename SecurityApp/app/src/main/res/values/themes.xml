@@ -22,4 +22,5 @@
     <style name="Theme.SecurityApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.SecurityApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
 </resources>
