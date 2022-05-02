@@ -5,15 +5,11 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import com.google.firebase.firestore.core.View;
 
 public class Information extends AppCompatActivity {
     private ListView ListViewinfo;
@@ -26,10 +22,21 @@ public class Information extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Information");
         ListViewinfo = findViewById(R.id.ListViewInfo);
+        Intent pageInfoIP = new Intent(Information.this,IpAddressInfo.class);
+        Intent pageUrl = new Intent(Information.this,UrlInfo.class);
+        Intent pageCyber = new Intent(Information.this,CyberThreatInfo.class);
+        Intent pageTypeData = new Intent(Information.this,TypeOfDataInfo.class);
+        Intent pageReg = new Intent(Information.this,RegionalInternetInfo.class);
+        Intent pageAuto= new Intent(Information.this,AutoInfo.class);
+        Intent pageMore = new Intent(Information.this,MoreResourcesInfo.class);
         String[] InfoHolder = new String[] {
-                "Test one",
-                "Test two",
-                "Test three",
+                "IP address",
+                "URL",
+                "Cyber security threats",
+                "Types of data breaches",
+                "Regional internet registry",
+                "Autonomous system",
+                "More Resources"
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_selectable_list_item, InfoHolder);
         ListViewinfo.setAdapter(adapter);
@@ -37,26 +44,33 @@ public class Information extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, android.view.View view, int i, long l) {
                 switch (i){
-                    case 0: Intent PageOne = new Intent(Information.this,Information_1.class);
-                       Information.this.startActivity(PageOne);
+                    case 0:
+                      Information.this.startActivity(pageInfoIP);
+                        break;
+                    case 1:
+                        Information.this.startActivity(pageUrl);
+                        break;
+                    case 2:
+                        Information.this.startActivity(pageCyber);
+                        break;
+                    case 3:
+                        Information.this.startActivity(pageTypeData);
+                        break;
+                    case 4:
+                        Information.this.startActivity(pageReg);
+                        break;
+                    case 5:
+                        Information.this.startActivity(pageAuto);
+                        break;
+                    case 6:
+                        Information.this.startActivity(pageMore);
                         break;
                 }
             }
         });
 
     }
-    public void onButtonInc(){
 
-    }
-    /**
-     * This onSelectionSelected method retrieves the information from the database based on selection
-     * and displays on page
-     * @param view listener for selection
-     * @return Nothing.
-     */
-    public void onSelectionSelected(View view){
-
-    }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

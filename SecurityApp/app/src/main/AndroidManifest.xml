@@ -36,7 +36,25 @@
             android:name=".TrendingThreats"
             android:exported="false" />
         <activity
-            android:name=".Information_1"
+            android:name=".IpAddressInfo"
+            android:exported="false" />
+        <activity
+            android:name=".UrlInfo"
+            android:exported="false" />
+        <activity
+            android:name=".CyberThreatInfo"
+            android:exported="false" />
+        <activity
+            android:name=".TypeOfDataInfo"
+            android:exported="false" />
+        <activity
+            android:name=".MoreResourcesInfo"
+            android:exported="false" />
+        <activity
+            android:name=".RegionalInternetInfo"
+            android:exported="false" />
+        <activity
+            android:name=".AutoInfo"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
