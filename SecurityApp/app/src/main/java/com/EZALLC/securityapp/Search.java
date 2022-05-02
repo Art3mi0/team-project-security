@@ -239,8 +239,16 @@ public class Search extends AppCompatActivity {
      */
     public void add_clear_list(String ipOrUrlAdd){
         number++;
+        for (int i = 0; i < SearchArray.size(); i ++) {
+            if (SearchArray.get(i).getSearch().equals(ipOrUrlAdd)) {
+                old = SearchArray.get(i).getNumber();
+                removeOld(false);
+                SearchArray.remove(i);
+                break;
+            }
+        }
         if(SearchArray.size() == 10) {
-            removeOld();
+            removeOld(true);
         }
         Recent newRecent = new Recent(type, ipOrUrlAdd, number);
 
@@ -262,9 +270,11 @@ public class Search extends AppCompatActivity {
         //ListViewSearch.setAdapter(SearchAdapter);
     }
 
-    public void removeOld() {
-        old = SearchArray.get(SearchArray.size()-1).getNumber();
-        SearchArray.remove(SearchArray.size()-1);
+    public void removeOld(Boolean actualOld) {
+        if (actualOld) {
+            old = SearchArray.get(SearchArray.size() - 1).getNumber();
+            SearchArray.remove(SearchArray.size() - 1);
+        }
         mDb.collection(COLLECTION)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {

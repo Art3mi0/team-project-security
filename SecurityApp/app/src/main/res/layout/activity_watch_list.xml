@@ -40,6 +40,8 @@
         android:layout_height="wrap_content"
         android:onClick="onFavorite"
         android:text="@string/watchlist_favorite_button_text"
+        android:background="@color/school_navy"
+        android:padding="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/watchlist_input" />
@@ -51,6 +53,8 @@
         android:onClick="onRemoveFromList"
         android:layout_marginLeft="12dp"
         android:text="@string/watchlist_remove_button_text"
+        android:background="@color/school_navy"
+        android:padding="4dp"
         app:layout_constraintStart_toEndOf="@id/watchlist_add_button"
         app:layout_constraintBottom_toBottomOf="@id/watchlist_add_button"/>
 
