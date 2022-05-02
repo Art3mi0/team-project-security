@@ -21,3 +21,11 @@ In android studio, from file, make a new project from version control. If not si
 * Pull/update project
 * After completing something, regardless of size, commit
 * After you felt you've done a lot, or have finished, pull/update once more, resolve conflicts, and finally commit and push your work
+
+## Running Tests
+* In android studio, pull down on the menu where the build to be run is selected.
+* Name this run configuration "All Tests"
+* From here, ensure the module is set to Security_App.app
+* Set test to "All in Module".
+* Click OK.
+* Now that the run configurations have been set up, simply select the "All Tests" configuration and click run.
