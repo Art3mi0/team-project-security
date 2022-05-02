@@ -2,6 +2,7 @@ package com.EZALLC.securityapp;
 
 import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.openLinkWithText;
 import static androidx.test.espresso.action.ViewActions.typeText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intended;
@@ -39,8 +40,8 @@ public class SearchListTest {
         Intents.init();
 
     }
-    @Test
-    public void onRecentSearchListClick() {
+   @Test
+    public void onRecentSearchListClickIP() {
         Espresso.onView(withId(R.id.searchInput)).perform(typeText("123.123.123.123"));
         Espresso.onView(withId(R.id.search_button)).perform(click());
         intended(hasComponent(IPHashInfo.class.getName()));
@@ -66,6 +67,11 @@ public class SearchListTest {
         Espresso.onView(withId(R.id.searchInput)).check(matches(not(withText(""))));
         Espresso.onView(withId(R.id.search_button)).perform(click());
         Espresso.onView(withContentDescription("Navigate up")).perform(click());
+    }
+    @Test
+    public void onSearchtextBox() {
+        Espresso.onView(withId(R.id.description))
+                .perform(openLinkWithText("Here"));
     }
    @After
    public void tearDown() throws Exception{
