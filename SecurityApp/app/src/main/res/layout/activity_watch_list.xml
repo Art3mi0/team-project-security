@@ -51,11 +51,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onRemoveFromList"
-        android:layout_marginLeft="12dp"
+        android:layout_marginLeft="24dp"
         android:text="@string/watchlist_remove_button_text"
         android:background="@color/school_navy"
         android:padding="4dp"
         app:layout_constraintStart_toEndOf="@id/watchlist_add_button"
+        app:layout_constraintBottom_toBottomOf="@id/watchlist_add_button"/>
+
+    <Button
+        android:id="@+id/watchlist_view_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onViewData"
+        android:layout_marginRight="24dp"
+        android:text="@string/watchlist_extra_button"
+        android:background="@color/school_navy"
+        android:padding="4dp"
+        app:layout_constraintEnd_toStartOf="@id/watchlist_add_button"
         app:layout_constraintBottom_toBottomOf="@id/watchlist_add_button"/>
 
     <EditText

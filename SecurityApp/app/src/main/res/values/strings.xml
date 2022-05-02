@@ -40,4 +40,7 @@
     <string name="watchlist_no_items">Items can be added to the watchlist after successful searches in the search page
      or from clicking items in the trending threats page</string>
 
+    <string name="watchlist_extra_heading">Extra Data From Watchlist</string>
+    <string name="watchlist_extra_button">View Data</string>
+
 </resources>
