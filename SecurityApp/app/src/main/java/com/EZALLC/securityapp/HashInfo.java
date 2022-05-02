@@ -26,12 +26,18 @@ class Data69{
     @Expose
     private Attributes attributes;
 
+    private String type;
+
     public Attributes getAttributes() {
         return attributes;
     }
 
     public void setAttributes(Attributes attributes) {
         this.attributes = attributes;
+    }
+
+    public String getType69() {
+        return type;
     }
 }
 
@@ -92,7 +98,9 @@ class Attributes{
     private String url;
     @SerializedName("last_analysis_stats")
     @Expose
-    private LastAnalysisStats lastAnalysisStats;
+    private LastAnalysisStats69 lastAnalysisStats69;
+
+
 
     public Integer getLastModificationDate() {
         return lastModificationDate;
@@ -234,19 +242,80 @@ class Attributes{
         return url;
     }
 
+
+
     public void setUrl(String url) {
         this.url = url;
     }
 
-    public LastAnalysisStats getLastAnalysisStats() {
-        return lastAnalysisStats;
+    public LastAnalysisStats69 getLastAnalysisStats69() {
+        return lastAnalysisStats69;
     }
 
-    public void setLastAnalysisStats(LastAnalysisStats lastAnalysisStats) {
-        this.lastAnalysisStats = lastAnalysisStats;
+//    public void setLastAnalysisStats(LastAnalysisStats lastAnalysisStats) {
+//        this.lastAnalysisStats69 = lastAnalysisStats;
+//    }
+
+}
+class LastAnalysisStats69{
+    @SerializedName("harmless")
+    @Expose
+    private Integer harmless;
+    @SerializedName("malicious")
+    @Expose
+    private Integer malicious;
+    @SerializedName("suspicious")
+    @Expose
+    private Integer suspicious;
+    @SerializedName("undetected")
+    @Expose
+    private Integer undetected;
+    @SerializedName("timeout")
+    @Expose
+    private Integer timeout;
+
+    public Integer getHarmless() {
+        return harmless;
+    }
+
+    public void setHarmless(Integer harmless) {
+        this.harmless = harmless;
+    }
+
+    public Integer getMalicious() {
+        return malicious;
+    }
+
+    public void setMalicious(Integer malicious) {
+        this.malicious = malicious;
+    }
+
+    public Integer getSuspicious() {
+        return suspicious;
+    }
+
+    public void setSuspicious(Integer suspicious) {
+        this.suspicious = suspicious;
+    }
+
+    public Integer getUndetected() {
+        return undetected;
+    }
+
+    public void setUndetected(Integer undetected) {
+        this.undetected = undetected;
+    }
+
+    public Integer getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(Integer timeout) {
+        this.timeout = timeout;
     }
 
 }
+
 
 class TotalVotes{
     @SerializedName("harmless")
