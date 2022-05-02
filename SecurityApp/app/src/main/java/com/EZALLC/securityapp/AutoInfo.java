@@ -13,7 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class Information_1 extends AppCompatActivity {
+import java.security.AuthProvider;
+
+public class AutoInfo extends AppCompatActivity {
     TextView tv;
     Button IncButton;
     Button DecButton;
@@ -24,14 +26,14 @@ public class Information_1 extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_information_1);
+        setContentView(R.layout.activity_autoinfo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Information");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        tv =(TextView) findViewById(R.id.textView6);
-        IncButton = (Button) findViewById(R.id.buttonInc);
-        DecButton = (Button) findViewById(R.id.buttonDec);
+        tv =(TextView) findViewById(R.id.AutoInfoBox);
+        IncButton = (Button) findViewById(R.id.buttonInc5);
+        DecButton = (Button) findViewById(R.id.buttonDec5);
         IncButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 if (TextSize<=maxTextSize){
@@ -39,7 +41,7 @@ public class Information_1 extends AppCompatActivity {
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize);
                 }
                 else{
-                    Toast.makeText(Information_1.this, "Maximum text size reached", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AutoInfo.this, "Maximum text size reached", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -51,7 +53,7 @@ public class Information_1 extends AppCompatActivity {
                     tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, TextSize);
                 }
                 else{
-                    Toast.makeText(Information_1.this, "Minimum text size reached", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AutoInfo.this, "Minimum text size reached", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -67,5 +69,4 @@ public class Information_1 extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

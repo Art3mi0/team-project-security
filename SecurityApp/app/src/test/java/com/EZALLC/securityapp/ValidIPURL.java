@@ -9,40 +9,41 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-class ValidIPURL{
+public class ValidIPURL{
     @Test
     public void iPIsValid() {
         assertTrue(Search.isValidIPAddress("1.1.1.1"));
     }
+    @Test
     public void invalidIpNumber() {
         assertFalse(Search.isValidIPAddress("260.1.1.1"));
     }
-
+    @Test
     public void invalidIpManyNumbers() {
         assertFalse(Search.isValidIPAddress("1.1.1.1.1"));
     }
+    @Test
     public void invalidIpNotNumber() {
         assertFalse(Search.isValidIPAddress("1.1.1.A"));
     }
+    @Test
     public void invalidIpRand() {
         assertFalse(Search.isValidIPAddress("-1.#####.@.9="));
     }
-    public void urlIsValid() {
-        assertTrue(Search.validURl("https://www.google.com"));
+    @Test
+    public void urlIsValid() { assertTrue(Search.validURl("https://www.google.com"));
     }
+    @Test
     public void invalidURLNoProtocol() {
         assertFalse(Search.validURl("www.google.com"));
     }
-
+    @Test
     public void invalidURLNoComGovNet() {
         assertFalse(Search.validURl("https://uncw.edu"));
     }
-    public void invalidURLBADDomainName() {
-        assertFalse(Search.validURl("https://www.google.com.com"));
-    }
+    @Test
     public void invalidURLRand() {
         assertFalse(Search.validURl("https:/www.google.com"));
-        assertFalse(Search.validURl("https://www.google.........com"));
         assertFalse(Search.validURl("https//www.google.com"));
         assertFalse(Search.validURl("https://www.google"));
         assertFalse(Search.validURl("https:/www.google.co"));

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Welcome to I.P and Hash</string>
     <string name="created_by">Created by Ixchel Peralta, Nicholas Morris, Temo Meza, Llacki B.P., and Skylar Stockton</string>
-    <string name="TrendingThreatHello">Hello from component Trending Threats</string>
-    <string name="EmailCheck">Hello from Email Check</string>
+    <string name="TrendingThreatHello">Threat Level</string>
+    <string name="EmailCheck">Grab a free randomly generated password while your here! You can never be too safe!</string>
     <string name="iphashdemo">INFO FOR IPV4 174.216.16.12 &amp; Below That Results of Security Check of Tinder.com
     Info Provided By VIRUS TOTAL</string>
     <string name="login_email">Email:</string>
@@ -15,7 +15,7 @@
     <string name="compromisedButtonText">Compromised?</string>
     <string name="emailTextTitle">Enter Email</string>
     <string name="generatePasswordTitleText">Generate Password</string>
-    <string name="generatePasswordButtonText">Generate</string>
+    <string name="generatePasswordButtonText">Generate Password</string>
     <string name="SearchHello">Hello from search component</string>
     <string name="InformationHello">Hello from Information component</string>
     <string name="watchlist_title">Hello from WatchList component</string>
@@ -23,5 +23,77 @@
     <string name="watchlist_help">Potentially significant text to be entered later</string>
     <string name="watchlist_favorite_button_text">Favorite</string>
     <string name="watchlist_remove_button_text">Remove</string>
-    <string name="findMyIp">Enter your IP address in the format xxx.xxx.xxx.xxx numbers can range between 0 and 255\nEnter your URL address with  protocol  http or https and a domain name including .com .net .gov like https://www.google.com\nFind your Ip address <a href="https://whatismyipaddress.com/">Here</a></string>
+    <string name="findMyIp">Enter your IP address in the format xxx.xxx.xxx.xxx numbers can range between 0 and 255\nEnter your URL address with  protocol
+        http or https and a domain name including .com .net .gov like https://www.google.com
+        \nEnter your email to find out if it has been compromised using haveibeenpwnd API
+        \nFind your Ip address<a href="https://whatismyipaddress.com/">Here</a></string>
+    <string name="IpAddressTextInfo">An IP address is four numbers separated by periods, and numbers can range from 0 to 255.
+        IP stands for Internet Protocol. There are different types of addresses like consumer, private, public, and many more.
+        An IP address is used to identify a device on the internet to make a connection to send and receive information.
+        IP addresses may be used in a malicious way, like tracing your home address or spying on your private internet traffic.\nLearn more\n
+        https://www.kaspersky.com/resource-center/definitions/what-is-an-ip-address
+        \nhttps://www.avast.com/c-what-is-an-ip-address
+        \nhttps://us.norton.com/internetsecurity-privacy-what-does-an-ip-address-tell-you.html</string>
+    <string name="URLTextInfo">URL stands for uniform resource locator.
+        A URL is an address for a unique resource on the web.
+        URLs have different parts like the protocol, domain name, path, and webpage.
+        They should be human-readable text and identify the file structure of a website.
+        \nLearn more\n
+        https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_URL
+        \nhttps://www.businessinsider.com/what-is-a-url
+        \nhttps://moz.com/learn/seo/url
+    </string>
+    <string name="CyberTextInfo">A cyber threat is a malicious act or event with the potential to steal or damage data, modify information, denial of service, and disrupt digital life in general.
+        Cyber threats can come from within an organization or remote locations by unknown users.
+        Some common cyber threats include malware, phishing attacks, distributed denial of service(DDoS) attacks, and trojans.\nLearn more\n
+        https://www.europarl.europa.eu/news/en/headlines/society/20220120STO21428/cybersecurity-main-and-emerging-threats-in-2021-infographic#ssh
+        \nhttps://csrc.nist.gov/glossary/term/cyber_threat
+        \nhttps://www.cisa.gov/uscert/ics/content/cyber-threat-source-descriptions
+    </string>
+    <string name="DataTextInfo">A data breach is a security incident that exposes confidential information or protected information accessed by an unauthorized person.
+        Types of data breaches included privilege escalation attacks, phishing, malware, denial of service, and advanced persistent threat(APT).
+        In a data breach, some vulnerabilities that are targeted include weak credentials, stolen credentials, and unsecured devices.\nLearn more\n
+        https://www.kaspersky.com/resource-center/definitions/data-breach
+        \nhttps://us.norton.com/internetsecurity-privacy-data-breaches-what-you-need-to-know.html
+        \nhttps://www.investopedia.com/terms/d/data-breach.asp
+    </string>
+    <string name="MoreTextInfo">
+        Learn the basics and practice the best ways to stay secure:\nhttps://overthewire.org
+        \nhttps://www.hackthissite.org
+        \nhttps://tryhackme.com
+        \nhttps://www.cisa.gov/uscert/ncas/tips
+        \nhttps://www.nist.gov/cybersecurity
+    </string>
+    <string name="RegTextInfo">
+        The regional Internet registry is an organization that allocates, controls, and manages internet number resources in a specific region.
+        There are 5 RIRs the APNIC, ARIN, RIPE NCC, LACNIC, and AFRINIC. In their respective regions, RIR works on the management, distribution, and registration of internet number resources.
+        The global RIR system uniquely assigns an internet number resource to one party and ensures that they are distributed based on justified needs.
+        \nLearn more\n
+        https://www.nro.net/about/rirs
+        \nhttps://www.apnic.net/about-apnic/organization/history-of-apnic/history-of-the-regional-internet-registries
+        \nhttps://www.ripe.net/about-us/what-we-do/regional-internet-registry
+        \nhttps://whatismyipaddress.com/rir
+    </string>
+    <string name="AutoTextInfo">
+        An autonomous system is a network or group of networks that have a unified routing policy, and all devices connected to the internet are connected to an AS.
+        An autonomous system is operated by a single large organization, an enterprise technology company, a university, or a government agency.
+        Autonomous system numbers are assigned to an autonomous system and serve as an identifier.\nlearn more\n
+        https://www.techtarget.com/searchnetworking/definition/autonomous-system
+        \nhttps://csrc.nist.gov/glossary/term/autonomous_system
+        \nhttps://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system
+    </string>
+    <string name="add">Add to Watchlist</string>
+    <string name="title_activity_email">Email</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="Breaches">Hooray! No breaches were found!</string>
+    <string name="NoBreaches">Breaches include:</string>
+
 </resources>
