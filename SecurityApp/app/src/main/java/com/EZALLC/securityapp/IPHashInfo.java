@@ -80,6 +80,7 @@ public class IPHashInfo extends AppCompatActivity {
 
 
 
+
     /*Will get the ip from an intent sent by Search activity.
      * Then the code will run to display info about it
      * Should be smooth and seamless.*/
@@ -115,6 +116,9 @@ public class IPHashInfo extends AppCompatActivity {
         ArrayList<String> list = (ArrayList<String>) getIntent().getSerializableExtra("key");
         Haveibeenpwndinterface = PulsediveClient.getClient().create(haveibeenpwndinterface.class);
         title.setText("INFO FOR \n"+ list.get(0));
+
+
+
         Log.w(TAG, list.toString());
         Log.w(TAG, "Should be above this!!!");
 
@@ -125,6 +129,7 @@ public class IPHashInfo extends AppCompatActivity {
             onCheckEmail(list.get(0));
         }else if(list.get(1).equals("URL")){
             getURLHash(list.get(0));
+            url = list.get(0);
         }
     }
 
@@ -222,7 +227,7 @@ public class IPHashInfo extends AppCompatActivity {
                 userContent += "Malicious: " + response.body().getData().getAttributes().getLastAnalysisStats().getMalicious()+ "\n";
                 Malicious = response.body().getData().getAttributes().getLastAnalysisStats().getMalicious();
 
-                userContent += "Suspicious: " + response.body().getData().getAttributes().getLastAnalysisStats().getSuspicious()+ "\n";
+                userContent += "Sus Level: " + response.body().getData().getAttributes().getLastAnalysisStats().getSuspicious()+ "\n";
                 Suspicious = response.body().getData().getAttributes().getLastAnalysisStats().getSuspicious();
 
                 userContent += "Undetected: " + response.body().getData().getAttributes().getLastAnalysisStats().getUndetected()+ "\n";
@@ -265,9 +270,10 @@ public class IPHashInfo extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void getURLHash(String url){
         //String encodedURL = Base64.getUrlEncoder().encodeToString("https://tinder.com/".getBytes(StandardCharsets.UTF_8));
-        String encodedURL = Base64.getUrlEncoder().encodeToString(url.getBytes(StandardCharsets.UTF_8));
-        encodedURL = encodedURL.replace("==","");
 
+        String encodedURL = Base64.getUrlEncoder().encodeToString(url.getBytes(StandardCharsets.UTF_8));
+        //encodedURL = encodedURL.replace("==","");
+        encodedURL = encodedURL.split("=")[0];
         Call<HashInfo> call = virusTotalAPI.getHashInfo(encodedURL);
         //Execute the request in a background thread
         call.enqueue(new Callback<HashInfo>() {
@@ -295,9 +301,14 @@ public class IPHashInfo extends AppCompatActivity {
                 }
 
                 String userContent = "";
-                userContent += "Success: " + response.body().getData().getAttributes().getTitle()+ "\n";
-                //userContent += "Harmless: " + response.body().getData().getAttributes().getTotalVotes().getHarmless()+ "\n";
-                //userContent += "Malicious: " + response.body().getData().getAttributes().getTotalVotes().getMalicious()+ "\n";
+                userContent += "Title: " + response.body().getData().getAttributes().getTitle()+ "\n";
+                userContent += "Harmless: " + response.body().getData().getAttributes().getLastAnalysisStats69().getHarmless()+ "\n";
+                userContent += "Malicious: " + response.body().getData().getAttributes().getLastAnalysisStats69().getMalicious()+ "\n";
+                userContent += "Sus Level: " + response.body().getData().getAttributes().getLastAnalysisStats69().getSuspicious()+ "\n";
+                userContent += "Undetected: " + response.body().getData().getAttributes().getLastAnalysisStats69().getUndetected()+ "\n";
+                userContent += "Harmless: " + response.body().getData().getAttributes().getTotalVotes().getHarmless()+ "\n";
+                userContent += "Type: " + response.body().getData().getType69()+ "\n";
+                userContent += "URL: " + url + "\n";
 
                 fTextView.setText(userContent);
 
