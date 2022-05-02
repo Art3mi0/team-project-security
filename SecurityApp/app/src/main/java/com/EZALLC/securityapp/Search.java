@@ -65,7 +65,7 @@ public class Search extends AppCompatActivity {
     private String docId;
 
     ArrayList<String> bundle= new ArrayList<>();
-    //String[] bundle = new String[]{};
+
 
 
     @Override
