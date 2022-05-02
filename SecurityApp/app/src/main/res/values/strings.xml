@@ -66,13 +66,21 @@
     </string>
     <string name="RegTextInfo">
         The regional Internet registry is an organization that allocates, controls, and manages internet number resources in a specific region.
-        There are 5 RIRs the APNIC, ARIN, RIPE NCC, LACNIC, and AFRINIC.In their respective regions, RIR works on the management, distribution, and registers of internet number resources.
+        There are 5 RIRs the APNIC, ARIN, RIPE NCC, LACNIC, and AFRINIC. In their respective regions, RIR works on the management, distribution, and registration of internet number resources.
         The global RIR system uniquely assigns an internet number resource to one party and ensures that they are distributed based on justified needs.
         \nLearn more\n
         https://www.nro.net/about/rirs
         \nhttps://www.apnic.net/about-apnic/organization/history-of-apnic/history-of-the-regional-internet-registries
         \nhttps://www.ripe.net/about-us/what-we-do/regional-internet-registry
         \nhttps://whatismyipaddress.com/rir
+    </string>
+    <string name="AutoTextInfo">
+        An autonomous system is a network or group of networks that have a unified routing policy, and all devices connected to the internet are connected to an AS.
+        An autonomous system is operated by a single large organization, an enterprise technology company, a university, or a government agency.
+        Autonomous system numbers are assigned to an autonomous system and serve as an identifier.\nlearn more\n
+        https://www.techtarget.com/searchnetworking/definition/autonomous-system
+        \nhttps://csrc.nist.gov/glossary/term/autonomous_system
+        \nhttps://www.cloudflare.com/learning/network-layer/what-is-an-autonomous-system
     </string>
     <string name="add">Add to Watchlist</string>
     <string name="title_activity_email">Email</string>
