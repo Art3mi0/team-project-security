@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <!-- Here you put the rest of your current view-->
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/ip_info_page"
     tools:context=".IPHashInfo">
 
     <include
@@ -30,28 +37,34 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/demo_title" />
+        app:layout_constraintTop_toBottomOf="@+id/demo_title"
+        android:textIsSelectable="true"/>
 
 
-
-    <TextView
-        android:id="@+id/hash_box"
+    <ProgressBar
+        android:id="@+id/pBar"
+        style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/IP_info_box" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/IP_info_box"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="@string/add"
+        android:background="@color/school_navy"
+        android:padding="4dp"
         android:onClick="Add_To_Firebase"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/hash_box"/>
+        app:layout_constraintTop_toBottomOf="@id/pBar"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

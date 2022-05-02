@@ -4,15 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.text.HtmlCompat;
 
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,9 +25,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,7 +42,7 @@ public class IPHashInfo extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final String TAG = "IPHASH INFO";
 
-
+    haveibeenpwndinterface Haveibeenpwndinterface;
     TextView fTextView;
 
     VirusTotalAPI virusTotalAPI;
@@ -59,6 +66,16 @@ public class IPHashInfo extends AppCompatActivity {
     private String Type;
     private String RegionalInternetRegistry;
     private Boolean IsFavorite;
+    private ProgressBar spinner;
+
+    private Boolean flag = false;
+    private String docId;
+
+    String url;
+    String ip;
+
+    String[] myStrings;
+
 
 
 
@@ -75,9 +92,11 @@ public class IPHashInfo extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setTitle("Data from APIs");
+
+        spinner=(ProgressBar)findViewById(R.id.pBar);
+        spinner.setVisibility(View.VISIBLE);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -86,19 +105,50 @@ public class IPHashInfo extends AppCompatActivity {
 
         virusTotalAPI = VirusTotalClient.getClient().create(VirusTotalAPI.class);
         fTextView = findViewById(R.id.IP_info_box);
-        url_info_box = (TextView) findViewById(R.id.hash_box);
+
 
         TextView title = (TextView) findViewById(R.id.demo_title);
-        title.setText(R.string.iphashdemo);
 
         da_button = (Button)findViewById(R.id.button);
         da_button.setEnabled(false);
 
-        getUser();
-        //getURLHash();
+        ArrayList<String> list = (ArrayList<String>) getIntent().getSerializableExtra("key");
+        Haveibeenpwndinterface = PulsediveClient.getClient().create(haveibeenpwndinterface.class);
+        title.setText("INFO FOR \n"+ list.get(0));
+        Log.w(TAG, list.toString());
+        Log.w(TAG, "Should be above this!!!");
 
+        if(list.get(1).equals("IP")) {
+            getUser(list.get(0));
+        }else if(list.get(1).equals("EMAIL")){
+            da_button.setVisibility(View.GONE);
+            onCheckEmail(list.get(0));
+        }else if(list.get(1).equals("URL")){
+            getURLHash(list.get(0));
+        }
     }
 
+
+    public void matchThreat(Threat check) {
+        mDb.collection(COLLECTION)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Threat t = document.toObject(Threat.class);
+                            if (t.getId().equals(check.getId())) {
+                                docId = document.getId();
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            mDb.collection(COLLECTION).document(docId).delete();
+                        }
+                    }
+                });
+    }
 
     public void Add_To_Firebase(View view){
 
@@ -106,6 +156,8 @@ public class IPHashInfo extends AppCompatActivity {
         //Toast.makeText(IPHashInfo.this, test = Integer.toString(Harmless),Toast.LENGTH_LONG).show();
 
         Threat newThreat = new Threat(Type,Id,RegionalInternetRegistry,ASNOwner,Continent,Country,Harmless,Malicious,Suspicious,Undetected, false);
+
+        matchThreat(newThreat);
 
         mDb.collection(COLLECTION)
                 .add(newThreat)
@@ -133,29 +185,21 @@ public class IPHashInfo extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, Search.class);
                 startActivity(intent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void getUser(){
+    public void getUser(String ip){
         //Execute the Network request
-        String da_qid = "696.696.69.69";
-        Call<IpInfo> call = virusTotalAPI.getIPInfo(da_qid);
+        Call<IpInfo> call = virusTotalAPI.getIPInfo(ip);
         //Execute the request in a background thread
         call.enqueue(new Callback<IpInfo>() {
             @Override
             public void onResponse(Call<IpInfo> call, Response<IpInfo> response) {
-//                if (!response.isSuccessful()){
-//                    fTextView.setText("It gets this far that's it.");
-//                    return;
-//                }
-
-//                if (response.body() != null){
-//                    //Handle error here?
-
+                spinner.setVisibility(View.GONE);
 
                 if(response.code() ==400){
                     Toast.makeText(IPHashInfo.this,
@@ -206,12 +250,10 @@ public class IPHashInfo extends AppCompatActivity {
 
                 da_button.setEnabled(true);
 
-
-//                }
-                //Log.e(TAG, "onResponse: " + response.body() );
             }
             @Override
             public void onFailure(Call<IpInfo> call, Throwable t) {
+                spinner.setVisibility(View.GONE);
                 //fTextView.setText("Failure: " + t);
                 Toast.makeText(IPHashInfo.this,
                         "Check internet connection.",
@@ -221,8 +263,9 @@ public class IPHashInfo extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void getURLHash(){
-        String encodedURL = Base64.getUrlEncoder().encodeToString("https://tinder.com/".getBytes(StandardCharsets.UTF_8));
+    public void getURLHash(String url){
+        //String encodedURL = Base64.getUrlEncoder().encodeToString("https://tinder.com/".getBytes(StandardCharsets.UTF_8));
+        String encodedURL = Base64.getUrlEncoder().encodeToString(url.getBytes(StandardCharsets.UTF_8));
         encodedURL = encodedURL.replace("==","");
 
         Call<HashInfo> call = virusTotalAPI.getHashInfo(encodedURL);
@@ -230,10 +273,7 @@ public class IPHashInfo extends AppCompatActivity {
         call.enqueue(new Callback<HashInfo>() {
             @Override
             public void onResponse(Call<HashInfo> call, Response<HashInfo> response) {
-//                if (!response.isSuccessful()){
-//                    fTextView.setText("It gets this far that's it.");
-//                    return;
-//                }
+                spinner.setVisibility(View.GONE);
 
                 if(response.code() ==400){
                     Toast.makeText(IPHashInfo.this,
@@ -247,24 +287,96 @@ public class IPHashInfo extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
                     return;
                 }
-
-//                if (response.body() != null){
-//                    //Handle API errors here?
+                if(response.body() == null){
+                    Toast.makeText(IPHashInfo.this,
+                            "Getting Nothing",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 String userContent = "";
                 userContent += "Success: " + response.body().getData().getAttributes().getTitle()+ "\n";
                 //userContent += "Harmless: " + response.body().getData().getAttributes().getTotalVotes().getHarmless()+ "\n";
                 //userContent += "Malicious: " + response.body().getData().getAttributes().getTotalVotes().getMalicious()+ "\n";
 
-                url_info_box.setText(userContent);
+                fTextView.setText(userContent);
 
             }
             @Override
             public void onFailure(Call<HashInfo> call, Throwable t) {
-                //fTextView.setText("Failure: " + t);
+                spinner.setVisibility(View.GONE);
                 Toast.makeText(IPHashInfo.this,
                         "Check internet connection.",
                         Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    /**
+     * this function uses an API to check if an email has been compromised or not
+     * @param  = user input and button click
+     * Output = a pop up that says error or email compromised or not
+     */
+    public void onCheckEmail(String email) {
+        //Execute the Network request
+
+
+        Call<List<Pwned>> call = Haveibeenpwndinterface.getPwned(email, false);
+        // if value is empty, return a comment
+        // if value is not valid email, return a comment (toast)
+        //Execute the request in a background thread
+        call.enqueue(new Callback<List<Pwned>>() {
+            @Override
+            public void onResponse(Call<List<Pwned>> call, Response<List<Pwned>> response) {
+                String userContent = "";
+//                if (response.code() == 404) {
+//                    spinner.setVisibility(View.GONE);
+//                    userContent += "This account probably don't exist.";
+//                    fTextView.setText(userContent);
+//                    return;
+//                }
+                if (response.body() == null) {
+                    spinner.setVisibility(View.GONE);
+
+                    fTextView.setText(R.string.Breaches);
+//                    Toast.makeText(IPHashInfo.this,
+//                            "No Breaches",
+//                            Toast.LENGTH_LONG).show();
+
+                    Log.e(TAG, "onResponse: " + response.body());
+                    return;
+                }
+                //loop incremented value
+                if (response.code() == 404) {
+                    spinner.setVisibility(View.GONE);
+                    userContent += "This account probably don't exist.";
+
+                }
+                for (int i = 0; i < response.body().size(); i++) {
+                    spinner.setVisibility(View.GONE);
+                    userContent += "Name: " + response.body().get(i).getName() + "\n";
+                    userContent += "Domain: " + response.body().get(i).getDomain() + "\n";
+                    userContent += "Title: " + response.body().get(i).getTitle() + "\n";
+                    userContent += "Breach Date: " + response.body().get(i).getBreachDate() + "\n";
+                    Spanned spanned = HtmlCompat.fromHtml(response.body().get(0).getDescription(), HtmlCompat.FROM_HTML_MODE_COMPACT);
+                    userContent += spanned+"\n";
+                    userContent+=""+"\n";
+                    //userContent += "Description: " + response.body().get(i).getDescription() + "\n";
+
+
+                }
+//                Toast.makeText(IPHashInfo.this,
+//                        userContent,
+//                        Toast.LENGTH_LONG).show();
+
+                fTextView.setText(userContent);
+
+                Log.e(TAG, "onResponse: " + response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Pwned>> call, Throwable t) {
+                Log.e(TAG, "onResponse: " + "It just gets here.");
             }
         });
     }

@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/threatType"
+        android:id="@+id/searchType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -14,20 +14,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/threatId"
+        android:id="@+id/searchThing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/threatType" />
-
-    <TextView
-        android:id="@+id/favoriteIndicator"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="textEnd"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/searchType" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

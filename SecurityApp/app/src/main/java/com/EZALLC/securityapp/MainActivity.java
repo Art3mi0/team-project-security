@@ -104,12 +104,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.iphash:
-                // User chose the "Settings" item, show the app settings UI...
-                Intent myIntent = new Intent(this, IPHashInfo.class);
-                startActivity(myIntent);
-                return true;
-
             case R.id.trendingthreats:
                 // User chose the "Favorite" action, mark the current item
                 // as a favorite...
@@ -186,69 +180,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public static boolean isValid(String email)
-    {
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
-                "[a-zA-Z0-9_+&*-]+)*@" +
-                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
-                "A-Z]{2,7}$";
 
-        Pattern pat = Pattern.compile(emailRegex);
-        if (email == null)
-            return false;
-        return pat.matcher(email).matches();
-    }
-
-    /**
-     * this function uses an API to check if an email has been compromised or not
-     * @param view = user input and button click
-     * Output = a pop up that says error or email compromised or not
-     */
-    public void onCheckEmail(View view) {
-        //Execute the Network request
-        enterEmail = findViewById(R.id.enterEmail);
-        String value = enterEmail.getText().toString().trim();
-        String da_qid = "skystock19%40gmail.com";
-        if (isValid(value) == false) {
-            Toast.makeText(MainActivity.this,
-                    "invalid email (make sure there is not an extra space after entering the email)",
-                    Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        Call<List<Pwned>> call = Haveibeenpwndinterface.getPwned(value);
-        // if value is empty, return a comment
-        // if value is not valid email, return a comment (toast)
-        //Execute the request in a background thread
-        call.enqueue(new Callback<List<Pwned>>() {
-            @Override
-            public void onResponse(Call<List<Pwned>> call, Response<List<Pwned>> response) {
-                if (response.body() == null) {
-                    Toast.makeText(MainActivity.this,
-                            "No Breaches",
-                            Toast.LENGTH_LONG).show();
-
-                    Log.e(TAG, "onResponse: " + response.body());
-                    return;
-                }
-                //loop incremented value
-
-                String userContent = "";
-                userContent += "Title " + response.body().get(0).getName() + "\n";
-                Toast.makeText(MainActivity.this,
-                        userContent,
-                        Toast.LENGTH_LONG).show();
-
-                Log.e(TAG, "onResponse: " + response.body());
-                }
-
-            @Override
-            public void onFailure(Call<List<Pwned>> call, Throwable t) {
-                Log.e(TAG, "onResponse: " + "It just gets here." );
-            }
-        });
-
-    }
 
     /**
      * This method creates an array list of the threat class from the users database, and uses the setFavorites

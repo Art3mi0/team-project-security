@@ -40,6 +40,8 @@ public class WatchList extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private static final String TAG = "Watchlist";
 
+    private TextView noItemsText;
+    private Threat oldFav;
     private ListView watchList;
     private EditText userInput;
     private String COLLECTION;
@@ -59,6 +61,7 @@ public class WatchList extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("WatchList");
 
+        noItemsText = findViewById(R.id.watchlist_no_items);
         watchList = findViewById(R.id.the_watchlist);
         userInput = findViewById(R.id.watchlist_input);
         mAuth = FirebaseAuth.getInstance();
@@ -81,7 +84,57 @@ public class WatchList extends AppCompatActivity {
         watchList.setOnItemClickListener(itemClickListener);
     }
 
+    public void onViewData(View view) {
+        threat = userInput.getText().toString();
+        if (threat.isEmpty()) {
+            Toast.makeText(WatchList.this, "Can't remove nothing", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        for (int i = 0; i < mThreats.size(); i++) {
+            if (mThreats.get(i).getId().equals(threat)) {
+                Intent intent = new Intent(this, WatchlistDetail.class);
+                intent.putExtra("DATA", threat);
+                startActivity(intent);
+                return;
+            }
+        }
+        Toast.makeText(WatchList.this, "Not in list", Toast.LENGTH_SHORT).show();
+    }
+
+    public boolean checkFavorite(){
+        for (int i = 0; i < mThreats.size(); i++) {
+            if (mThreats.get(i).getIsFavorite()) {
+                oldFav = mThreats.get(i);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void unFavorite() {
+
+        mDb.collection(COLLECTION)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Threat t = document.toObject(Threat.class);
+                            if (t.getId().equals(oldFav.getId())) {
+                                docId = document.getId();
+                                break;
+                            }
+                        }
+                        mDb.collection(COLLECTION).document(docId).update("isFavorite", false);
+                        getThreats();
+                        //Toast.makeText(getApplicationContext(),"Unfavorited " + threat, Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
     public void onFavorite(View view) {
+        Boolean currentFav = false;
+        Boolean exists = false;
         threat = userInput.getText().toString();
         if (threat.isEmpty()) {
             Toast.makeText(WatchList.this, "Can't favorite nothing", Toast.LENGTH_SHORT).show();
@@ -92,31 +145,46 @@ public class WatchList extends AppCompatActivity {
             Log.d(TAG, Boolean.toString(mThreats.get(i).getIsFavorite()) + " " + Boolean.toString(mThreats.get(i).getId().equals(threat)));
             if ((mThreats.get(i).getIsFavorite()) && (mThreats.get(i).getId().equals(threat))) {
                 Toast.makeText(WatchList.this, "Already Favorite", Toast.LENGTH_SHORT).show();
-            } else {
-                mDb.collection(COLLECTION)
-                        .get()
-                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                                    Threat t = document.toObject(Threat.class);
-                                    if (t.getId().equals(threat)) {
-                                        docId = document.getId();
-                                        break;
-                                    }
-                                }
-                                mDb.collection(COLLECTION).document(docId).update("isFavorite", true);
-                                getThreats();
-                                Toast.makeText(getApplicationContext(),"Favorited " + threat, Toast.LENGTH_LONG).show();
-                            }
-                        });
-                Log.d(TAG, "Adapter should have updated");
                 return;
             }
+            if ((!mThreats.get(i).getType().equals("ip_address")) && (mThreats.get(i).getId().equals(threat))) {
+                Toast.makeText(WatchList.this, "Can't favorite urls", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (mThreats.get(i).getId().equals(threat)) {
+                exists = true;
+            }
         }
+        if (!exists) {
+            Toast.makeText(WatchList.this, "Threat not in list", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        currentFav = checkFavorite();
+        if (currentFav) {
+            unFavorite();
+        }
+        mDb.collection(COLLECTION)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Threat t = document.toObject(Threat.class);
+                            if (t.getId().equals(threat)) {
+                                docId = document.getId();
+                                break;
+                            }
+                        }
+                        mDb.collection(COLLECTION).document(docId).update("isFavorite", true);
+                        getThreats();
+                        Toast.makeText(getApplicationContext(),"Favorited " + threat, Toast.LENGTH_LONG).show();
+                    }
+                });
 
-        //Toast.makeText(WatchList.this, "Already not in list", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "Adapter should have updated");
         return;
+
+
     }
 
     /**
@@ -179,9 +247,12 @@ public class WatchList extends AppCompatActivity {
                             Log.d(TAG, Boolean.toString(t.getIsFavorite()));
                         }
                         adapter.clear();
-                        if (mThreats != null) {
+                        try {
+                            mThreats.get(0);
                             Log.d(TAG, "threats not null");
                             adapter.addAll(mThreats);
+                        } catch (Exception e) {
+                            noItemsText.setText(getString(R.string.watchlist_no_items));
                         }
                     }
                 });
@@ -219,10 +290,16 @@ public class WatchList extends AppCompatActivity {
 
             TextView threatType = convertView.findViewById(R.id.threatType);
             TextView threatId = convertView.findViewById(R.id.threatId);
+            TextView favoriteIndicator = convertView.findViewById(R.id.favoriteIndicator);
 
             Threat t = threatsList.get(position);
             threatType.setText(t.getType());
             threatId.setText(t.getId());
+            if(t.getIsFavorite()) {
+                favoriteIndicator.setText("ඞ Favorite ඞ");
+            } else {
+                favoriteIndicator.setText("");
+            }
 
             return convertView;
         }
