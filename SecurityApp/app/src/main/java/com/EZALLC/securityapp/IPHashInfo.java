@@ -128,8 +128,13 @@ public class IPHashInfo extends AppCompatActivity {
         }
     }
 
+    public void Add_To_Firebase(View view){
 
-    public void matchThreat(Threat check) {
+        String test;
+        //Toast.makeText(IPHashInfo.this, test = Integer.toString(Harmless),Toast.LENGTH_LONG).show();
+
+        Threat newThreat = new Threat(Type,Id,RegionalInternetRegistry,ASNOwner,Continent,Country,Harmless,Malicious,Suspicious,Undetected, false);
+
         mDb.collection(COLLECTION)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -137,7 +142,7 @@ public class IPHashInfo extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             Threat t = document.toObject(Threat.class);
-                            if (t.getId().equals(check.getId())) {
+                            if (t.getId().equals(Id)) {
                                 docId = document.getId();
                                 flag = true;
                                 break;
@@ -146,39 +151,29 @@ public class IPHashInfo extends AppCompatActivity {
                         if (flag) {
                             mDb.collection(COLLECTION).document(docId).delete();
                         }
+                        mDb.collection(COLLECTION)
+                                .add(newThreat)
+                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                    @Override
+                                    public void onSuccess(DocumentReference documentReference) {
+                                        Log.d(TAG, "Threat added successfully.");
+                                        Toast.makeText(IPHashInfo.this,
+                                                "Threat added!",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Could not add threat!");
+                                        Toast.makeText(IPHashInfo.this,
+                                                "Failed to add threat!",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                     }
                 });
-    }
 
-    public void Add_To_Firebase(View view){
-
-        String test;
-        //Toast.makeText(IPHashInfo.this, test = Integer.toString(Harmless),Toast.LENGTH_LONG).show();
-
-        Threat newThreat = new Threat(Type,Id,RegionalInternetRegistry,ASNOwner,Continent,Country,Harmless,Malicious,Suspicious,Undetected, false);
-
-        matchThreat(newThreat);
-
-        mDb.collection(COLLECTION)
-                .add(newThreat)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "Threat added successfully.");
-                        Toast.makeText(IPHashInfo.this,
-                                "Threat added!",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Could not add threat!");
-                        Toast.makeText(IPHashInfo.this,
-                                "Failed to add threat!",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
 
     }
     @Override
