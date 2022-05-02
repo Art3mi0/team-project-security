@@ -26,6 +26,7 @@ public class Information extends AppCompatActivity {
         Intent pageUrl = new Intent(Information.this,UrlInfo.class);
         Intent pageCyber = new Intent(Information.this,CyberThreatInfo.class);
         Intent pageTypeData = new Intent(Information.this,TypeOfDataInfo.class);
+        Intent pageReg = new Intent(Information.this,RegionalInternetInfo.class);
         Intent pageMore = new Intent(Information.this,MoreResourcesInfo.class);
         String[] InfoHolder = new String[] {
                 "IP address",
@@ -53,6 +54,9 @@ public class Information extends AppCompatActivity {
                         break;
                     case 3:
                         Information.this.startActivity(pageTypeData);
+                        break;
+                    case 4:
+                        Information.this.startActivity(pageReg);
                         break;
                     case 6:
                         Information.this.startActivity(pageMore);

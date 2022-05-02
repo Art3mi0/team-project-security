@@ -64,6 +64,16 @@
         \nhttps://www.cisa.gov/uscert/ncas/tips
         \nhttps://www.nist.gov/cybersecurity
     </string>
+    <string name="RegTextInfo">
+        The regional Internet registry is an organization that allocates, controls, and manages internet number resources in a specific region.
+        There are 5 RIRs the APNIC, ARIN, RIPE NCC, LACNIC, and AFRINIC.In their respective regions, RIR works on the management, distribution, and registers of internet number resources.
+        The global RIR system uniquely assigns an internet number resource to one party and ensures that they are distributed based on justified needs.
+        \nLearn more\n
+        https://www.nro.net/about/rirs
+        \nhttps://www.apnic.net/about-apnic/organization/history-of-apnic/history-of-the-regional-internet-registries
+        \nhttps://www.ripe.net/about-us/what-we-do/regional-internet-registry
+        \nhttps://whatismyipaddress.com/rir
+    </string>
     <string name="add">Add to Watchlist</string>
     <string name="title_activity_email">Email</string>
     <!-- Strings used for fragments for navigation -->
