@@ -25,6 +25,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -66,6 +68,9 @@ public class IPHashInfo extends AppCompatActivity {
     private Boolean IsFavorite;
     private ProgressBar spinner;
 
+    private Boolean flag = false;
+    private String docId;
+
     String url;
     String ip;
 
@@ -87,9 +92,8 @@ public class IPHashInfo extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setTitle("Data from APIs");
 
         spinner=(ProgressBar)findViewById(R.id.pBar);
         spinner.setVisibility(View.VISIBLE);
@@ -125,12 +129,35 @@ public class IPHashInfo extends AppCompatActivity {
     }
 
 
+    public void matchThreat(Threat check) {
+        mDb.collection(COLLECTION)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Threat t = document.toObject(Threat.class);
+                            if (t.getId().equals(check.getId())) {
+                                docId = document.getId();
+                                flag = true;
+                                break;
+                            }
+                        }
+                        if (flag) {
+                            mDb.collection(COLLECTION).document(docId).delete();
+                        }
+                    }
+                });
+    }
+
     public void Add_To_Firebase(View view){
 
         String test;
         //Toast.makeText(IPHashInfo.this, test = Integer.toString(Harmless),Toast.LENGTH_LONG).show();
 
         Threat newThreat = new Threat(Type,Id,RegionalInternetRegistry,ASNOwner,Continent,Country,Harmless,Malicious,Suspicious,Undetected, false);
+
+        matchThreat(newThreat);
 
         mDb.collection(COLLECTION)
                 .add(newThreat)
@@ -158,7 +185,7 @@ public class IPHashInfo extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, Search.class);
                 startActivity(intent);
                 return true;
         }

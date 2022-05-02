@@ -84,6 +84,23 @@ public class WatchList extends AppCompatActivity {
         watchList.setOnItemClickListener(itemClickListener);
     }
 
+    public void onViewData(View view) {
+        threat = userInput.getText().toString();
+        if (threat.isEmpty()) {
+            Toast.makeText(WatchList.this, "Can't remove nothing", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        for (int i = 0; i < mThreats.size(); i++) {
+            if (mThreats.get(i).getId().equals(threat)) {
+                Intent intent = new Intent(this, WatchlistDetail.class);
+                intent.putExtra("DATA", threat);
+                startActivity(intent);
+                return;
+            }
+        }
+        Toast.makeText(WatchList.this, "Not in list", Toast.LENGTH_SHORT).show();
+    }
+
     public boolean checkFavorite(){
         for (int i = 0; i < mThreats.size(); i++) {
             if (mThreats.get(i).getIsFavorite()) {
