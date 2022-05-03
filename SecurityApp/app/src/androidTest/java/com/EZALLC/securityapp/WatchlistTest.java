@@ -1,4 +1,5 @@
 package com.EZALLC.securityapp;
+import static androidx.test.espresso.Espresso.closeSoftKeyboard;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static androidx.test.espresso.action.ViewActions.click;
@@ -24,6 +25,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
 
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -31,6 +33,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.hamcrest.CoreMatchers.anything;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
@@ -46,25 +49,20 @@ public class WatchlistTest {
 
     @Test
     public void goto_Search(){
-        //Kinda works.
-        //Espresso.onView(withId(R.menu.menu_main)).perform(click()).check(matches(isDisplayed()));
-        Espresso.onView(withId(R.id.textView7)).check(matches(isDisplayed()));
-
+        //Make sure Watchlist is Empty
+        //Goes to search page. Searches for an IP and adds it to the Watchlist. Goes to Watchlist and checks
+        //first index. Clicks it. It will appear in the edit text. This tests makes sure it matches to original input.
         Espresso.onView(withId(R.id.searchInput)).perform(typeText("174.216.16.12"));
         Espresso.onView(withId(R.id.searchInput)).check(matches(withText("174.216.16.12")));
+        closeSoftKeyboard();
         Espresso.onView(withId(R.id.search_button)).perform(click());
 
-        //SystemClock.sleep(1500);
-
-//        Espresso.onView(withId(R.id.Search)).perform(click());
-//
-
         intended(hasComponent(IPHashInfo.class.getName()));
-        SystemClock.sleep(15000);
+        SystemClock.sleep(20000);
         Espresso.onView(withId(R.id.button)).perform(click());
 
-        //openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
-        //Espresso.onView(withId(android.R.id.home)).perform(click());
+        Espresso.onView(withContentDescription("Navigate up")).perform(click());
+        intended(hasComponent(Search.class.getName()));
 
         Espresso.onView(withContentDescription("Navigate up")).perform(click());
         intended(hasComponent(MainActivity.class.getName()));
@@ -73,11 +71,11 @@ public class WatchlistTest {
         Espresso.onView(withText("WatchList")).perform(click());
         intended(hasComponent(WatchList.class.getName()));
 
-        //Mess with one below.
-        //Espresso.onData(anything()).inAdapterView(withId(R.id.the_watchlist)).atPosition(0).check(matches(isDisplayed()));
-
-       // Espresso.onView(ViewMatchers.withId(R.id.ip_info_page)).perform(ViewActions.click());
-
+        Espresso.onData(Matchers.anything())
+                .inAdapterView(withId(R.id.the_watchlist))
+                .atPosition(0).perform(click());
+        Espresso.onView(withId(R.id.watchlist_input)).check(matches(not(withText(""))));
+        Espresso.onView(withId(R.id.watchlist_input)).check(matches(withText("174.216.16.12")));
     }
     @After
     public void tearDown() throws Exception{
