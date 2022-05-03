@@ -300,14 +300,31 @@ public class IPHashInfo extends AppCompatActivity {
                 userContent += "Type: " + response.body().getData().getType69()+ "\n";
                 userContent += "URL: " + url + "\n";
                 userContent += "Harmless: " + response.body().getData().getAttributes().getLastAnalysisStats69().getHarmless()+ "\n";
+                Harmless = response.body().getData().getAttributes().getLastAnalysisStats69().getHarmless();
+
                 userContent += "Malicious: " + response.body().getData().getAttributes().getLastAnalysisStats69().getMalicious()+ "\n";
+                Malicious = response.body().getData().getAttributes().getLastAnalysisStats69().getMalicious();
+
                 userContent += "Sus Level: " + response.body().getData().getAttributes().getLastAnalysisStats69().getSuspicious()+ "\n";
+                Suspicious = response.body().getData().getAttributes().getLastAnalysisStats69().getSuspicious();
+
                 userContent += "Undetected: " + response.body().getData().getAttributes().getLastAnalysisStats69().getUndetected()+ "\n";
-                userContent += "Harmless: " + response.body().getData().getAttributes().getTotalVotes().getHarmless()+ "\n";
+                Undetected = response.body().getData().getAttributes().getLastAnalysisStats69().getUndetected();
+
                 userContent += "Type: " + response.body().getData().getType69()+ "\n";
+                Type = response.body().getData().getType69();
+
                 userContent += "URL: " + url + "\n";
+                Id = url;
+
+                Continent = "None";
+                RegionalInternetRegistry = "None";
+                Country = "None";
+                ASNOwner = "None";
 
                 fTextView.setText(userContent);
+
+                da_button.setEnabled(true);
 
             }
             @Override

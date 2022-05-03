@@ -58,8 +58,16 @@ public class WatchlistDetail extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             Threat t = document.toObject(Threat.class);
                             if (t.getId().equals(threatRecieved)) {
-                                displayIp(t);
-                                return;
+                                if(t.getType().equals("ip_address")) {
+                                    displayIp(t);
+                                    return;
+                                } else if (t.getType().equals("url")) {
+                                    displayUrl(t);
+                                    return;
+                                } else if (t.getType().equals("email")) {
+                                    //displayEmail(t);
+                                    return;
+                                }
                             }
                         }
                         display.setText("Somehow you arrived on this page with data we don't have :/");
@@ -73,6 +81,14 @@ public class WatchlistDetail extends AppCompatActivity {
                 "A.S Owner: " + t.getAsOwner() + "\n" +
                 "Continent: " + t.getContinent() + "\n" +
                 "Country: " + t.getCountry() + "\n" +
+                "Total Harmless Results: " + Integer.toString(t.getHarmless()) + "\n" +
+                "Total Malicious Results: " + Integer.toString(t.getMalicious()) + "\n" +
+                "Total Suspicious Results: " + Integer.toString(t.getSuspicious()) + "\n" +
+                "Total Undetected Results: " + Integer.toString(t.getUndetected()));
+    }
+
+    public void displayUrl(Threat t) {
+        display.setText(t.getType() + "- " + t.getId()+ "\n" +
                 "Total Harmless Results: " + Integer.toString(t.getHarmless()) + "\n" +
                 "Total Malicious Results: " + Integer.toString(t.getMalicious()) + "\n" +
                 "Total Suspicious Results: " + Integer.toString(t.getSuspicious()) + "\n" +

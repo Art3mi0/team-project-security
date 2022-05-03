@@ -215,16 +215,25 @@ public class MainActivity extends AppCompatActivity {
     public void setFavorites(TextView textView) {
         for (int i = 0; i < mThreats.size(); i++) {
             if (mThreats.get(i).getIsFavorite()) {
-                textView.setText(mThreats.get(i).getType() + "- " + mThreats.get(i).getId()+ "\n" +
-                        "Regional Internet Registry: " + mThreats.get(i).getRegionalInternetRegistry() + "\n" +
-                        "A.S Owner: " + mThreats.get(i).getAsOwner() + "\n" +
-                        "Continent: " + mThreats.get(i).getContinent() + "\n" +
-                        "Country: " + mThreats.get(i).getCountry() + "\n" +
-                        "Total Harmless Results: " + Integer.toString(mThreats.get(i).getHarmless()) + "\n" +
-                        "Total Malicious Results: " + Integer.toString(mThreats.get(i).getMalicious()) + "\n" +
-                        "Total Suspicious Results: " + Integer.toString(mThreats.get(i).getSuspicious()) + "\n" +
-                        "Total Undetected Results: " + Integer.toString(mThreats.get(i).getUndetected()));
-                return;
+                if (mThreats.get(i).getType().equals("ip_address")) {
+                    textView.setText(mThreats.get(i).getType() + "- " + mThreats.get(i).getId() + "\n" +
+                            "Regional Internet Registry: " + mThreats.get(i).getRegionalInternetRegistry() + "\n" +
+                            "A.S Owner: " + mThreats.get(i).getAsOwner() + "\n" +
+                            "Continent: " + mThreats.get(i).getContinent() + "\n" +
+                            "Country: " + mThreats.get(i).getCountry() + "\n" +
+                            "Total Harmless Results: " + Integer.toString(mThreats.get(i).getHarmless()) + "\n" +
+                            "Total Malicious Results: " + Integer.toString(mThreats.get(i).getMalicious()) + "\n" +
+                            "Total Suspicious Results: " + Integer.toString(mThreats.get(i).getSuspicious()) + "\n" +
+                            "Total Undetected Results: " + Integer.toString(mThreats.get(i).getUndetected()));
+                    return;
+                } else if (mThreats.get(i).getType().equals("url")) {
+                    textView.setText(mThreats.get(i).getType() + " - " + mThreats.get(i).getId()+ "\n" +
+                            "Total Harmless Results: " + Integer.toString(mThreats.get(i).getHarmless()) + "\n" +
+                            "Total Malicious Results: " + Integer.toString(mThreats.get(i).getMalicious()) + "\n" +
+                            "Total Suspicious Results: " + Integer.toString(mThreats.get(i).getSuspicious()) + "\n" +
+                            "Total Undetected Results: " + Integer.toString(mThreats.get(i).getUndetected()));
+                    return;
+                }
             }
         }
         textView.setText("You have not yet set a favorite from your watchlist.");

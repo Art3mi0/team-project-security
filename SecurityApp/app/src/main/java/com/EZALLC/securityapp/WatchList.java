@@ -147,10 +147,10 @@ public class WatchList extends AppCompatActivity {
                 Toast.makeText(WatchList.this, "Already Favorite", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if ((!mThreats.get(i).getType().equals("ip_address")) && (mThreats.get(i).getId().equals(threat))) {
-                Toast.makeText(WatchList.this, "Can't favorite urls", Toast.LENGTH_SHORT).show();
-                return;
-            }
+//            if ((!mThreats.get(i).getType().equals("ip_address")) && (mThreats.get(i).getId().equals(threat))) {
+//                Toast.makeText(WatchList.this, "Can't favorite urls", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
             if (mThreats.get(i).getId().equals(threat)) {
                 exists = true;
             }
