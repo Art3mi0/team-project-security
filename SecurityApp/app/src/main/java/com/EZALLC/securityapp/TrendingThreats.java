@@ -152,7 +152,7 @@ public class TrendingThreats extends AppCompatActivity {
                 }
 
             } catch (Exception e) {
-                System.out.println(e);
+                //System.out.println(e);
             }
             return response + statusCode; //"Failed to fetch data!";
         }
@@ -168,7 +168,7 @@ public class TrendingThreats extends AppCompatActivity {
                     start = i+26;
                     int index = htmlPage.substring(start, start+100).indexOf('"');
                     end = index + start;
-                    System.out.println(htmlPage.substring(start,end));
+                    //System.out.println(htmlPage.substring(start,end));
     			ips.add(htmlPage.substring(start,end));
                 }
             }
@@ -181,7 +181,7 @@ public class TrendingThreats extends AppCompatActivity {
 //    	threatLevel += htmlPage.charAt(index1);
 //        System.out.println(threatLevel);
             for (int i = 0; i< ips.size(); i++) {
-                Log.i("IP list entry", ips.get(i));
+                //Log.i("IP list entry", ips.get(i));
 
             }
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(TrendingThreats.this, android.R.layout.simple_list_item_1,ips);

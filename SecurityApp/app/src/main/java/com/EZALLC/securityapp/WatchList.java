@@ -77,7 +77,7 @@ public class WatchList extends AppCompatActivity {
                    // @Override
                     public void onItemClick(AdapterView<?> listView, View view, int i, long l) {
                         String item = mThreats.get(i).getId();
-                        Log.d(TAG, item);
+                        //Log.d(TAG, item);
                         userInput.setText(item);
                     }
                 };
@@ -141,8 +141,8 @@ public class WatchList extends AppCompatActivity {
             return;
         }
         for (int i = 0; i < mThreats.size(); i++) {
-            Log.d(TAG, "Checking if " + threat + " = " + mThreats.get(i).getId());
-            Log.d(TAG, Boolean.toString(mThreats.get(i).getIsFavorite()) + " " + Boolean.toString(mThreats.get(i).getId().equals(threat)));
+            //Log.d(TAG, "Checking if " + threat + " = " + mThreats.get(i).getId());
+            //Log.d(TAG, Boolean.toString(mThreats.get(i).getIsFavorite()) + " " + Boolean.toString(mThreats.get(i).getId().equals(threat)));
             if ((mThreats.get(i).getIsFavorite()) && (mThreats.get(i).getId().equals(threat))) {
                 Toast.makeText(WatchList.this, "Already Favorite", Toast.LENGTH_SHORT).show();
                 return;
@@ -181,7 +181,7 @@ public class WatchList extends AppCompatActivity {
                     }
                 });
 
-        Log.d(TAG, "Adapter should have updated");
+        //Log.d(TAG, "Adapter should have updated");
         return;
 
 
@@ -200,7 +200,7 @@ public class WatchList extends AppCompatActivity {
             return;
         }
         for (int i = 0; i < mThreats.size(); i++) {
-            Log.d(TAG, "Checking if " + threat + " = " + mThreats.get(i));
+            //Log.d(TAG, "Checking if " + threat + " = " + mThreats.get(i));
             if (threat.equals(mThreats.get(i).getId())) {
                 mDb.collection(COLLECTION)
                         .get()
@@ -219,7 +219,7 @@ public class WatchList extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),"Deleted " + threat + " from list", Toast.LENGTH_LONG).show();
                             }
                         });
-                Log.d(TAG, "Adapter should have updated");
+                //Log.d(TAG, "Adapter should have updated");
                 return;
             }
         }
@@ -243,13 +243,13 @@ public class WatchList extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             Threat t = document.toObject(Threat.class);
                             mThreats.add(t);
-                            Log.d(TAG, t.getId());
-                            Log.d(TAG, Boolean.toString(t.getIsFavorite()));
+                            //Log.d(TAG, t.getId());
+                            //Log.d(TAG, Boolean.toString(t.getIsFavorite()));
                         }
                         adapter.clear();
                         try {
                             mThreats.get(0);
-                            Log.d(TAG, "threats not null");
+                            //Log.d(TAG, "threats not null");
                             adapter.addAll(mThreats);
                         } catch (Exception e) {
                             noItemsText.setText(getString(R.string.watchlist_no_items));

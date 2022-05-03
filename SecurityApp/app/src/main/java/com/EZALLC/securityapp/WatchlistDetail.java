@@ -101,7 +101,7 @@ public class WatchlistDetail extends AppCompatActivity {
         for (int i = 0; i < t.getBreaches().size(); i++) {
             displayText += t.getBreaches().get(i);
         }
-        Log.d(TAG, displayText);
+        //Log.d(TAG, displayText);
         display.setText(displayText);
     }
 

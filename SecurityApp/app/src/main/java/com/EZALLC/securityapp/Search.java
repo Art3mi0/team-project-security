@@ -97,7 +97,7 @@ public class Search extends AppCompatActivity {
                         @Override
                         public void run() {
                             searchButton.setEnabled(true);
-                            Log.d(TAG, "resend1");
+                            //Log.d(TAG, "resend1");
 
                         }
                     }, 2000);
@@ -109,7 +109,7 @@ public class Search extends AppCompatActivity {
                         @Override
                         public void run() {
                             searchButton.setEnabled(true);
-                            Log.d(TAG, "resend1");
+                            //Log.d(TAG, "resend1");
 
                         }
                     }, 2000);
@@ -155,7 +155,7 @@ public class Search extends AppCompatActivity {
                             ListViewSearch.setVisibility(android.view.View.VISIBLE);
                             searchUserInput.setEnabled(true);
                             searchButton.setEnabled(true);
-                            Log.d(TAG, "resend1");
+                            //Log.d(TAG, "resend1");
 
 
                         }
@@ -173,7 +173,7 @@ public class Search extends AppCompatActivity {
                     // @Override
                     public void onItemClick(AdapterView<?> listView, View view, int i, long l) {
                         String item = SearchArray.get(i).getSearch();
-                        Log.d(TAG, item);
+                        //Log.d(TAG, item);
                         searchUserInput.setText(item);
                     }
                 };
@@ -257,14 +257,14 @@ public class Search extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "Recent added successfully.");
+                        //Log.d(TAG, "Recent added successfully.");
                         getRecents();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Could not add recent!");
+                        //Log.w(TAG, "Could not add recent!");
                     }
                 });
         //ListViewSearch.setAdapter(SearchAdapter);
@@ -383,13 +383,13 @@ public class Search extends AppCompatActivity {
                                 number = r.getNumber();
                             }
                             SearchArray.add(r);
-                            Log.d(TAG, r.getSearch());
+                            //Log.d(TAG, r.getSearch());
                         }
                         adapter.clear();
                         try {
                             SearchArray.get(0);
                             Collections.sort(SearchArray, new Sortbynumber());
-                            Log.d(TAG, "The last item is " + SearchArray.get(SearchArray.size()-1).getSearch());
+                            //Log.d(TAG, "The last item is " + SearchArray.get(SearchArray.size()-1).getSearch());
                             adapter.addAll(SearchArray);
                         } catch(Exception e) {
                             number = 0;

@@ -162,7 +162,7 @@ public class IPHashInfo extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                     @Override
                                     public void onSuccess(DocumentReference documentReference) {
-                                        Log.d(TAG, "Threat added successfully.");
+                                        //Log.d(TAG, "Threat added successfully.");
                                         Toast.makeText(IPHashInfo.this,
                                                 "Threat added!",
                                                 Toast.LENGTH_SHORT).show();
@@ -171,7 +171,7 @@ public class IPHashInfo extends AppCompatActivity {
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Could not add threat!");
+                                        //Log.w(TAG, "Could not add threat!");
                                         Toast.makeText(IPHashInfo.this,
                                                 "Failed to add threat!",
                                                 Toast.LENGTH_SHORT).show();
@@ -370,7 +370,7 @@ public class IPHashInfo extends AppCompatActivity {
 //                            "No Breaches",
 //                            Toast.LENGTH_LONG).show();
 
-                    Log.e(TAG, "onResponse: " + response.body());
+                    //Log.e(TAG, "onResponse: " + response.body());
                     return;
                 }
                 //loop incremented value
@@ -412,12 +412,12 @@ public class IPHashInfo extends AppCompatActivity {
                 fTextView.setText(userContent);
                 da_button.setEnabled(true);
 
-                Log.e(TAG, "onResponse: " + response.body());
+                //Log.e(TAG, "onResponse: " + response.body());
             }
 
             @Override
             public void onFailure(Call<List<Pwned>> call, Throwable t) {
-                Log.e(TAG, "onResponse: " + "It just gets here.");
+                //Log.e(TAG, "onResponse: " + "It just gets here.");
             }
         });
     }
