@@ -296,7 +296,9 @@ public class IPHashInfo extends AppCompatActivity {
                 }
 
                 String userContent = "";
-                userContent += "Title: " + response.body().getData().getAttributes().getTitle()+ "\n";
+//                userContent += "Title: " + response.body().getData().getAttributes().getTitle()+ "\n";
+                userContent += "Type: " + response.body().getData().getType69()+ "\n";
+                userContent += "URL: " + url + "\n";
                 userContent += "Harmless: " + response.body().getData().getAttributes().getLastAnalysisStats69().getHarmless()+ "\n";
                 Harmless = response.body().getData().getAttributes().getLastAnalysisStats69().getHarmless();
 
