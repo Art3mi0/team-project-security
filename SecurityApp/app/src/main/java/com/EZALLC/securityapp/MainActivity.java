@@ -233,6 +233,14 @@ public class MainActivity extends AppCompatActivity {
                             "Total Suspicious Results: " + Integer.toString(mThreats.get(i).getSuspicious()) + "\n" +
                             "Total Undetected Results: " + Integer.toString(mThreats.get(i).getUndetected()));
                     return;
+                } else if(mThreats.get(i).getType().equals("email")) {
+                    String displayText = mThreats.get(i).getType() + "- " + mThreats.get(i).getId()+ "\n";
+                    for (int j = 0; j < mThreats.get(i).getBreaches().size(); j++) {
+                        displayText += mThreats.get(i).getBreaches().get(j);
+                    }
+                    Log.d(TAG, displayText);
+                    textView.setText(displayText);
+                    return;
                 }
             }
         }

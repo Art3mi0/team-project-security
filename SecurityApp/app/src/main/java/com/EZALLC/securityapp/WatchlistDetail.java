@@ -22,6 +22,7 @@ public class WatchlistDetail extends AppCompatActivity {
 
     private final FirebaseFirestore mDb = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
+    private String TAG = "WatchlistDetail";
 
     private String intentKey = "DATA";
     private TextView display;
@@ -65,7 +66,7 @@ public class WatchlistDetail extends AppCompatActivity {
                                     displayUrl(t);
                                     return;
                                 } else if (t.getType().equals("email")) {
-                                    //displayEmail(t);
+                                    displayEmail(t);
                                     return;
                                 }
                             }
@@ -93,6 +94,15 @@ public class WatchlistDetail extends AppCompatActivity {
                 "Total Malicious Results: " + Integer.toString(t.getMalicious()) + "\n" +
                 "Total Suspicious Results: " + Integer.toString(t.getSuspicious()) + "\n" +
                 "Total Undetected Results: " + Integer.toString(t.getUndetected()));
+    }
+
+    public void displayEmail(Threat t) {
+        String displayText = t.getType() + "- " + t.getId()+ "\n";
+        for (int i = 0; i < t.getBreaches().size(); i++) {
+            displayText += t.getBreaches().get(i);
+        }
+        Log.d(TAG, displayText);
+        display.setText(displayText);
     }
 
     @Override
