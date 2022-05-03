@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -54,6 +55,7 @@ public class Search extends AppCompatActivity {
     private ListView ListViewSearch;
     public ArrayAdapter<Recent> adapter;
     private ArrayList<Recent> SearchArray;
+    private TextView urlText;
 
     private final FirebaseFirestore mDb = FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth;
@@ -78,6 +80,8 @@ public class Search extends AppCompatActivity {
         searchUserInput= findViewById(R.id.searchInput);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ListViewSearch = findViewById(R.id.SearchList);
+        urlText = findViewById(R.id.description);
+        urlText.setMovementMethod(LinkMovementMethod.getInstance());
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();

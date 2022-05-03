@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText passwordView;
     private TextView favoritesText;
+    private TextView welcomeText;
     EditText enterEmail;
 
 
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         passwordView = findViewById(R.id.passwordDisplay);
         favoritesText = findViewById(R.id.favorites);
+        welcomeText = findViewById(R.id.welcome_text);
 
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, Login.class);
             startActivity(intent);
         }
+        welcomeText.setText("User: " + email);
         COLLECTION = email + "'s Threats";
         getThreats();
 
@@ -90,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle(null);
+        getSupportActionBar().setTitle(getString(R.string.app_name));
     }
 
     @Override
