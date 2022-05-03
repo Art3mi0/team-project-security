@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             email = user.getEmail();
         }
         catch (Exception ex) {
-            Log.e(TAG, String.valueOf(ex));
+            //Log.e(TAG, String.valueOf(ex));
             Intent intent = new Intent(MainActivity.this, Login.class);
             startActivity(intent);
         }
@@ -199,11 +199,11 @@ public class MainActivity extends AppCompatActivity {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             Threat t = document.toObject(Threat.class);
                             mThreats.add(t);
-                            Log.d(TAG, t.getId());
-                            Log.d(TAG, Boolean.toString(t.getIsFavorite()));
+                            //Log.d(TAG, t.getId());
+                            //Log.d(TAG, Boolean.toString(t.getIsFavorite()));
                         }
                         if (mThreats != null) {
-                            Log.d(TAG, "threats not null");
+                            //Log.d(TAG, "threats not null");
                             setFavorites(favoritesText);
                         }
                     }
@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
                     for (int j = 0; j < mThreats.get(i).getBreaches().size(); j++) {
                         displayText += mThreats.get(i).getBreaches().get(j);
                     }
-                    Log.d(TAG, displayText);
+                    //Log.d(TAG, displayText);
                     textView.setText(displayText);
                     return;
                 }
