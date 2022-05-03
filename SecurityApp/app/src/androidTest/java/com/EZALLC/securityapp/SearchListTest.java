@@ -45,8 +45,10 @@ public class SearchListTest {
         Espresso.onView(withId(R.id.searchInput)).perform(typeText("123.123.123.123"));
         Espresso.onView(withId(R.id.search_button)).perform(click());
         intended(hasComponent(IPHashInfo.class.getName()));
+        SystemClock.sleep(10000);
         Espresso.onView(withContentDescription("Navigate up")).perform(click());
         closeSoftKeyboard();
+        SystemClock.sleep(5000);
         Espresso.onData(anything())
               .inAdapterView(withId(R.id.SearchList))
                .atPosition(0).perform(click());
@@ -59,8 +61,10 @@ public class SearchListTest {
         Espresso.onView(withId(R.id.searchInput)).perform(typeText("skystock19@gmail.com"));
         Espresso.onView(withId(R.id.search_button)).perform(click());
         intended(hasComponent(IPHashInfo.class.getName()));
+        SystemClock.sleep(10000);
         Espresso.onView(withContentDescription("Navigate up")).perform(click());
         closeSoftKeyboard();
+        SystemClock.sleep(5000);
         Espresso.onData(anything())
                 .inAdapterView(withId(R.id.SearchList))
                 .atPosition(0).perform(click());
@@ -68,13 +72,15 @@ public class SearchListTest {
         Espresso.onView(withId(R.id.search_button)).perform(click());
         Espresso.onView(withContentDescription("Navigate up")).perform(click());
     }
-
+    @Test
     public void onRecentSearchListClickURL() {
         Espresso.onView(withId(R.id.searchInput)).perform(typeText("https://www.google.com/"));
         Espresso.onView(withId(R.id.search_button)).perform(click());
         intended(hasComponent(IPHashInfo.class.getName()));
+        SystemClock.sleep(10000);
         Espresso.onView(withContentDescription("Navigate up")).perform(click());
         closeSoftKeyboard();
+        SystemClock.sleep(5000);
         Espresso.onData(anything())
                 .inAdapterView(withId(R.id.SearchList))
                 .atPosition(0).perform(click());
