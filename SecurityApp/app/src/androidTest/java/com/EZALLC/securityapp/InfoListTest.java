@@ -28,8 +28,8 @@ import org.junit.runner.RunWith;
 public class InfoListTest {
     @Rule
     public ActivityTestRule<Information> intentsTestRule = new ActivityTestRule<>(Information.class);
-    @Rule
-    public ActivityTestRule<IpAddressInfo> mActivityRule = new ActivityTestRule(IpAddressInfo.class);
+   // @Rule
+    //public ActivityTestRule<IpAddressInfo> mActivityRule = new ActivityTestRule(IpAddressInfo.class);
 
     @Before
     public void setUp() throws Exception{
