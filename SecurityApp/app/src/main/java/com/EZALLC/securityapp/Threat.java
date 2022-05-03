@@ -1,5 +1,7 @@
 package com.EZALLC.securityapp;
 
+import java.util.List;
+
 public class Threat {
 
     private String type;
@@ -13,12 +15,13 @@ public class Threat {
     private int suspicious;
     private int undetected;
     private boolean isFavorite;
+    private List<String> breaches;
 
     public Threat() {
     }
 
     public Threat(String type, String id, String regionalInternetRegistry, String asOwner, String continent, String country,
-                  int harmless, int malicious, int suspicious, int undetected, boolean isFavorite) {
+                  int harmless, int malicious, int suspicious, int undetected, boolean isFavorite, List<String> breaches) {
         this.type = type;
         this.id = id;
         this.regionalInternetRegistry = regionalInternetRegistry;
@@ -30,6 +33,7 @@ public class Threat {
         this.suspicious = suspicious;
         this.undetected = undetected;
         this.isFavorite = isFavorite;
+        this.breaches = breaches;
     }
 
     public String getType() {
@@ -118,5 +122,13 @@ public class Threat {
 
     public void setFavorite(boolean isFavorite) {
         this.isFavorite = isFavorite;
+    }
+
+    public List<String> getBreaches() {
+        return breaches;
+    }
+
+    public void setBreaches(List<String> breaches) {
+        this.breaches = breaches;
     }
 }

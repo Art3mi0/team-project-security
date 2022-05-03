@@ -70,6 +70,8 @@ public class IPHashInfo extends AppCompatActivity {
 
     private Boolean flag = false;
     private String docId;
+    private List<String> Breaches;
+    private ArrayList<String> list;
 
     String url;
     String ip;
@@ -113,7 +115,7 @@ public class IPHashInfo extends AppCompatActivity {
         da_button = (Button)findViewById(R.id.button);
         da_button.setEnabled(false);
 
-        ArrayList<String> list = (ArrayList<String>) getIntent().getSerializableExtra("key");
+        list = (ArrayList<String>) getIntent().getSerializableExtra("key");
         Haveibeenpwndinterface = PulsediveClient.getClient().create(haveibeenpwndinterface.class);
         title.setText("INFO FOR \n"+ list.get(0));
 
@@ -125,7 +127,6 @@ public class IPHashInfo extends AppCompatActivity {
         if(list.get(1).equals("IP")) {
             getUser(list.get(0));
         }else if(list.get(1).equals("EMAIL")){
-            da_button.setVisibility(View.GONE);
             onCheckEmail(list.get(0));
         }else if(list.get(1).equals("URL")){
             getURLHash(list.get(0));
@@ -138,7 +139,7 @@ public class IPHashInfo extends AppCompatActivity {
         String test;
         //Toast.makeText(IPHashInfo.this, test = Integer.toString(Harmless),Toast.LENGTH_LONG).show();
 
-        Threat newThreat = new Threat(Type,Id,RegionalInternetRegistry,ASNOwner,Continent,Country,Harmless,Malicious,Suspicious,Undetected, false);
+        Threat newThreat = new Threat(Type,Id,RegionalInternetRegistry,ASNOwner,Continent,Country,Harmless,Malicious,Suspicious,Undetected, false, Breaches);
 
         mDb.collection(COLLECTION)
                 .get()
@@ -246,6 +247,8 @@ public class IPHashInfo extends AppCompatActivity {
                 userContent += "Type: " + response.body().getData().getType()+ "\n";
                 Type = response.body().getData().getType();
 
+                Breaches = null;
+
                 fTextView.setText(userContent);
 
                 da_button.setEnabled(true);
@@ -311,16 +314,15 @@ public class IPHashInfo extends AppCompatActivity {
                 userContent += "Undetected: " + response.body().getData().getAttributes().getLastAnalysisStats69().getUndetected()+ "\n";
                 Undetected = response.body().getData().getAttributes().getLastAnalysisStats69().getUndetected();
 
-                userContent += "Type: " + response.body().getData().getType69()+ "\n";
                 Type = response.body().getData().getType69();
 
-                userContent += "URL: " + url + "\n";
                 Id = url;
 
                 Continent = "None";
                 RegionalInternetRegistry = "None";
                 Country = "None";
                 ASNOwner = "None";
+                Breaches = null;
 
                 fTextView.setText(userContent);
 
@@ -377,12 +379,25 @@ public class IPHashInfo extends AppCompatActivity {
                     userContent += "This account probably don't exist.";
 
                 }
+                Breaches = new ArrayList<String>();
+                Type = "email";
+                Id = list.get(0);
+                Harmless = 0;
+                Malicious = 0;
+                Suspicious = 0;
+                Undetected = 0;
+                Country = null;
+                ASNOwner = null;
+                RegionalInternetRegistry = null;
+                Continent = null;
+
                 for (int i = 0; i < response.body().size(); i++) {
                     spinner.setVisibility(View.GONE);
                     userContent += "Name: " + response.body().get(i).getName() + "\n";
                     userContent += "Domain: " + response.body().get(i).getDomain() + "\n";
                     userContent += "Title: " + response.body().get(i).getTitle() + "\n";
                     userContent += "Breach Date: " + response.body().get(i).getBreachDate() + "\n";
+                    Breaches.add(userContent);
                     Spanned spanned = HtmlCompat.fromHtml(response.body().get(0).getDescription(), HtmlCompat.FROM_HTML_MODE_COMPACT);
                     userContent += spanned+"\n";
                     userContent+=""+"\n";
@@ -395,6 +410,7 @@ public class IPHashInfo extends AppCompatActivity {
 //                        Toast.LENGTH_LONG).show();
 
                 fTextView.setText(userContent);
+                da_button.setEnabled(true);
 
                 Log.e(TAG, "onResponse: " + response.body());
             }
